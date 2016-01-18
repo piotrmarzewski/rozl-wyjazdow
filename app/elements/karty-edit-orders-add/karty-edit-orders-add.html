@@ -201,6 +201,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         return (new Date()).toISOString().slice(0,16);
       },
       _add: function() {
+        var distance = this.$.przyjazdlicznik.value - this.$.wyjazdlicznik.value;
+        var timeDiff = Date.parse(this.$.przyjazddata.value) - Date.parse(this.$.wyjazddata.value);
+        timeDiff = timeDiff/60000; //minutes
+        console.log("Distance",distance, timeDiff);
         this.fire('add-karta-order', {
           trasa: {
             z: this.$.trasaz.value.toUpperCase(),
@@ -214,7 +218,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             data: this.$.przyjazddata.value,
             licznik: this.$.przyjazdlicznik.value
           },
-          kierowca: this.$.kierowca.selectedItemLabel
+          kierowca: this.$.kierowca.selectedItemLabel,
+          dystans: distance,
+          czas: timeDiff
         });
         //clean form
         this.$.wyjazddata.value = this._today();

@@ -44,14 +44,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .zlecenie {
         margin-top: 1px;
       }
-
-      .zlecenie-item span {
+      .zlecenie-item .label {
         display: inline-block;
         text-transform: uppercase;
         color: #D4D0D0;
         font-size: 10px;
         min-width: 20px;
       }
+      .zlecenie-item .dystans::after{
+        content: " km";
+        color: #D4D0D0;
+      }
+      .zlecenie-item .czas::after{
+        content: " min";
+        color: #D4D0D0;        
+      }
+
       .zlecenie [two-line] {
         font-size: 12px;
         margin: 0 5px 0 5px;
@@ -82,29 +90,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <paper-item-body two-line>
         <div class="zlecenie-item">
           <div class="">trasa</div>
-          <span>z: </span>[[zlecenie.trasa.z]]<br>
-          <span>do: </span>[[zlecenie.trasa.do]]
+          <span class="label">z: </span>[[zlecenie.trasa.z]]<br>
+          <span class="label">do: </span>[[zlecenie.trasa.do]]
         </div>
       </paper-item-body>
       <paper-item-body two-line>
         <div class="zlecenie-item">
           <div class=""> wyjazd </div>
-          <span>Data: </span> [[zlecenie.wyjazd.data]]<br>
-          <span>Licznik: </span> [[zlecenie.wyjazd.licznik]]
+          <span class="label">Data: </span> <span> [[zlecenie.wyjazd.data]] </span> <br>
+          <span class="label">Licznik: </span><span class="dystans">[[zlecenie.wyjazd.licznik]]</span>
         </div>
       </paper-item-body>
       <paper-item-body two-line>
         <div class="zlecenie-item">
           <div class=""> przyjazd </div>
-          <span>Data: </span> [[zlecenie.przyjazd.data]]<br>
-          <span>Licznik: </span> [[zlecenie.przyjazd.licznik]]
+          <span class="label">Data: </span><span>[[zlecenie.przyjazd.data]]</span><br>
+          <span class="label">Licznik: </span><span class="dystans"> [[zlecenie.przyjazd.licznik]]</span>
         </div>
       </paper-item-body>
       <paper-item-body two-line>
         <div class="zlecenie-item">
           <div class=""> Razem </div>
-          <span>Czas.: </span> 3h<br>
-          <span>Odległośc: </span> 150km
+          <span class="label">Czas.: </span><span class="czas"> [[zlecenie.czas]] </span> <br>
+          <span class="label">Dystans: </span><span class="dystans"> [[zlecenie.dystans]]</span>
         </div>
       </paper-item-body>
     </paper-icon-item>
