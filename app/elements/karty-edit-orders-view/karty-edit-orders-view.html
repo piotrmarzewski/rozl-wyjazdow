@@ -76,7 +76,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
       <div id="card-content" class="card-content">
         <template is="dom-repeat" id="zleceniaList" items="[[zlecenia]]" as="zlecenie">
-        <karty-edit-orders-item index="{{index}}" zlecenie="{{zlecenie}}"></karty-edit-orders-item>
+        <karty-edit-orders-item index="{{index}}" on-delete-order="deleteOrder" zlecenie="{{zlecenie}}"></karty-edit-orders-item>
         </template>
         <!-- <karty-edit-maindata karta={{karta}}></karty-edit-maindata>
         <karty-edit-orders-view></karty-edit-orders-view> -->
@@ -124,6 +124,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         console.log("Add-Karta-Order: ", e.detail);
         this.push('zlecenia', e.detail);
         // document.querySelector('#karta-add-accepted').open();
+      },
+      deleteOrder: function(e) {
+        console.log('Order delete', e);
+        this.arrayDelete('zlecenia', e.detail.zlecenie);
+        // document.querySelector('#sm-del-accepted').open();
       },
     });
   })();
