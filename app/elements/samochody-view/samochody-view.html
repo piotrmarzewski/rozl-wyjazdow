@@ -1,0 +1,100 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="samochody-view">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      paper-material {
+        padding: 20px;
+      }
+      .content {
+        position: relative;
+      }
+      #sm-edit-accepted,
+      #sm-add-accepted,
+      #sm-del-accepted {
+        --paper-toast-background-color: green;
+        --paper-toast-color: white;
+      }
+    </style>
+
+    <paper-material elevation="1">
+      <h2 class="page-title">Samochody</h2>
+      <firebase-collection
+        log="true"
+        order-by-child="marka"
+        location="https://zbk.firebaseio.com/rozliczenia/samochody"
+        data="{{samochody}}"></firebase-collection>
+
+
+      <div class="content">
+        <samochody-list samochody="{{samochody}}" kierlist="[[kierlist]]" on-delete-samochod="deleteSamochod" on-edit-samochod="editSamochod">
+        </samochody-list>
+      </div>
+
+    </paper-material>
+    <samochody-add on-add-samochod="addSamochod" norma-pal="10" kierlist="[[kierlist]]"></samochody-add>
+    <paper-toast id="sm-add-accepted" text="Dodano nowy samochod do bazy danych."></paper-toast>
+    <paper-toast id="sm-del-accepted" text="Usunięto samochod z bazy danych."></paper-toast>
+    <paper-toast id="sm-edit-accepted" text="Dane samochodu zostały zmienione."></paper-toast>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'samochody-view',
+
+      properties: {
+        samochody: Array,
+        samlist: {
+          type: Array,
+          value: [],
+          notify: true
+        },
+        kierlist: {
+          type: Array
+        },
+        foo: {
+          type: String,
+          notify: true
+        }
+      },
+      observers: [
+        '_dataChanged(samochody.*)'
+      ],
+      addSamochod: function(e) {
+        this.push('samochody', e.detail );
+        document.querySelector('#sm-add-accepted').open();
+      },
+
+      deleteSamochod: function(e) {
+        console.log('Samochod delete', e);
+        this.arrayDelete('samochody', e.detail.samochod);
+        document.querySelector('#sm-del-accepted').open();
+      },
+      editSamochod: function(e) {
+        console.log('Samochod edited', e);
+        // this.arrayDelete('samochody', e.detail.samochod);
+        document.querySelector('#sm-edit-accepted').open();
+      },
+      _dataChanged: function(changes) {
+        // kopiuj tablice z lista kierowcow
+        this.samlist = this.samochody.slice();
+      }
+    });
+  })();
+  </script>
+</dom-module>

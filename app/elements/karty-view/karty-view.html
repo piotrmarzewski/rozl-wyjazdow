@@ -1,0 +1,101 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/firebase-element/firebase-collection.html">
+
+<dom-module id="karty-view">
+  <template>
+    <style>
+      :host {
+        display: block;
+        --paper-menu-background-color: #D3E5FF;
+        --paper-menu-selected-item: {
+            background-color: rgba(51, 151, 255, 0.76);
+            color: #fff;
+            font-weight: normal;
+        }
+
+      }
+
+    paper-menu{
+      width: 250px;
+    }
+    .main {
+      padding: 25px;
+    }
+    #lista-samochodow {
+      border-radius: 4px 0 0 4px;
+      min-height: 200px;
+    }
+    #lista-kart{
+      min-height: 200px;
+    }
+    </style>
+    <firebase-collection
+      log="true"
+      location="https://zbk.firebaseio.com/rozliczenia/karty"
+      data="{{karty}}"></firebase-collection>
+
+    <array-selector id="selector" items="{{samlist}}" selected="{{selected}}"></array-selector>
+
+    <div class="layout horizontal ">
+      <div class="">
+          <paper-menu id="lista-samochodow">
+              <template is="dom-repeat" id="samochodyList" items="[[samlist]]" as="samochod">
+                <paper-item on-tap="toggleSelection" disabled="[[!samochod.isActive]]">
+                  <div><span>{{samochod.marka}}</span> <span>{{samochod.nazwa}}</span></div>
+                </paper-item>
+              </template>
+          </paper-menu>
+      </div>
+      <div  class="flex">
+        <div class="layout vertical">
+          <paper-material id="lista-kart" elevation="1" class="main">
+            <karty-list karty={{karty}}></karty-list>
+          </paper-material>
+          <karty-add on-add-karta="addKarta" samochod="[[selected]]"></karty-add>
+        </div>
+      </div>
+
+      </div>
+
+
+
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'karty-view',
+
+      properties: {
+        samlist: Array,
+        karty: {
+          type: Array,
+          value: [],
+          notify: true
+        }
+      },
+      toggleSelection: function(e) {
+        var item = this.$.samochodyList.itemForElement(e.target);
+        // console.log("ITEMS",item);
+        this.$.selector.select(item);
+      },
+      addKarta: function(e) {
+        console.log(e.detail.numer);
+        this.push('karty', e.detail);
+        // document.querySelector('#karta-add-accepted').open();
+      },
+    });
+  })();
+  </script>
+</dom-module>

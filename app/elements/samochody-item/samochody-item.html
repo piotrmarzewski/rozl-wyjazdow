@@ -1,0 +1,220 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="samochody-item">
+  <template>
+    <style>
+      :host {
+        margin-bottom: 16px;
+        margin-right: 15px;
+        /*display: inline-block;*/
+      }
+      paper-card {
+        width: 30%;
+        margin-bottom: 16px;
+      }
+      iron-icon {
+        margin-right: 10px;
+      }
+      .card-content {
+        height: 250px;
+      }
+      .fancy .title {
+        padding: 8px;
+        color: #FFFFFF;
+        background-color: #999999;
+        font-size: 16px;
+      }
+      .active .title {
+        background-color: #375F92;
+      }
+      .fancy img {
+        width: 100%;
+      }
+
+      .fancy .big {
+        font-size: 22px;
+        padding: 8px 0 16px;
+        color: var(--google-grey-500);
+        background-color: ;
+      }
+
+      .fancy .medium {
+        font-size: 16px;
+        padding-bottom: 8px;
+      }
+      .pink {
+        --paper-card-header-color: var(--paper-pink-500);
+      }
+      .prop {
+        display: inline-block;
+        background-color: #EEE;
+        padding: 4px;
+        margin: 2px;
+        border-radius: 2px;
+        color: #B7B7B7;
+      }
+      .active .prop {
+        background-color: #738498;
+        color: #EEE;
+      }
+      .title .active-icon {
+        position: absolute;
+        right: 0;
+      }
+      #active {
+        position: absolute;
+        right: 10px;
+      }
+      paper-input {
+        display: inline-block;
+        width: 5em;
+      }
+      .horizontal-section {
+        padding: 4px;
+        margin: 5px;
+        border-radius: 2px;
+        border: solid 1px #738498;
+        position: relative;
+      }
+      paper-slider {
+        display: inline-block;
+        width: 60%;
+        margin-top: 10px;
+        margin-left: 30px;
+      }
+      .horizontal .prop-icon {
+        position: absolute;
+        top: 15px;
+        left: 10px;
+      }
+      paper-material {
+        margin: 15px 0;
+      }
+      paper-dropdown-menu {
+        margin-left: 45px;
+      }
+    </style>
+    <paper-card  animated-shadow="true" class$="fancy [[_computeClass(samochod.isActive)]]">
+      <div class="title">
+        <div> <iron-icon icon="maps:directions-car"></iron-icon>Samochod <span class="active-icon"><iron-icon icon="[[_computeStatusName(samochod.isActive)]]"></iron-icon></span></div>
+      </div>
+      <div id="card-content" class="card-content">
+        <div id="samochod-view" hidden$={{edit}} >
+          <div class="big">[[samochod.marka]]<br> [[samochod.nazwa]]</div>
+          <span class="prop"><iron-icon icon="assignment-ind"></iron-icon>[[samochod.kierowca]]</span>
+          <span class="prop"><iron-icon icon="inbox"></iron-icon>[[samochod.norma]]</span>
+          <span class="prop"><iron-icon icon="maps:local-gas-station"></iron-icon>[[samochod.paliwo]]</span>
+          <span class="prop"><iron-icon icon="maps:local-offer"></iron-icon>[[samochod.rejestracja]]</span>
+        </div>
+        <div id="samochod-edit" class="edit" hidden$="{{!edit}}">
+          <paper-toggle-button id="active" name="Aktywny" checked="[[samochod.isActive]]" on-change="_toggleActiveName"></paper-toggle-button>
+          <paper-input id="nazwa" label="Nazwa" value="[[samochod.nazwa]]" ></paper-input>
+          <paper-input id="marka" label="Marka" value="[[samochod.marka]]" ></paper-input>
+          <paper-input id="rejestracja" label="Rejestracja" value="[[samochod.rejestracja]]"></paper-input>
+          <paper-material elevation="1">
+            <paper-radio-group id="paliwo" selected="[[samochod.paliwo]]"><iron-icon icon="maps:local-gas-station"></iron-icon>
+              <paper-radio-button name="ON">ON</paper-radio-button>
+              <paper-radio-button name="benzyna">benzyna</paper-radio-button>
+            </paper-radio-group>
+          </paper-material>
+          <paper-material elevation="1" class="horizontal">
+            <iron-icon class="prop-icon" icon="inbox"></iron-icon><paper-slider id="norma" pin snaps min="1" max="20" step="1" value="[[samochod.norma]]"></paper-slider>
+          </paper-material>
+          <paper-material elevation="1" class="horizontal"><iron-icon  class="prop-icon" icon="assignment-ind"></iron-icon>
+          <!-- Drop down menu - lista kierowcow -->
+            <paper-dropdown-menu id="kierowca" label="" placeholder="[[samochod.kierowca]]">
+              <paper-menu  class="dropdown-content">
+                <template is="dom-repeat" items="[[kierlist]]" as="kierowca">
+                  <paper-item >[[kierowca.imie]] [[kierowca.nazwisko]]</paper-item>
+                </template>
+              </paper-menu>
+            </paper-dropdown-menu>
+          </paper-material>
+        </div>
+      </div>
+
+
+        <!-- <div><h4>[[kierowca.__firebaseKey__]] <span>[[kierowca.imie]]</span> <span>[[kierowca.nazwisko]]</span></h4></div> -->
+      </div>
+      <div class="card-actions">
+        <paper-icon-button icon="create" on-tap="_toggleEditMode" hidden$="{{edit}}">Edytuj</paper-icon-button>
+        <paper-icon-button icon="check" on-tap="_onAccept" hidden$="{{!edit}}">Akceptuj</paper-icon-button>
+        <paper-icon-button icon="clear" on-tap="_onClear" hidden$="{{!edit}}">Anuluj</paper-icon-button>
+        <paper-icon-button icon="delete" class="btn-cancel" disabled$="{{!edit}}" aria-label="Kasuj" tabindex="0" on-tap="_onDelete">Kasuj
+        </paper-icon-button>
+      </div>
+    </paper-card>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'samochody-item',
+      properties: {
+        samochod: {
+          type: Object,
+          notify: true
+        },
+        edit: {
+          type: Boolean,
+          value: false
+        },
+        kierlist: Array
+      },
+      _onDelete: function() {
+        this.fire('delete-samochod', {samochod: this.samochod});
+      },
+      _computeClass: function(active) {
+        return active ? "active" : ""
+      },
+      _computeStatusName: function(active) {
+        console.log("Aktywny",active);
+        return active ? "visibility" : "visibility-off";
+      },
+      _toggleActiveName: function() {
+        console.log(this.$.active.checked);
+      },
+      _toggleEditMode: function() {
+        this.edit = !this.edit;
+        //this.toggleAttribute("hidden", this.edit, this.$.kierowcaview);
+        //this.toggleAttribute("hidden", !this.edit, this.$.kierowcaedit);
+        console.log("edit", !this.edit)
+      },
+      _onClear: function() {
+        this._toggleEditMode();
+        this.$.marka.value = this.samochod.marka;
+        this.$.nazwa.value = this.samochod.nazwa;
+        this.$.rejestracja.value = this.samochod.rejestracja;
+        this.$.active.checked = this.samochod.isActive;
+        this.$.paliwo.selected = this.samochod.paliwo;
+        this.$.norma.value = this.samochod.norma;
+        this.$.kierowca.placeholder = this.samochod.kierowca;
+      },
+      _onAccept: function() {
+        this.set('samochod.nazwa',this.$.nazwa.value);
+        this.set('samochod.marka',this.$.marka.value);
+        this.set('samochod.isActive',this.$.active.checked);
+        this.set('samochod.kierowca',this.$.kierowca.selectedItemLabel);
+        this.set('samochod.rejestracja',this.$.rejestracja.value);
+        this.set('samochod.paliwo',this.$.paliwo.selected);
+        this.set('samochod.norma',this.$.norma.value);
+
+        this._toggleEditMode();
+        console.log("Edit mode off", this.edit, this.samopchod);
+        this.fire('edit-samochod', {samochod: this.samochod});
+      }
+    });
+  })();
+  </script>
+</dom-module>

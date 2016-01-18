@@ -1,0 +1,181 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="karty-add">
+  <template>
+    <style>
+    :host {
+      display: block;
+    }
+    paper-material {
+      padding: 20px;
+    }
+
+    .input-wrapper {
+      padding-left: 70px;
+    }
+
+    paper-input {
+      display: inline-block;
+      width: 65%;
+      --paper-input-container: {
+        padding-bottom: 0;
+      };
+
+      /* These styles are not DRY :( */
+      --paper-input-container-label: {
+        font-size: 20px;
+        font-family: 'Roboto Slab', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+        font-weight: normal;
+        color: #9E9E9E;
+      };
+      --paper-input-container-input: {
+        font-size: 20px;
+        font-family: 'Roboto Slab', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+      };
+      --paper-input-container-underline: {
+        top: 7px;
+        background: #9E9E9E;
+      };
+      --paper-input-container-underline-focus: {
+        top: 7px;
+      };
+    }
+    paper-input[focused] + paper-input + paper-button,
+    paper-input[focused] + paper-button,
+    paper-button[focused] {
+      background: var(--default-primary-color);
+      color: var(--text-primary-color);
+    }
+
+    paper-button {
+      background: #E0E0E0;
+      color: #9E9E9E;
+      font-size: 14px;
+    }
+
+    paper-button[focused] {
+      /* https://github.com/PolymerElements/paper-button/pull/43 */
+      outline-width: 3px;
+    }
+
+    .selected-car{
+      background-color:rgb(55, 95, 146);
+      border-radius: 2px;
+      color: #fff;
+      padding: 10px;
+      text-transform: uppercase;
+      width: 63%;
+    }
+    .title .sticker {
+      display: inline-block;
+      background-color: rgba(255, 255, 255, 0.15);
+      margin-left: 5px;
+      border-radius: 2px;
+    }
+    .title .sticker span {
+      display: inline-block;
+      background-color: rgba(255, 255, 255, 0.75);
+      font-size: 16px;
+      padding: 4px;
+      text-transform: uppercase;
+      color: rgba(0, 0, 0, 0.91);
+      border-radius: 0 2px 2px 0;
+    }
+    .title .sticker .label {
+      background-color: transparent;
+      padding: 4px 8px 4px 8px;
+      /*margin: 2px;*/
+      font-size: 12px;
+      color: #fff;
+      border-radius: 2px 0 0 2px;
+    }
+    </style>
+
+    <paper-material elevation="1" >
+      <h2 class="page-title">Dodaj kartę</h2>
+      <!-- <paper-fab icon="add" title="Dodaj" class="green"></paper-fab> -->
+      <div class="input-wrapper">
+          <div class="selected-car title">
+            <div class="sticker"> <span class="label">Wybrany samochod:</span><span>[[selectedName]]</span></div>
+
+          </div>
+          <paper-input id="numer" prevent-invalid-input allowed-pattern="[0-9,/,a-z]" disabled="[[!selected]]" label="Numer" on-keydown="_checkAdd"></paper-input>
+          <paper-input id="data"  disabled="[[!selected]]" always-float-label label="Data" value="[[_today()]]" type="date" on-keydown="_checkAdd"></paper-input>
+
+          <paper-button on-tap="_add" disabled="[[!selected]]">Dodaj</paper-button>
+
+      </div>
+    </paper-material>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'karty-add',
+
+      properties: {
+        //wybrany samochod dla ktorego bedzie dodana karta
+        samochod: {
+          type: Object,
+          notify: true
+        },
+        selected: {
+          type: Boolean,
+          computed: '_computeIfSelcted(samochod)',
+          notify: true
+        },
+        selectedName: {
+          type: String,
+          computed: '_computeSelcted(samochod)',
+          notify: true
+        }
+      },
+      _today: function() {
+        return (new Date()).toISOString().slice(0,10);
+      },
+      _checkAdd: function(e) {
+        if (e.keyCode === 13) {
+          this._add();
+        }
+      },
+      _add: function() {
+        if (this.$.numer.value && this.$.data.value) {
+          console.log(this.samochod.__firebaseKey__)
+          this.fire('add-karta', {
+            numer: this.$.numer.value,
+            data: this.$.data.value,
+            samochodId: this.samochod.__firebaseKey__,
+            samochodMarka: this.samochod.marka,
+            samochodNazwa: this.samochod.nazwa,
+            kierowca: this.samochod.kierowca,
+            isActive: true
+          });
+          //clean form
+          this.$.numer.value = null;
+          this.$.data.value = _today();
+        }
+      },
+      //
+      _computeIfSelcted: function(sam) {
+        // console.log("samochod", sam );
+        return sam === null ? false : true ;
+      },
+      _computeSelcted: function(sam) {
+        console.log("samochod", sam );
+        return sam === null ? "Nie wybrano" : sam.marka + " " + sam.nazwa   ;
+      }
+    });
+  })();
+  </script>
+</dom-module>

@@ -1,0 +1,195 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="samochody-add">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      paper-material {
+        padding: 20px;
+      }
+
+      .input-wrapper {
+        padding-left: 70px;
+      }
+      paper-dropdown-menu,
+      paper-input {
+        display: inline-block;
+        width: 65%;
+        --paper-input-container: {
+          padding-bottom: 0;
+        };
+        /* These styles are not DRY :( */
+        --paper-input-container-label: {
+          font-size: 18px;
+          font-family: 'Roboto Slab', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+          font-weight: normal;
+          color: #9E9E9E;
+        };
+        --paper-input-container-input: {
+          font-size: 18px;
+          font-family: 'Roboto Slab', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+        };
+        --paper-input-container-underline: {
+          top: 7px;
+          background: #9E9E9E;
+        };
+        --paper-input-container-underline-focus: {
+          top: 7px;
+        };
+      }
+      paper-input[focused] + paper-input + paper-button,
+      paper-input[focused] + paper-button,
+      paper-button[focused] {
+        background: var(--default-primary-color);
+        color: var(--text-primary-color);
+      }
+
+      paper-button {
+        background: #E0E0E0;
+        color: #9E9E9E;
+        font-size: 14px;
+      }
+      paper-item {
+        width: 200px;
+      }
+      paper-button[focused] {
+        /* https://github.com/PolymerElements/paper-button/pull/43 */
+        outline-width: 3px;
+      }
+      paper-radio-button {
+        display: inline-block;
+      }
+      .horizontal-section {
+        width: 65%;
+        margin-top: 20px;
+      }
+      .horizontal-section .section-label {
+        font-size: 14px;
+        font-family: 'Roboto Slab', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+        font-weight: normal;
+        color: #3F51B5;
+      }
+      .section-label span {
+        font-weight: bold;
+        color: #333;
+        font-size: 18px;
+      }
+      paper-radio-button{
+        font-size: 16px;
+        font-family: 'Roboto Slab', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+        font-weight: normal;
+        --paper-radio-button-label-color: #9E9E9E;
+      }
+      paper-slider {
+        width: 60%;
+        display: inline-block;
+      }
+      paper-menu {
+          overflow: hidden;
+      }
+      paper-item {
+        width: 300px;
+
+      }
+      #contentWrapper.iron-dropdown > * {
+        /* overflow: hidden; */
+      overflow-x: hidden;
+      }
+    </style>
+    <paper-material elevation="1">
+      <h2 class="page-title">Dodaj samochod</h2>
+      <!-- <paper-fab icon="add" title="Dodaj" class="green"></paper-fab> -->
+      <div class="input-wrapper">
+
+          <paper-input id="marka" label="Marka" on-keydown="_checkAdd"></paper-input>
+          <paper-input id="nazwa" label="Nazwa" on-keydown="_checkAdd"></paper-input>
+          <paper-input id="rejestracja" label="Rejestracja" on-keydown="_checkAdd"></paper-input>
+          <div class="horizontal-section">
+            <div class="section-label">
+              Rodzaj paliwa
+            </div>
+            <paper-radio-group id="paliwo" selected="ON">
+              <paper-radio-button name="ON">olej napędowy</paper-radio-button>
+              <paper-radio-button name="benzyna">benzyna</paper-radio-button>
+            </paper-radio-group>
+          </div>
+          <div class="horizontal-section">
+            <div class="section-label">
+              Norma zużycia paliwa= <span>{{normaPal}} </span> litrow na 100km
+            </div>
+            <paper-slider id="norma" pin snaps min="1" max="20" step="1" value="{{normaPal}}"></paper-slider>
+          </div>
+          <!-- Drop down menu - lista kierowcow -->
+          <paper-dropdown-menu id="kierowca" label="Kierowca">
+            <paper-menu  class="dropdown-content">
+              <template is="dom-repeat" items="[[kierlist]]" as="kierowca">
+                <paper-item >[[kierowca.imie]] [[kierowca.nazwisko]]</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+
+
+          <paper-button on-tap="_add">Dodaj</paper-button>
+
+      </div>
+
+      <todo-input on-add-todo="addTodo"></todo-input>
+    </paper-material>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'samochody-add',
+
+      properties: {
+        kierlist: Array, //lista kierowcow z fb
+        normaPal: {
+          type: Number,
+          value: 10
+        }
+      },
+      _checkAdd: function(e) {
+        if (e.keyCode === 13) {
+          this._add();
+        }
+      },
+      _add: function() {
+        if (this.$.nazwa.value && this.$.marka.value) {
+          this.fire('add-samochod', {
+            marka: this.$.marka.value,
+            nazwa: this.$.nazwa.value,
+            paliwo: this.$.paliwo.selected,
+            norma: this.$.norma.value,
+            kierowca: this.$.kierowca.selectedItemLabel,
+            rejestracja: this.$.rejestracja.value,
+            isActive: true
+          });
+          //wyzerowanie formularza
+          this.$.nazwa.value = null;
+          this.$.marka.value = null;
+          this.$.paliwo.value = "ON";
+          this.$.rejestracja.value = null;
+          // this.$.kierowca.selectedItemLabel = null;
+          this.$.rejestracja.value = null;
+          console.log(this.kierowcy);
+          console.log("Dodawanie",this.$.kierowca.selectedItemLabel)
+        }
+      }
+    });
+  })();
+  </script>
+</dom-module>

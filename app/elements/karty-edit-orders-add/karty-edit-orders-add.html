@@ -1,0 +1,219 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="karty-edit-orders-add">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      paper-card{
+        width: 100%;
+        margin-top: 20px;
+      }
+      paper-fab {
+        background: #E6C629;
+        width: 45px;
+        height: 45px;
+      }
+      .title {
+        background-color:rgb(55, 95, 146);
+        border-radius: 2px;
+        color: #fff;
+        padding: 10px;
+        text-transform: uppercase;
+        /*width: 100%;*/
+      }
+      .sticker {
+        display: inline-block;
+        background-color: rgba(255, 255, 255, 0.15);
+        margin-left: 5px;
+        border-radius: 2px;
+      }
+      .sticker span {
+        display: inline-block;
+        background-color: rgba(255, 255, 255, 0.75);
+        font-size: 16px;
+        padding: 4px;
+        text-transform: uppercase;
+        color: rgba(0, 0, 0, 0.91);
+        border-radius: 0 2px 2px 0;
+      }
+      .sticker .label {
+        background-color: transparent;
+        padding: 4px 8px 4px 8px;
+        /*margin: 2px;*/
+        font-size: 12px;
+        color: #fff;
+        border-radius: 2px 0 0 2px;
+      }
+      .avatar {
+        color: rgba(255, 255, 255, 0.81);
+        display: inline-block;
+        /*width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        overflow: hidden;
+        background: #E6C629;
+        display: flex;
+        flex-direction: column;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;*/
+      }
+      .avatar iron-icon {
+        /*width: 40px;
+        height: 40px;*/
+        color: rgba(255, 255, 255, 0.81);
+      }
+      .list paper-icon-item{
+        display: inline-flex;
+      }
+      .zlecenie {
+        margin-top: 1px;
+      }
+
+      .zlecenie-item span {
+        display: inline-block;
+        text-transform: uppercase;
+        color: #D4D0D0;
+        font-size: 10px;
+        min-width: 20px;
+      }
+      .zlecenie [two-line] {
+        font-size: 12px;
+        margin: 0 5px 0 5px;
+      }
+
+      .zlecenie-item > div {
+        text-transform: uppercase;
+        color: #F7F7F7;
+        font-size: 10px;
+        background-color: rgba(55, 95, 146, 0.45);
+        padding: 0 5px 0 5px;
+      }
+      .zlecenie .kierowca {
+        font-size: 12px;
+        font-weight: bold;
+      }
+      #kierowca {
+            margin-top: 40px;
+      }
+      #kierowca paper-item {
+        font-size: 14px;
+        max-height: 40px;
+        min-height: 30px;
+        overflow-x: hidden;
+      }
+      .zlecenie-item paper-input {
+        padding: 0;
+      }
+    </style>
+    <!-- <div>Hello from <span>{{foo}}</span></div> -->
+    <paper-card  class="fancy active" animated-shadow="true" elevation="0">
+      <div class="title active">
+        <div>
+          <span>Dodaj zlecenie</span>
+        </div>
+      </div>
+      <div id="card-content" class="card-content">
+        <div class="input-wrapper">
+
+          <!-- <paper-input id="imie" label="Imię" on-keydown="_checkAdd"></paper-input>
+          <paper-input id="nazwisko" label="Nazwisko" on-keydown="_checkAdd"></paper-input> -->
+          <paper-icon-item class="zlecenie">
+            <div class="avatar" item-icon>
+              <paper-fab icon="icons:add" on-tap="_add"></paper-fab>
+              <!-- <paper-button on-tap="_add">+</paper-button> -->
+
+            </div>
+            <paper-item-body two-line>
+              <div class="zlecenie-item kierowca">
+                <div class="">kierowca</div>
+                <paper-dropdown-menu id="kierowca" no-label-float   label="Kierowca">
+                  <paper-menu  class="dropdown-content">
+                    <template is="dom-repeat" items="[[kierlist]]" as="kierowca">
+                      <paper-item >[[kierowca.imie]] [[kierowca.nazwisko]]</paper-item>
+                    </template>
+                  </paper-menu>
+                </paper-dropdown-menu>
+              </div>
+            </paper-item-body>
+            <paper-item-body two-line>
+              <div class="zlecenie-item">
+                <div class="">trasa</div>
+                <paper-input id="trasaz" label="Z" no-label-float autocomplete autocapitalize></paper-input>
+                <paper-input id="trasado" label="Do" no-label-float></paper-input>
+              </div>
+            </paper-item-body>
+            <paper-item-body two-line>
+              <div class="zlecenie-item">
+                <div class=""> wyjazd </div>
+                <paper-input id="wyjazddata" label="" value="[[_today()]]" type="datetime-local" no-label-float ></paper-input>
+                <paper-input id="wyjazdlicznik" label="Licznik" type="number" min="1" max="5000" step="1" no-label-float></paper-input>
+                <!-- <span>Data: </span> [[zlecenie.wyjazd.godz]]<br>
+                <span>Licznik: </span> [[zlecenie.wyjazd.licznik]] -->
+              </div>
+            </paper-item-body>
+            <paper-item-body two-line>
+              <div class="zlecenie-item">
+                <div class=""> przyjazd </div>
+                <paper-input id="przyjazddata" label="" value="[[_today()]]" type="datetime-local" no-label-float ></paper-input>
+                <paper-input id="przyjazdlicznik" label="Licznik" type="number" min="100" max="5000" step="1" no-label-float></paper-input>
+                <!-- <span>Data: </span> [[zlecenie.przyjazd.godz]]<br>
+                <span>Licznik: </span> [[zlecenie.przyjazd.licznik]] -->
+              </div>
+            </paper-item-body>
+          </paper-icon-item>
+        </div>
+      </div>
+    </paper-card>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'karty-edit-orders-add',
+
+      properties: {
+        kierlist: Array,
+        foo: {
+          type: String,
+          value: 'karty-edit-orders-add',
+          notify: true
+        }
+      },
+      _today: function() {
+        // console.log((new Date()).toISOString().slice(0,16));
+        return (new Date()).toISOString().slice(0,16);
+      },
+      _add: function() {
+        this.fire('add-karta-order', {
+          trasaZ: this.$.trasaz.value,
+          trasaDo: this.$.trasado.value,
+          wyjazdData: this.$.wyjazddata.value,
+          wyjazdLicznik: this.$.wyjazdlicznik.value,
+          przyjazdData: this.$.przyjazddata.value,
+          przyjazdLicznik: this.$.przyjazdlicznik.value,
+          kierowca: "Malinowski Jan"
+        });
+        //clean form
+        this.$.wyjazddata.value = this._today();
+      }
+    });
+  })();
+  </script>
+</dom-module>

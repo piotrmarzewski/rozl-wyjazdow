@@ -1,0 +1,136 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="kierowcy-item">
+  <template>
+    <style>
+      :host {
+        margin-bottom: 16px;
+        margin-right: 15px;
+      }
+      paper-card {
+        width: 24%;
+        margin-bottom: 16px;
+      }
+      .card-content {
+        height: 150px;
+      }
+      .fancy .title div {
+        padding: 8px;
+        color: #FFFFFF;
+        background-color: #999999;
+        font-size: 16px;
+      }
+      .fancy .title div.active {
+        background-color: #375F92;
+      }
+      .fancy img {
+        width: 100%;
+      }
+
+      .fancy .big {
+        font-size: 22px;
+        padding: 8px 0 16px;
+        color: var(--google-grey-500);
+        background-color: ;
+      }
+
+      .fancy .medium {
+        font-size: 16px;
+        padding-bottom: 8px;
+      }
+      .pink {
+        --paper-card-header-color: var(--paper-pink-500);
+      }
+    </style>
+    <paper-card  class="fancy" animated-shadow="true">
+      <div class="title">
+        <div class$="[[_computeClass(kierowca.isActive)]]"> <iron-icon icon="account-circle"></iron-icon> Kierowca</div>
+      </div>
+      <div id="card-content" class="card-content">
+        <div id="kierowcaview" hidden$={{edit}} >
+          <div class="big">{{kierowca.imie}}<br> {{kierowca.nazwisko}}</div>
+          <div class="medium">[[_computeStatusName(kierowca.isActive)]]</div>
+        </div>
+        <div id="kierowcaedit" class="edit" hidden$="{{!edit}}">
+          <paper-input id="imie" label="Imię" value="[[kierowca.imie]]" ></paper-input>
+          <paper-input id="nazwisko" label="Nazwisko" value="[[kierowca.nazwisko]]" ></paper-input><br>
+          <paper-toggle-button id="active" name="Aktywny" checked="[[kierowca.isActive]]" on-change="_toggleActiveName"></paper-toggle-button>
+        </div>
+      </div>
+
+
+        <!-- <div><h4>[[kierowca.__firebaseKey__]] <span>[[kierowca.imie]]</span> <span>[[kierowca.nazwisko]]</span></h4></div> -->
+      </div>
+      <div class="card-actions">
+        <paper-icon-button icon="create" on-tap="_toggleEditMode" hidden$="{{edit}}">Edytuj</paper-icon-button>
+        <paper-icon-button icon="check" on-tap="_onAccept" hidden$="{{!edit}}">Akceptuj</paper-icon-button>
+        <paper-icon-button icon="clear" on-tap="_onClear" hidden$="{{!edit}}">Anuluj</paper-icon-button>
+        <paper-icon-button icon="delete" class="btn-cancel" disabled$="{{!edit}}" aria-label="Kasuj" tabindex="0" on-tap="_onDelete">Kasuj
+        </paper-icon-button>
+      </div>
+    </paper-card>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'kierowcy-item',
+
+      properties: {
+        kierowca: {
+          type: Object,
+          notify: true
+        },
+        edit: {
+          type: Boolean,
+          value: false
+        }
+      },
+      _onDelete: function() {
+        this.fire('delete-kierowca', {kierowca: this.kierowca});
+      },
+      _computeClass: function(active) {
+        return active ? 'active' : '' ;
+      },
+      _computeStatusName: function(active) {
+        return active ? 'Aktywny' : 'Nieaktywny';
+      },
+      _toggleActiveName: function() {
+        console.log(this.$.active.checked);
+      },
+      _toggleEditMode: function() {
+        this.edit = !this.edit;
+        //this.toggleAttribute("hidden", this.edit, this.$.kierowcaview);
+        //this.toggleAttribute("hidden", !this.edit, this.$.kierowcaedit);
+        console.log("edit", !this.edit);
+      },
+      _onClear: function() {
+        this._toggleEditMode();
+        this.$.imie.value = this.kierowca.imie;
+        this.$.nazwisko.value = this.kierowca.nazwisko;
+        this.$.active.checked = this.kierowca.isActive;
+      },
+      _onAccept: function() {
+        this.set('kierowca.imie',this.$.imie.value);
+        this.set('kierowca.nazwisko',this.$.nazwisko.value);
+        this.set('kierowca.isActive',this.$.active.checked);
+        this._toggleEditMode();
+        console.log('Edit mode off', this.edit, this.kierowca);
+        //  this.fire('edit-kierowca', {kierowca: this.kierowca});
+      }
+
+    });
+  })();
+  </script>
+</dom-module>

@@ -1,0 +1,121 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/firebase-element/firebase-collection.html">
+
+<dom-module id="kierowcy-view">
+  <template>
+    <style>
+      :host {
+        display: block;
+        /*padding: 20px;*/
+        /*background-color: #f0f;*/
+      }
+      paper-material {
+        padding: 20px;
+      }
+      .content {
+        position: relative;
+      }
+      #kier-add-accepted,
+      #kier-del-accepted {
+        --paper-toast-background-color: green;
+        --paper-toast-color: white;
+      }
+    </style>
+    <paper-material elevation="1">
+      <h2 class="page-title">Kierowcy</h2>
+      <firebase-collection
+        log="true"
+        order-by-child="nazwisko"
+        location="https://zbk.firebaseio.com/rozliczenia/kierowcy"
+        data="{{kierowcy}}"></firebase-collection>
+
+
+      <div class="content">
+        <kierowcy-list kierowcy="{{kierowcy}}" on-delete-kierowca="deleteKierowca" on-edit-kierowca="editKierowca">
+        </kierowcy-list>
+      </div>
+
+    </paper-material>
+    <kierowcy-add on-add-kierowca="addKierowca"></kierowcy-add>
+    <paper-toast id="kier-add-accepted" text="Dodano nowego kierowcę do bazy danych."></paper-toast>
+    <paper-toast id="kier-del-accepted" text="Usunięto kierowcę z bazy danych."></paper-toast>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'kierowcy-view',
+
+      properties: {
+        kierowcy: {
+          type: Array,
+          notify: true
+        },
+        // kopia listy kierowcow
+        kierlist: {
+          type: Array,
+          value: [],
+          notify: true
+        }
+      },
+      observers: [
+        '_dataChanged(kierowcy.*)'
+      ],
+      addKierowca: function(e) {
+        this.push('kierowcy', {
+          imie: e.detail.imie,
+          nazwisko: e.detail.nazwisko,
+          isActive: true
+        });
+        document.querySelector('#kier-add-accepted').open();
+      },
+
+      deleteKierowca: function(e) {
+        this.arrayDelete('kierowcy', e.detail.kierowca);
+        document.querySelector('#kier-del-accepted').open();
+      },
+
+      editKierowca: function(e) {
+        console.log("Kierowca edit", e.detail.kierowca, this.kierowcy);
+        // this.set('kierowcy', e.detail.kierowca);
+      },
+
+      ready: function() {
+        console.log(this.localName + '#' + this.id + ' was attached', this.kierowcy );
+      },
+
+      _dataChanged: function(changes) {
+        // kopiuj tablice z lista kierowcow
+        this.kierlist = this.kierowcy.slice();
+      },
+
+      // clearTodos: function() {
+      //   for (var i = 0; i < this.todos.length; i++) {
+      //     var todo = this.todos[i];
+      //     if (todo.isComplete) {
+      //       this.splice('todos', i--, 1);
+      //     }
+      //   }
+      // },
+      attributeChanged: function(name, type) {
+        console.log(this.localName + '#' + this.id + ' attribute ' + name +
+        ' was changed to ' + this.getAttribute(name));
+      },
+      signOut: function() {
+        this.fire('sign-out');
+      }
+    });
+  })();
+  </script>
+</dom-module>

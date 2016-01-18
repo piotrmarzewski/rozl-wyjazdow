@@ -1,0 +1,143 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="karty-edit-orders-item">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .avatar {
+        color: rgba(255, 255, 255, 0.81);
+        display: inline-block;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        overflow: hidden;
+        background: rgba(55, 95, 146, 0.75);
+        display: flex;
+        flex-direction: column;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+      }
+      .avatar iron-icon {
+        /*width: 40px;
+        height: 40px;*/
+        color: rgba(255, 255, 255, 0.81);
+      }
+      .list paper-icon-item{
+        display: inline-flex;
+      }
+      .zlecenie {
+        margin-top: 1px;
+      }
+
+      .zlecenie-item span {
+        display: inline-block;
+        text-transform: uppercase;
+        color: #D4D0D0;
+        font-size: 10px;
+        min-width: 20px;
+      }
+      .zlecenie [two-line] {
+        font-size: 12px;
+        margin: 0 5px 0 5px;
+      }
+
+      .zlecenie-item > div {
+        text-transform: uppercase;
+        color: #F7F7F7;
+        font-size: 10px;
+        background-color: rgba(55, 95, 146, 0.45);
+        padding: 0 5px 0 5px;
+      }
+      .zlecenie .kierowca {
+        font-size: 12px;
+        font-weight: bold;
+      }
+
+    </style>
+    <paper-icon-item class="zlecenie">
+      <div class="avatar" item-icon>[[indexInc]]</iron-icon></div>
+      <paper-item-body two-line>
+        <div class="zlecenie-item kierowca">
+          <div class="">kierowca</div>
+          [[zlecenie.__firebaseKey__]] [[zlecenie.nazwisko]]<span></span><br>
+          <span>&nbsp;</span>&nbsp;
+        </div>
+      </paper-item-body>
+      <paper-item-body two-line>
+        <div class="zlecenie-item">
+          <div class="">trasa</div>
+          <span>z: </span>[[zlecenie.wyjazd.z]]<br>
+          <span>do: </span>[[zlecenie.przyjazd.do]]
+        </div>
+      </paper-item-body>
+      <paper-item-body two-line>
+        <div class="zlecenie-item">
+          <div class=""> wyjazd </div>
+          <span>Data: </span> [[zlecenie.wyjazd.godz]]<br>
+          <span>Licznik: </span> [[zlecenie.wyjazd.licznik]]
+        </div>
+      </paper-item-body>
+      <paper-item-body two-line>
+        <div class="zlecenie-item">
+          <div class=""> przyjazd </div>
+          <span>Data: </span> [[zlecenie.przyjazd.godz]]<br>
+          <span>Licznik: </span> [[zlecenie.przyjazd.licznik]]
+        </div>
+      </paper-item-body>
+      <paper-item-body two-line>
+        <div class="zlecenie-item">
+          <div class=""> Razem </div>
+          <span>Czas.: </span> 3h<br>
+          <span>Odległośc: </span> 150km
+        </div>
+      </paper-item-body>
+    </paper-icon-item>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'karty-edit-orders-item',
+
+      properties: {
+        index: {
+          type: Number
+        },
+        zlecenie: {
+          type: Object,
+          notify: true
+        },
+        indexInc: {
+          type: Number,
+          computed: '_computeIndexInc(index)'
+        },
+        foo: {
+          type: String,
+          value: 'karty-edit-orders-item',
+          notify: true
+        }
+      },
+      _computeIndexInc: function(i){
+        return ++i;
+      }
+    });
+  })();
+  </script>
+</dom-module>

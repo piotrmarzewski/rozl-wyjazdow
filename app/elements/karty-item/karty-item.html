@@ -1,0 +1,116 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="karty-item">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      paper-card {
+        width: 100%;
+        margin-bottom: 16px;
+      }
+      .card-content {
+
+      }
+      .fancy .title{
+        padding: 8px;
+        color: #FFFFFF;
+        background-color: #999999;
+        font-size: 16px;
+      }
+      .fancy .title.active {
+        background-color: #375F92;
+        border-radius: 2px;
+      }
+      .fancy img {
+        width: 100%;
+      }
+
+      .fancy .big {
+        font-size: 22px;
+        padding: 8px 0 16px;
+        color: var(--google-grey-500);
+        background-color: ;
+      }
+
+      .fancy .medium {
+        font-size: 16px;
+        padding-bottom: 8px;
+      }
+      .title .sticker {
+        display: inline-block;
+        background-color: rgba(255, 255, 255, 0.15);
+        margin-left: 5px;
+        border-radius: 2px;
+      }
+      .title .sticker span {
+        display: inline-block;
+        background-color: rgba(255, 255, 255, 0.75);
+        font-size: 14px;
+        padding: 4px;
+        text-transform: uppercase;
+        color: rgba(0, 0, 0, 0.91);
+        border-radius: 0 2px 2px 0;
+      }
+      .title .sticker .label {
+        background-color: transparent;
+        padding: 4px;
+        /*margin: 2px;*/
+        font-size: 10px;
+        color: #fff;
+        border-radius: 2px 0 0 2px;
+      }
+      paper-fab {
+        position: absolute;
+        right: 10px;
+        top: 23px;
+        background: #E6C629;
+        width: 35px;
+        height: 35px;
+      }
+    </style>
+    <paper-card  class="fancy active" animated-shadow="true" elevation="2">
+      <div class="title active">
+        <div> <iron-icon icon="chrome-reader-mode"></iron-icon>
+              <div class="sticker"> <span class="label">Nr:</span><span>[[karta.numer]]</span></div>
+              <div class="sticker"> <span class="label">Data:</span><span> [[karta.data]]</span></div>
+        </div>
+      </div>
+      <div id="card-content" class="card-content">
+        [[karta.samochodMarka]] [[karta.samochodNazwa]] [[karta.__firebaseKey__]]
+      </div>
+      <paper-fab icon="icons:chevron-right" on-tap="_gotoEditPage"></paper-fab>
+    </paper-card>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'karty-item',
+
+      properties: {
+        karta: {
+          type: String,
+          value: 'karty-item',
+          notify: true
+        }
+      },
+      _gotoEditPage: function () {
+        page('/karty/'+this.karta.__firebaseKey__);
+      }
+    });
+  })();
+  </script>
+</dom-module>

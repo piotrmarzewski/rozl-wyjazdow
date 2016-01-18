@@ -1,0 +1,111 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="karty-edit-maindata">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .avatar {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        overflow: hidden;
+        background: #375F92;
+        display: flex;
+        flex-direction: column;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+      }
+      .avatar iron-icon {
+        /*width: 40px;
+        height: 40px;*/
+        color: rgba(255, 255, 255, 0.81);
+      }
+      .list paper-icon-item{
+        display: inline-flex;
+        width: 41%;
+      }
+      @media all and (max-width: 960px) {
+        .list paper-icon-item{
+          width: 100%;
+        }
+      }
+    </style>
+    <!-- <div>Hello from <span>{{foo}}</span></div> -->
+    <div class="list" role="listbox">
+      <!-- samochod -->
+      <paper-icon-item>
+        <div class="avatar" item-icon><iron-icon icon="maps:directions-car" item-icon></iron-icon></div>
+        <paper-item-body two-line>
+          <div secondary>Marka i typ:</div>
+          <div>[[karta.samochodMarka]] [[karta.samochodNazwa]]</div>
+        </paper-item-body>
+      </paper-icon-item>
+      <!-- kierowca -->
+      <paper-icon-item>
+        <div class="avatar" item-icon><iron-icon icon="icons:account-circle" item-icon></iron-icon></div>
+        <paper-item-body two-line>
+          <div secondary>Imię i nazwisko kierowcy:</div>
+          <div>[[karta.kierowca]]</div>
+        </paper-item-body>
+      </paper-icon-item>
+      <!-- promień wyjazdu -->
+      <paper-icon-item>
+        <div class="avatar" item-icon><iron-icon icon="icons:language" item-icon></iron-icon></div>
+        <paper-item-body two-line>
+          <div secondary>Promień wyjazdu</div>
+          <div>Brak danych</div>
+        </paper-item-body>
+      </paper-icon-item>
+      <!-- Zlecający wyjazd -->
+      <paper-icon-item>
+        <div class="avatar" item-icon><iron-icon icon="icons:account-box" item-icon></iron-icon></div>
+        <paper-item-body two-line>
+          <div secondary>Wydający kartę</div>
+          <div>Brak danych</div>
+        </paper-item-body>
+      </paper-icon-item>
+      <!-- Stan początkowy licznika -->
+      <paper-icon-item>
+        <div class="avatar" item-icon><iron-icon icon="maps:rate-review" item-icon></iron-icon></div>
+        <paper-item-body two-line>
+          <div secondary>Stan początkowy licznika</div>
+          <div>Brak danych</div>
+        </paper-item-body>
+      </paper-icon-item>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'karty-edit-maindata',
+
+      properties: {
+        karta: {
+          type: Object,
+          // value: 'karty-edit-maindata',
+          notify: true
+        }
+      }
+    });
+  })();
+  </script>
+</dom-module>
