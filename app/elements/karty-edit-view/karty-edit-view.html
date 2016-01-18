@@ -82,8 +82,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
         <div id="card-content" class="card-content">
           <karty-edit-maindata karta="{{karta}}"></karty-edit-maindata>
-          <karty-edit-orders-view id="[[params.id]]"></karty-edit-orders-view>
-          <karty-edit-orders-add on-add-karta-order="addKartaOrder" kierlist=[[kierlist]]></karty-edit-orders-add>
+          <karty-edit-orders-view id="[[params.id]]" kierlist=[[kierlist]]></karty-edit-orders-view>
+          <!-- <karty-edit-orders-add on-add-karta-order="addKartaOrder" kierlist=[[kierlist]]></karty-edit-orders-add> -->
         </div>
       </paper-card>
     </paper-material>
@@ -117,12 +117,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       _goBack: function(){
         window.history.back();
-      },
-      addKartaOrder: function(e) {
-        console.log("Add-Karta-Order: ", e.detail);
-        // this.push('karty', e.detail);
-        // document.querySelector('#karta-add-accepted').open();
-      },
+      }
     });
   })();
   </script>

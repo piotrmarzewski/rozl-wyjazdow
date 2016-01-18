@@ -202,13 +202,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       _add: function() {
         this.fire('add-karta-order', {
-          trasaZ: this.$.trasaz.value,
-          trasaDo: this.$.trasado.value,
-          wyjazdData: this.$.wyjazddata.value,
-          wyjazdLicznik: this.$.wyjazdlicznik.value,
-          przyjazdData: this.$.przyjazddata.value,
-          przyjazdLicznik: this.$.przyjazdlicznik.value,
-          kierowca: "Malinowski Jan"
+          trasa: {
+            z: this.$.trasaz.value.toUpperCase(),
+            do: this.$.trasado.value.toUpperCase()
+          },
+          wyjazd: {
+            data: this.$.wyjazddata.value,
+            licznik: this.$.wyjazdlicznik.value
+          },
+          przyjazd: {
+            data: this.$.przyjazddata.value,
+            licznik: this.$.przyjazdlicznik.value
+          },
+          kierowca: this.$.kierowca.selectedItemLabel
         });
         //clean form
         this.$.wyjazddata.value = this._today();
