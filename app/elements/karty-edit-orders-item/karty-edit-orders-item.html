@@ -57,7 +57,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       .zlecenie-item .czas::after{
         content: " min";
-        color: #D4D0D0;        
+        color: #D4D0D0;
       }
 
       .zlecenie [two-line] {
@@ -97,14 +97,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <paper-item-body two-line>
         <div class="zlecenie-item">
           <div class=""> wyjazd </div>
-          <span class="label">Data: </span> <span> [[zlecenie.wyjazd.data]] </span> <br>
+          <span class="label">Data: </span> <span> [[formatedDataWyj]] </span> <br>
           <span class="label">Licznik: </span><span class="dystans">[[zlecenie.wyjazd.licznik]]</span>
         </div>
       </paper-item-body>
       <paper-item-body two-line>
         <div class="zlecenie-item">
           <div class=""> przyjazd </div>
-          <span class="label">Data: </span><span>[[zlecenie.przyjazd.data]]</span><br>
+          <span class="label">Data: </span><span> [[formatedDataPrzyj]]</span><br>
           <span class="label">Licznik: </span><span class="dystans"> [[zlecenie.przyjazd.licznik]]</span>
         </div>
       </paper-item-body>
@@ -140,10 +140,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: String,
           value: 'karty-edit-orders-item',
           notify: true
+        },
+        formatedDataPrzyj: {
+          type: String,
+          computed: '_computeDateFormat(zlecenie.przyjazd.data)'
+        },
+        formatedDataWyj: {
+          type: String,
+          computed: '_computeDateFormat(zlecenie.wyjazd.data)'
         }
       },
       _computeIndexInc: function(i){
         return ++i;
+      },
+      _computeDateFormat: function(data){
+        var formDate = data.slice(0,10) + " g. " + data.slice(11,16);
+        return formDate;
       }
     });
   })();
