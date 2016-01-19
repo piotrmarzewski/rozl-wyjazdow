@@ -112,11 +112,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
         locationBase: {
           type: String,
-          value: 'https://zbk.firebaseio.com/rozliczenia/karty/'
+          value: 'https://zbk.firebaseio.com/rozliczenia/zlecenia'
         }
       },
       _computeLocation: function(lb, id) {
-        var loc =  lb + id + "/zlecenia";
+        var loc =  lb + "/" + id;
         console.log("ZLECENIA", loc);
         return loc;
       },
