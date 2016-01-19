@@ -76,37 +76,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         font-size: 12px;
         font-weight: bold;
       }
-      paper-fab {
+      paper-icon-button{
+        color: white;
+        border-radius: 15px;
+        padding: 2px;
         position: absolute;
+        right: -11px;
+        /*background-color: var(--paper-light-blue-500);*/
+        background-color: rgba(55, 95, 146, 0.45);
         width: 25px;
         height: 25px;
-        right: 3px;
-        background: rgba(55, 95, 146, 0.75);
-        visibility: hidden;
+        /*box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
+        0 3px 14px 2px rgba(0, 0, 0, 0.12),
+        0 5px 5px -3px rgba(0, 0, 0, 0.4);*/
+
       }
-      paper-fab.edit {
+      paper-icon-button.edit {
+        --paper-icon-button-ink-color: var(--paper-orange-500);
         top: 10px;
       }
-      paper-fab.delete {
+      paper-icon-button.delete {
+        --paper-icon-button-ink-color: var(--paper-orange-500);
         top: 40px;
       }
-      iron-icon#icon {
-          width: 16px;
+      paper-icon-button:hover{
+        background-color: rgba(55, 95, 146, 0.75);
+        box-shadow: var(--shadow-elevation-6dp);
+        box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
+                    0 3px 14px 2px rgba(0, 0, 0, 0.12),
+                    0 5px 5px -3px rgba(0, 0, 0, 0.4);
+        transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
       }
-      paper-icon-item:hover paper-fab{
-        visibility: visible;
+      iron-icon{
+        width: 80%;
+        height: 80%;
+        margin: 10%;
       }
-      paper-icon-item paper-fab.delete:hover{
-        background-color: red;
-      }
-      paper-icon-item paper-fab.edit:hover{
-        background-color: green;
-      }
-      paper-icon-item:focus paper-fab{
-        visibility: visible;
-      }
-
-
     </style>
     <paper-icon-item class="zlecenie">
       <div class="avatar" item-icon>[[indexInc]]</iron-icon></div>
@@ -145,8 +150,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <span class="label">Dystans: </span><span class="dystans"> [[zlecenie.dystans]]</span>
         </div>
       </paper-item-body>
-      <paper-fab mini icon="create" class="edit"></paper-fab>
-      <paper-fab mini icon="clear" on-tap="_onDelete" class="delete"></paper-fab>
+      <!-- <paper-fab mini icon="create" class="edit"></paper-fab> -->
+      <paper-icon-button icon="create" class="edit"></paper-icon-button>
+      <paper-icon-button icon="clear" class="delete" on-tap="_onDelete" ></paper-icon-button>
+      <!-- <paper-fab mini icon="clear" on-tap="_onDelete" class="delete"></paper-fab> -->
     </paper-icon-item>
   </template>
   <script>

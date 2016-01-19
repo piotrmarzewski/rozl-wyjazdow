@@ -79,6 +79,70 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width: 35px;
         height: 35px;
       }
+
+
+      .avatar {
+        color: rgba(255, 255, 255, 0.81);
+        display: inline-block;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        overflow: hidden;
+        background: rgba(55, 95, 146, 0.75);
+        display: flex;
+        flex-direction: column;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+      }
+      .avatar iron-icon {
+        /*width: 40px;
+        height: 40px;*/
+        color: rgba(255, 255, 255, 0.81);
+      }
+      .list paper-icon-item{
+        display: inline-flex;
+      }
+      .zlecenie {
+        margin-top: 1px;
+      }
+      .zlecenie-item .label {
+        display: inline-block;
+        text-transform: uppercase;
+        color: #D4D0D0;
+        font-size: 10px;
+        min-width: 20px;
+      }
+      .zlecenie-item .dystans::after{
+        content: " km";
+        color: #D4D0D0;
+      }
+      .zlecenie-item .czas::after{
+        content: " min";
+        color: #D4D0D0;
+      }
+
+      .zlecenie [two-line] {
+        font-size: 12px;
+        margin: 0 5px 0 5px;
+      }
+
+      .zlecenie-item > div {
+        text-transform: uppercase;
+        color: rgba(55, 95, 146, 0.45);
+        font-size: 11px;
+        font-weight: bold;
+
+        /*background-color: rgba(55, 95, 146, 0.45);*/
+        padding: 0 5px 0 0px;
+      }
+      .zlecenie .kierowca {
+        font-size: 12px;
+        font-weight: bold;
+      }
     </style>
     <paper-card  class="fancy active" animated-shadow="true" elevation="2">
       <div class="title active">
@@ -87,9 +151,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <div class="sticker"> <span class="label">Data:</span><span> [[karta.data]]</span></div>
         </div>
       </div>
-      <div id="card-content" class="card-content">
-        [[karta.samochodMarka]] [[karta.samochodNazwa]] [[karta.__firebaseKey__]]
-      </div>
+      <paper-icon-item class="zlecenie">
+        <paper-item-body two-line>
+          <div class="zlecenie-item kierowca">
+            <div class="">Samochod</div>
+            [[karta.samochodMarka]] [[karta.samochodNazwa]]<span></span><br>
+          </div>
+        </paper-item-body>
+        <paper-item-body two-line>
+          <div class="zlecenie-item">
+            <div class="">kierowca</div>
+            [[karta.kierowca]]<span class="label"></span>
+          </div>
+        </paper-item-body>
+        <paper-item-body two-line>
+          <div class="zlecenie-item">
+            <div class="">dystans</div>
+            <span class="label"></span>[[karta.dystans]]<br>
+          </div>
+        </paper-item-body>
+        <paper-item-body two-line>
+          <div class="zlecenie-item">
+            <div class="">czas</div>
+            <span class="label"></span>[[karta.czas]]<br>
+          </div>
+        </paper-item-body>
+
+      </paper-icon-item>
       <paper-fab icon="icons:chevron-right" on-tap="_gotoEditPage"></paper-fab>
     </paper-card>
   </template>

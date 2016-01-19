@@ -143,7 +143,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <div class="zlecenie-item kierowca">
                 <div class="">kierowca</div>
                 <paper-dropdown-menu id="kierowca" no-label-float   label="Kierowca">
-                  <paper-menu  class="dropdown-content">
+                  <paper-menu  class="dropdown-content" id="kierowcamenu">
                     <template is="dom-repeat" items="[[kierlist]]" as="kierowca">
                       <paper-item >[[kierowca.imie]] [[kierowca.nazwisko]]</paper-item>
                     </template>
@@ -195,6 +195,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           value: 'karty-edit-orders-add',
           notify: true
         }
+      },
+      ready: function() {
+        // access a local DOM element by ID using this.$
+        this.$.kierowcamenu.selected = "Jan kolewa";
+        console.log('Hello!');
       },
       _today: function() {
         // console.log((new Date()).toISOString().slice(0,16));
