@@ -41,6 +41,38 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: inline-flex;
         width: 41%;
       }
+      .obl {
+        margin-top: 1px;
+      }
+      .obl-item .label {
+        display: inline-block;
+        text-transform: uppercase;
+        color: #D4D0D0;
+        font-size: 10px;
+        min-width: 20px;
+      }
+      .obl-item .dystans::after{
+        content: " km";
+        color: #D4D0D0;
+      }
+      .obl-item .czas::after{
+        content: " min";
+        color: #D4D0D0;
+      }
+      .obl-item .paliwo::after{
+        content: " l";
+        color: #D4D0D0;
+      }
+      .obliczenia paper-item-body {
+          padding-left: 3px;
+      }
+      .obl-item > div {
+        text-transform: uppercase;
+        color: #F7F7F7;
+        font-size: 10px;
+        background-color: rgba(55, 95, 146, 0.45);
+        padding: 0 5px 0 5px;
+      }
       @media all and (max-width: 960px) {
         .list paper-icon-item{
           width: 100%;
@@ -87,6 +119,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <paper-item-body two-line>
           <div secondary>Stan początkowy licznika</div>
           <div>Brak danych</div>
+        </paper-item-body>
+      </paper-icon-item>
+
+
+      <paper-icon-item class="obliczenia">
+        <div class="avatar" item-icon><iron-icon icon="icons:assessment" item-icon></iron-icon></div>
+        <paper-item-body two-line>
+          <div class="obl-item">
+            <div class=""> Czas  </div>
+            <span class="czas"> [[karta.czas]] </span> <br>
+          </div>
+        </paper-item-body>
+        <paper-item-body two-line>
+          <div class="obl-item">
+            <div class=""> Dystans </div>
+            <span class="dystans"> [[karta.dystans]] </span> <br>
+          </div>
+        </paper-item-body>
+        <paper-item-body two-line>
+          <div class="obl-item">
+            <div class=""> Zuzycie paliwa </div>
+            <span class="paliwo"> [[karta.zuzyciePaliwa]] </span> <br>
+          </div>
         </paper-item-body>
       </paper-icon-item>
     </div>

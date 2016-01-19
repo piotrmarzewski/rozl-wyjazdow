@@ -76,6 +76,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         font-size: 12px;
         font-weight: bold;
       }
+      .zlecenie-item .value{
+        float: right;
+      }
       paper-icon-button{
         color: white;
         border-radius: 15px;
@@ -132,22 +135,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <paper-item-body two-line>
         <div class="zlecenie-item">
           <div class=""> wyjazd </div>
-          <span class="label">Data: </span> <span> {{_computeDateFormat(zlecenie.wyjazd.data)}} </span> <br>
-          <span class="label">Licznik: </span><span class="dystans">[[zlecenie.wyjazd.licznik]]</span>
+          <span class="label">Data: </span> <span class="czas value"> {{_computeDateFormat(zlecenie.wyjazd.data)}} </span> <br>
+          <span class="label">Licznik: </span><span class="dystans value">[[zlecenie.wyjazd.licznik]]</span>
         </div>
       </paper-item-body>
       <paper-item-body two-line>
         <div class="zlecenie-item">
           <div class=""> przyjazd </div>
-          <span class="label">Data: </span><span> {{_computeDateFormat(zlecenie.przyjazd.data)}}</span><br>
-          <span class="label">Licznik: </span><span class="dystans"> [[zlecenie.przyjazd.licznik]]</span>
+          <span class="label">Data: </span><span class="czas value"> {{_computeDateFormat(zlecenie.przyjazd.data)}}</span><br>
+          <span class="label">Licznik: </span><span class="dystans value"> [[zlecenie.przyjazd.licznik]]</span>
         </div>
       </paper-item-body>
       <paper-item-body two-line>
         <div class="zlecenie-item">
           <div class=""> Razem </div>
-          <span class="label">Czas.: </span><span class="czas"> [[zlecenie.czas]] </span> <br>
-          <span class="label">Dystans: </span><span class="dystans"> [[zlecenie.dystans]]</span>
+          <span class="label">Czas.: </span><span class="czas value"> [[zlecenie.czas]] </span> <br>
+          <span class="label">Dystans: </span><span class="dystans value"> [[zlecenie.dystans]]</span>
         </div>
       </paper-item-body>
       <!-- <paper-fab mini icon="create" class="edit"></paper-fab> -->
