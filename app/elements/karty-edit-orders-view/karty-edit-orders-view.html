@@ -123,13 +123,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       addKartaOrder: function(e) {
         console.log("Add-Karta-Order: ", e.detail);
         this.push('zlecenia', e.detail);
-        // document.querySelector('#karta-add-accepted').open();
+        var suma = this._sumDistance(this.zlecenia);
+        // console.log("Dystans:", suma);
+        this.fire('orders-changed', suma);
       },
       deleteOrder: function(e) {
         console.log('Order delete', e);
         this.arrayDelete('zlecenia', e.detail.zlecenie);
         // document.querySelector('#sm-del-accepted').open();
+        //counting distance and time in orders
+        var suma = this._sumDistance(this.zlecenia);
+        // console.log("Dystans:", suma);
+        this.fire('orders-changed', suma);
       },
+      _sumDistance: function(zlecenia){
+        var suma = {
+          czas: 0,
+          dystans: 0
+        };
+        zlecenia.forEach(function(zlecenie){
+          // console.log(zlecenie.dystans);
+          suma.dystans += zlecenie.dystans;
+          suma.czas += zlecenie.czas;
+        });
+        return suma;
+      }
     });
   })();
   </script>

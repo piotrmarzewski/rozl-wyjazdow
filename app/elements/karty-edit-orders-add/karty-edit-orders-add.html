@@ -209,7 +209,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var distance = this.$.przyjazdlicznik.value - this.$.wyjazdlicznik.value;
         var timeDiff = Date.parse(this.$.przyjazddata.value) - Date.parse(this.$.wyjazddata.value);
         timeDiff = timeDiff/60000; //minutes
-        console.log("Distance",distance, timeDiff);
+        // console.log("Distance",distance, timeDiff);
         this.fire('add-karta-order', {
           trasa: {
             z: this.$.trasaz.value.toUpperCase(),

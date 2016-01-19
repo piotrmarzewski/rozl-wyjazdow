@@ -124,6 +124,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         content: " min";
         color: #D4D0D0;
       }
+      .zlecenie-item .dystans::after{
+        content: " km";
+        color: #D4D0D0;
+      }
+      .zlecenie-item .paliwo::after{
+        content: " l";
+        color: #D4D0D0;
+      }
 
       .zlecenie [two-line] {
         font-size: 12px;
@@ -167,13 +175,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <paper-item-body two-line>
           <div class="zlecenie-item">
             <div class="">dystans</div>
-            <span class="label"></span>[[karta.dystans]]<br>
+            <!-- <span class="label"> </span> -->
+            <span class="dystans">[[karta.dystans]]</span><br>
           </div>
         </paper-item-body>
         <paper-item-body two-line>
           <div class="zlecenie-item">
             <div class="">czas</div>
-            <span class="label"></span>[[karta.czas]]<br>
+            <!-- <span class="label"></span> -->
+            <span class="czas">[[karta.czas]]</span><br>
+          </div>
+        </paper-item-body>
+        <paper-item-body two-line>
+          <div class="zlecenie-item">
+            <div class="">zużycie paliwa</div>
+            <!-- <span class="label"></span> -->
+            <span class="paliwo"> [[karta.zuzyciepaliwa]]</span><br>
           </div>
         </paper-item-body>
 

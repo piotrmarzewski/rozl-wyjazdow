@@ -82,7 +82,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
         <div id="card-content" class="card-content">
           <karty-edit-maindata karta="{{karta}}"></karty-edit-maindata>
-          <karty-edit-orders-view id="[[params.id]]" kierlist=[[kierlist]]></karty-edit-orders-view>
+          <karty-edit-orders-view id="[[params.id]]" kierlist=[[kierlist]] on-orders-changed='updateDistance'></karty-edit-orders-view>
           <!-- <karty-edit-orders-add on-add-karta-order="addKartaOrder" kierlist=[[kierlist]]></karty-edit-orders-add> -->
         </div>
       </paper-card>
@@ -97,6 +97,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'karty-edit-view',
 
       properties: {
+        karta: Object,
         params: {
           type: Object
         },
@@ -109,6 +110,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           value: 'https://zbk.firebaseio.com/rozliczenia/karty/'
         },
         kierlist: Array
+      },
+      updateDistance: function(e){
+        console.log("UPDATE", e.detail);
+        //update time and distance summ
+        this.set('karta.dystans', e.detail.dystans);
+        this.set('karta.czas', e.detail.czas);
       },
       _computeLocation: function(lb, id) {
         var loc =  lb + id;
