@@ -130,7 +130,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       deleteOrder: function(e) {
         console.log('Order delete', e);
         this.arrayDelete('zlecenia', e.detail.zlecenie);
-        // document.querySelector('#sm-del-accepted').open();
         //counting distance and time in orders
         var suma = this._sumDistance(this.zlecenia);
         // console.log("Dystans:", suma);
@@ -148,6 +147,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
         return suma;
       }
+
     });
   })();
   </script>

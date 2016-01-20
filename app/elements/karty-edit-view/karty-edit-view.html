@@ -114,8 +114,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       updateDistance: function(e){
         console.log("UPDATE", e.detail);
         //update time and distance summ
-        this.set('karta.dystans', e.detail.dystans);
+        this.set('karta.dystans', e.detail.dystans, this.karta.zuzyciePaliwaNorma);
         this.set('karta.czas', e.detail.czas);
+        this.set('karta.zuzyciePaliwa', this._calculateFuelUsage(e.detail.dystans, 9));
       },
       _computeLocation: function(lb, id) {
         var loc =  lb + id;
@@ -124,6 +125,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       _goBack: function(){
         window.history.back();
+      },
+      _calculateFuelUsage: function (distance, norm) {
+        var usage = Math.round((distance/100)*norm);
+        console.log("USAGE",usage);
+        return usage;
       }
     });
   })();
