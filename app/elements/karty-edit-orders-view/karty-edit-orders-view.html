@@ -82,7 +82,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <karty-edit-orders-view></karty-edit-orders-view> -->
       </div>
     </paper-card>
-    <karty-edit-orders-add on-add-karta-order="addKartaOrder" kierlist=[[kierlist]]></karty-edit-orders-add>
+    <karty-edit-orders-add
+          on-add-karta-order="addKartaOrder"
+          kierowca-nazw="[[kierowcaNazw]]"
+          kierlist="[[kierlist]]"></karty-edit-orders-add>
 
   </template>
   <script>
@@ -93,6 +96,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'karty-edit-orders-view',
 
       properties: {
+        kierowcaNazw: String,
         zlecenia: {
           type: Array,
           value: [],

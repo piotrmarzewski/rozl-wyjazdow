@@ -142,7 +142,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <paper-item-body two-line>
               <div class="zlecenie-item kierowca">
                 <div class="">kierowca</div>
-                <paper-dropdown-menu id="kierowca" no-label-float   label="Kierowca">
+                <paper-dropdown-menu id="kierowca" no-label-float   label="[[kierowcaNazw]]">
                   <paper-menu  class="dropdown-content" id="kierowcamenu">
                     <template is="dom-repeat" items="[[kierlist]]" as="kierowca">
                       <paper-item >[[kierowca.imie]] [[kierowca.nazwisko]]</paper-item>
@@ -189,6 +189,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'karty-edit-orders-add',
 
       properties: {
+        kierowcaNazw: String,
         kierlist: Array,
         foo: {
           type: String,
@@ -198,8 +199,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       ready: function() {
         // access a local DOM element by ID using this.$
-        this.$.kierowcamenu.selected = "Jan kolewa";
-        console.log('Hello!');
+        // this.$.kierowca.placeholder = "Jan kolewa";
+        // console.log('ADD ORDER',this.kierowcanazw);
       },
       _today: function() {
         // console.log((new Date()).toISOString().slice(0,16));
@@ -210,6 +211,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var timeDiff = Date.parse(this.$.przyjazddata.value) - Date.parse(this.$.wyjazddata.value);
         timeDiff = timeDiff/60000; //minutes
         // console.log("Distance",distance, timeDiff);
+        var kierowca = this.$.kierowca.selectedItemLabel || this.kierowcaNazw;
+
         this.fire('add-karta-order', {
           trasa: {
             z: this.$.trasaz.value.toUpperCase(),
@@ -223,7 +226,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             data: this.$.przyjazddata.value,
             licznik: this.$.przyjazdlicznik.value
           },
-          kierowca: this.$.kierowca.selectedItemLabel,
+          kierowca: kierowca,
           dystans: distance,
           czas: timeDiff
         });
