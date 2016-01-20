@@ -51,6 +51,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         font-size: 10px;
         min-width: 20px;
       }
+      .licznik::after,
       .obl-item .dystans::after{
         content: " km";
         color: #D4D0D0;
@@ -72,6 +73,39 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         font-size: 10px;
         background-color: rgba(55, 95, 146, 0.45);
         padding: 0 5px 0 5px;
+      }
+      .datanotset .avatar{
+        background-color: var(--paper-orange-a700);
+      }
+      .datanotset .data::after{
+        color: #D4D0D0;
+        content: "Brak danych";
+      }
+      .dataset paper-icon-button.view {
+        display: none;
+      }
+      .dataset:hover paper-icon-button.view {
+        display: block;
+      }
+      /*.dataset:hover .edit paper-icon-button.view {
+        display: none;
+      }*/
+      .edit {
+        display: none;
+      }
+      .edycja .view {
+        display: none !important;
+      }
+      .edycja .edit{
+        display: block;
+      }
+      paper-icon-item paper-icon-button{
+        position: absolute;
+        right: 10px;
+        top: 10px;
+      }
+      paper-icon-button{
+        color: var(--paper-blue-grey-300);
       }
       @media all and (max-width: 960px) {
         .list paper-icon-item{
@@ -98,30 +132,44 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </paper-item-body>
       </paper-icon-item>
       <!-- promień wyjazdu -->
-      <paper-icon-item>
+      <paper-icon-item class$="[[_computeClass(karta.promWyjazdu)]]">
         <div class="avatar" item-icon><iron-icon icon="icons:language" item-icon></iron-icon></div>
         <paper-item-body two-line>
-          <div secondary>Promień wyjazdu</div>
-          <div>Brak danych</div>
+          <div secondary view>Promień wyjazdu</div>
+          <div class="view data">[[_computeData(karta.promWyjazdu)]]</div>
+          <div class="edit">
+            <paper-input label="Promień wyjazdu" value="{{karta.promWyjazdu}}" no-label-float></paper-input>
+          </div>
+          <paper-icon-button class="view" icon="create" on-tap="edit"></paper-icon-button>
+          <paper-icon-button class="edit" icon="done" on-tap="done"></paper-icon-button>
         </paper-item-body>
       </paper-icon-item>
       <!-- Zlecający wyjazd -->
-      <paper-icon-item>
+      <paper-icon-item class$="[[_computeClass(karta.wydanaPrzez)]]">
         <div class="avatar" item-icon><iron-icon icon="icons:account-box" item-icon></iron-icon></div>
         <paper-item-body two-line>
           <div secondary>Wydający kartę</div>
-          <div>Brak danych</div>
+          <div class="data view">[[karta.wydanaPrzez]]</div>
+          <div class="edit">
+            <paper-input label="Karta wydana przez" value="{{karta.wydanaPrzez}}" no-label-float></paper-input>
+          </div>
+          <paper-icon-button class="view" icon="create" on-tap="edit"></paper-icon-button>
+          <paper-icon-button class="edit" icon="done" on-tap="done"></paper-icon-button>
         </paper-item-body>
       </paper-icon-item>
       <!-- Stan początkowy licznika -->
-      <paper-icon-item>
+      <paper-icon-item class$="[[_computeClass(karta.stanLicznikaPocz)]]">
         <div class="avatar" item-icon><iron-icon icon="maps:rate-review" item-icon></iron-icon></div>
         <paper-item-body two-line>
           <div secondary>Stan początkowy licznika</div>
-          <div>Brak danych</div>
+          <div class="data licznik view">[[karta.stanLicznikaPocz]]</div>
+          <div class="edit">
+            <paper-input label="Stan licznika" value="{{karta.stanLicznikaPocz}}" no-label-float></paper-input>
+          </div>
+          <paper-icon-button class="view" icon="create" on-tap="edit"></paper-icon-button>
+          <paper-icon-button class="edit" icon="done" on-tap="done"></paper-icon-button>
         </paper-item-body>
       </paper-icon-item>
-
 
       <paper-icon-item class="obliczenia">
         <div class="avatar" item-icon><iron-icon icon="icons:assessment" item-icon></iron-icon></div>
@@ -159,7 +207,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           // value: 'karty-edit-maindata',
           notify: true
         }
-      }
+      },
+      _computeClass: function(property) {
+        return property ? 'dataset' : 'datanotset' ;
+      },
+      _computeData: function (property) {
+        return property ? property : "";
+      },
+      edit: function (e) {
+        var path=e.detail.sourceEvent.path[2];
+        this.toggleClass('edycja', true, path);
+        console.log("edit",path);
+      },
+      done: function (e) {
+        var path=e.detail.sourceEvent.path[2];
+        this.toggleClass('edycja', false, path);
+        console.log("edit",path);
+      },
     });
   })();
   </script>
