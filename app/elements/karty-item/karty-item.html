@@ -26,11 +26,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .fancy .title{
         padding: 8px;
         color: #FFFFFF;
-        background-color: #999999;
+        background-color: var(--paper-gray-700);
         font-size: 16px;
       }
       .fancy .title.active {
-        background-color: #375F92;
+        background-color: var(--main-template-dark);
         border-radius: 2px;
       }
       .fancy img {
@@ -50,7 +50,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       .title .sticker {
         display: inline-block;
-        background-color: rgba(255, 255, 255, 0.15);
+        background-color: var(--main-lighten-150);
         margin-left: 5px;
         border-radius: 2px;
       }
@@ -60,7 +60,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         font-size: 14px;
         padding: 4px;
         text-transform: uppercase;
-        color: rgba(0, 0, 0, 0.91);
+        color: rgba(0, 0, 0, 0.9);
+        /*color: var(--main-darken-900);*/
         border-radius: 0 2px 2px 0;
       }
       .title .sticker .label {
@@ -75,20 +76,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         position: absolute;
         right: 10px;
         top: 23px;
-        background: #E6C629;
+        background: var(--main-accent-500);
         width: 35px;
         height: 35px;
       }
 
 
       .avatar {
-        color: rgba(255, 255, 255, 0.81);
+        color: var(--main-lighten-750);
         display: inline-block;
         width: 35px;
         height: 35px;
         border-radius: 50%;
         overflow: hidden;
-        background: rgba(55, 95, 146, 0.75);
+        background: var(--main-template-700);
         display: flex;
         flex-direction: column;
         -ms-flex-align: center;
@@ -99,9 +100,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         justify-content: center;
       }
       .avatar iron-icon {
-        /*width: 40px;
-        height: 40px;*/
-        color: rgba(255, 255, 255, 0.81);
+        color: var(--main-lighten-750);
       }
       .list paper-icon-item{
         display: inline-flex;
@@ -109,28 +108,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .zlecenie {
         margin-top: 1px;
       }
+      .zlecenie-item span::after{
+        color: var(--paper-grey-400);
+      }
       .zlecenie-item .label {
         display: inline-block;
         text-transform: uppercase;
-        color: #D4D0D0;
         font-size: 10px;
         min-width: 20px;
       }
       .zlecenie-item .dystans::after{
         content: " km";
-        color: #D4D0D0;
       }
       .zlecenie-item .czas::after{
         content: " min";
-        color: #D4D0D0;
       }
       .zlecenie-item .dystans::after{
         content: " km";
-        color: #D4D0D0;
       }
       .zlecenie-item .paliwo::after{
         content: " l";
-        color: #D4D0D0;
       }
 
       .zlecenie [two-line] {

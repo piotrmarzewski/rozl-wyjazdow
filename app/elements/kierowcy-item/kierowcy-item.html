@@ -21,17 +21,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width: 24%;
         margin-bottom: 16px;
       }
+      paper-toggle-button{
+        --paper-toggle-button-checked-bar-color:  var(--main-template-dark);
+        --paper-toggle-button-checked-button-color:  var(--main-template-dark);
+        --paper-toggle-button-checked-ink-color: var(--main-template-dark);
+      }
+      /*paper-icon-button{
+        color: var(--main-template-700);
+      }
+      paper-icon-button[disabled="true"]{
+        color:#999;
+      }*/
       .card-content {
         height: 150px;
       }
       .fancy .title div {
         padding: 8px;
-        color: #FFFFFF;
-        background-color: #999999;
+        color: var(--main-lighten-750);
+        background-color:var(--main-darken-300);
         font-size: 16px;
       }
       .fancy .title div.active {
-        background-color: #375F92;
+        background-color:var(--main-template-dark);
       }
       .fancy img {
         width: 100%;
@@ -48,9 +59,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         font-size: 16px;
         padding-bottom: 8px;
       }
-      .pink {
-        --paper-card-header-color: var(--paper-pink-500);
-      }
+
     </style>
     <paper-card  class="fancy" animated-shadow="true">
       <div class="title">
