@@ -21,6 +21,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       paper-card {
         width: 30%;
         margin-bottom: 16px;
+        background-color: #fff;
       }
       iron-icon {
         margin-right: 10px;
@@ -30,12 +31,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       .fancy .title {
         padding: 8px;
-        color: #FFFFFF;
-        background-color: #999999;
+        color: rgba(255, 255, 255, 0.80);
+        background-color: var(--google-grey-500);
         font-size: 16px;
+        border-radius: 2px 2px 0 0 ;
       }
-      .active .title {
-        background-color: #375F92;
+      .fancy.active .title {
+        background-color: var(--default-primary-color);
       }
       .fancy img {
         width: 100%;
@@ -45,16 +47,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         font-size: 22px;
         padding: 8px 0 16px;
         color: var(--google-grey-500);
-        background-color: ;
       }
 
       .fancy .medium {
         font-size: 16px;
         padding-bottom: 8px;
       }
-      .pink {
-        --paper-card-header-color: var(--paper-pink-500);
-      }
+
       .prop {
         display: inline-block;
         background-color: #EEE;

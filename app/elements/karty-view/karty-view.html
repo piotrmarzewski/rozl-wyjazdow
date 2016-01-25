@@ -60,14 +60,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </paper-menu>
       </div>
       <div  class="flex">
-        <paper-material elevation="0" class="main">
-          <karty-view-datepicker start-at={{startAtDate}} end-at="{{endAtDate}}"></karty-view-datepicker>
-          <!-- <div class="">START
-            {{startAtDate}} END
-            {{endAtDate}} -
-          </div> -->
-        </paper-material>
         <div class="layout vertical">
+          <paper-material elevation="1" class="main">
+            <karty-view-datepicker start-at={{startAtDate}} end-at="{{endAtDate}}"></karty-view-datepicker>
+          </paper-material>
           <paper-material id="lista-kart" elevation="1" class="main">
             <karty-list karty={{karty}}></karty-list>
           </paper-material>
