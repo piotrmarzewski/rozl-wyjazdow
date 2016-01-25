@@ -16,23 +16,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     :host {
       display: block;
     }
-    paper-material {
+    /*paper-material {
       padding: 20px;
-    }
+    }*/
 
     .input-wrapper {
-      padding-left: 70px;
+      padding: 10px;
     }
 
-    paper-input {
+    /*paper-input {
       display: inline-block;
       width: 65%;
       --paper-input-container: {
         padding-bottom: 0;
-      };
+      };*/
 
       /* These styles are not DRY :( */
-      --paper-input-container-label: {
+      /*--paper-input-container-label: {
         font-size: 20px;
         font-family: 'Roboto Slab', 'Roboto', 'Helvetica', 'Arial', sans-serif;
         font-weight: normal;
@@ -49,32 +49,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       --paper-input-container-underline-focus: {
         top: 7px;
       };
-    }
-    paper-input[focused] + paper-input + paper-button,
+    }*/
+    /*paper-input[focused] + paper-input + paper-button,
     paper-input[focused] + paper-button,
     paper-button[focused] {
       background: var(--default-primary-color);
       color: var(--text-primary-color);
-    }
+    }*/
 
-    paper-button {
+    /*paper-button {
       background: #E0E0E0;
       color: #9E9E9E;
       font-size: 14px;
-    }
+    }*/
 
-    paper-button[focused] {
+    /*paper-button[focused] {*/
       /* https://github.com/PolymerElements/paper-button/pull/43 */
-      outline-width: 3px;
-    }
+      /*outline-width: 3px;
+    }*/
 
     .selected-car{
+      display: inline-block;
       background-color:rgb(55, 95, 146);
       border-radius: 2px;
       color: #fff;
-      padding: 10px;
+      /*padding: 10px;*/
       text-transform: uppercase;
       width: 63%;
+    }
+    .selected-car[selected] .sticker {
+      background-color:orange;
     }
     .title .sticker {
       display: inline-block;
@@ -99,21 +103,143 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       color: #fff;
       border-radius: 2px 0 0 2px;
     }
+    paper-card{
+      width: 100%;
+      margin-top: 20px;
+    }
+    paper-fab {
+      background: #E6C629;
+      width: 45px;
+      height: 45px;
+    }
+    .title {
+      background-color:rgb(55, 95, 146);
+      border-radius: 2px;
+      color: #fff;
+      text-transform: uppercase;
+      padding: 5px 10px 5px 10;
+    }
+    .title .title {
+      padding: 0;
+    }
+    .sticker {
+      display: inline-block;
+      background-color: rgba(255, 255, 255, 0.15);
+      margin-left: 5px;
+      border-radius: 2px;
+    }
+    .sticker span {
+      display: inline-block;
+      background-color: rgba(255, 255, 255, 0.75);
+      font-size: 16px;
+      padding: 4px;
+      text-transform: uppercase;
+      color: rgba(0, 0, 0, 0.91);
+      border-radius: 0 2px 2px 0;
+    }
+    .sticker .label {
+      background-color: transparent;
+      padding: 4px 8px 4px 8px;
+      /*margin: 2px;*/
+      font-size: 12px;
+      color: #fff;
+      border-radius: 2px 0 0 2px;
+    }
+    .avatar {
+      color: rgba(255, 255, 255, 0.81);
+      display: inline-block;
+      /*width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: #E6C629;
+      display: flex;
+      flex-direction: column;
+      -ms-flex-align: center;
+      -webkit-align-items: center;
+      align-items: center;
+      -ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;*/
+    }
+    .list paper-icon-item{
+      display: inline-flex;
+    }
+    .zlecenie {
+      margin-top: 1px;
+    }
+
+    .zlecenie-item span {
+      display: inline-block;
+      text-transform: uppercase;
+      color: var(--main-lighten-900);
+      font-size: 10px;
+      min-width: 20px;
+    }
+    .zlecenie [two-line] {
+      font-size: 12px;
+      margin: 0 5px 0 5px;
+    }
+
+    .zlecenie-item > div {
+      text-transform: uppercase;
+      color: var(--main-lighten-900);
+      font-size: 10px;
+      background-color: var(--main-template-500);
+      padding: 0 5px 0 5px;
+    }
+    .zlecenie .kierowca {
+      font-size: 12px;
+      font-weight: bold;
+    }
+    #kierowca {
+          margin-top: 40px;
+    }
+    #kierowca paper-item {
+      font-size: 14px;
+      max-height: 40px;
+      min-height: 30px;
+      overflow-x: hidden;
+    }
+    .zlecenie-item paper-input {
+      padding: 0;
+    }
     </style>
 
     <paper-material elevation="1" >
-      <h2 class="page-title">Dodaj kartę</h2>
-      <!-- <paper-fab icon="add" title="Dodaj" class="green"></paper-fab> -->
+
       <div class="input-wrapper">
-          <div class="selected-car title">
-            <div class="sticker"> <span class="label">Wybrany samochod:</span><span>[[selectedName]]</span></div>
 
+          <paper-card  class="fancy active" animated-shadow="true" elevation="0">
+            <div class="title active">
+                <span>Dodaj kartę</span>
+                <div class="selected-car title" selected$="[[!selected]]">
+                  <div class="sticker"> <span class="label">Wybrany samochod:</span><span>[[selectedName]]</span></div>
+                </div>
+            </div>
+          </paper-card>
+          <div id="card-content" class="card-content">
+            <div class="input-wrapper">
+              <paper-icon-item class="zlecenie">
+                <div class="avatar" item-icon>
+                  <paper-fab icon="icons:add" disabled$="[[!selected]]" on-tap="_add"></paper-fab>
+
+                </div>
+                <paper-item-body two-line>
+                  <div class="zlecenie-item">
+                    <div class="">Numer ewidencyjny</div>
+                    <paper-input id="numer" no-label-float prevent-invalid-input autocapitalize allowed-pattern="[0-9,/,a-z]" label="Numer" on-keydown="_checkAdd"></paper-input>
+                  </div>
+                </paper-item-body>
+                <paper-item-body two-line>
+                  <div class="zlecenie-item">
+                    <div class=""> data wystawienia </div>
+                    <paper-input id="data" no-label-float label="" value="[[_today()]]" type="date" on-keydown="_checkAdd"></paper-input>
+                  </div>
+                </paper-item-body>
+              </paper-icon-item>
+            </div>
           </div>
-          <paper-input id="numer" prevent-invalid-input allowed-pattern="[0-9,/,a-z]" disabled="[[!selected]]" label="Numer" on-keydown="_checkAdd"></paper-input>
-          <paper-input id="data"  disabled="[[!selected]]" always-float-label label="Data" value="[[_today()]]" type="date" on-keydown="_checkAdd"></paper-input>
-
-          <paper-button on-tap="_add" disabled="[[!selected]]">Dodaj</paper-button>
-
       </div>
     </paper-material>
   </template>
@@ -150,8 +276,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
       _add: function() {
-        if (this.$.numer.value && this.$.data.value) {
-          console.log(this.samochod.__firebaseKey__)
+        if (this.$.numer.value && this.$.data.value && this.selected) {
+          console.log(this.samochod.__firebaseKey__);
           this.fire('add-karta', {
             numer: this.$.numer.value,
             data: this.$.data.value,
@@ -167,7 +293,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           });
           //clean form
           this.$.numer.value = null;
-          this.$.data.value = _today();
+          this.$.data.value = this._today();
         }
       },
       //
