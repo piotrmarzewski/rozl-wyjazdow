@@ -13,197 +13,149 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="karty-add">
   <template>
     <style>
-    :host {
-      display: block;
-    }
-    /*paper-material {
-      padding: 20px;
-    }*/
+      :host {
+        display: block;
+      }
+      .input-wrapper {
+        padding: 10px;
+      }
 
-    .input-wrapper {
-      padding: 10px;
-    }
+      .selected-car{
+        display: inline-block;
+        background-color:rgb(55, 95, 146);
+        border-radius: 2px;
+        color: #fff;
+        /*padding: 10px;*/
+        text-transform: uppercase;
+        width: 63%;
+      }
+      .selected-car[selected] .sticker {
+        background-color:orange;
+      }
+      .title .sticker {
+        display: inline-block;
+        background-color: rgba(255, 255, 255, 0.15);
+        margin-left: 5px;
+        border-radius: 2px;
+      }
+      .title .sticker span {
+        display: inline-block;
+        background-color: rgba(255, 255, 255, 0.75);
+        font-size: 16px;
+        padding: 4px;
+        text-transform: uppercase;
+        color: rgba(0, 0, 0, 0.91);
+        border-radius: 0 2px 2px 0;
+      }
+      .title .sticker .label {
+        background-color: transparent;
+        padding: 4px 8px 4px 8px;
+        /*margin: 2px;*/
+        font-size: 12px;
+        color: #fff;
+        border-radius: 2px 0 0 2px;
+      }
+      paper-card{
+        width: 100%;
+        margin-top: 20px;
+      }
+      paper-fab {
+        background: #E6C629;
+        width: 45px;
+        height: 45px;
+      }
+      .title {
+        background-color:rgb(55, 95, 146);
+        border-radius: 2px;
+        color: #fff;
+        text-transform: uppercase;
+        padding: 5px 10px 5px;
+      }
+      .title .title {
+        padding: 0;
+      }
+      .sticker {
+        display: inline-block;
+        background-color: rgba(255, 255, 255, 0.15);
+        margin-left: 5px;
+        border-radius: 2px;
+      }
+      .sticker span {
+        display: inline-block;
+        background-color: rgba(255, 255, 255, 0.75);
+        font-size: 16px;
+        padding: 4px;
+        text-transform: uppercase;
+        color: rgba(0, 0, 0, 0.91);
+        border-radius: 0 2px 2px 0;
+      }
+      .sticker .label {
+        background-color: transparent;
+        padding: 4px 8px 4px 8px;
+        /*margin: 2px;*/
+        font-size: 12px;
+        color: #fff;
+        border-radius: 2px 0 0 2px;
+      }
+      .avatar {
+        color: rgba(255, 255, 255, 0.81);
+        display: inline-block;
+        /*width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        overflow: hidden;
+        background: #E6C629;
+        display: flex;
+        flex-direction: column;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;*/
+      }
+      .list paper-icon-item{
+        display: inline-flex;
+      }
+      .zlecenie {
+        margin-top: 1px;
+      }
 
-    /*paper-input {
-      display: inline-block;
-      width: 65%;
-      --paper-input-container: {
-        padding-bottom: 0;
-      };*/
+      .zlecenie-item span {
+        display: inline-block;
+        text-transform: uppercase;
+        color: var(--main-lighten-900);
+        font-size: 10px;
+        min-width: 20px;
+      }
+      .zlecenie [two-line] {
+        font-size: 12px;
+        margin: 0 5px 0 5px;
+      }
 
-      /* These styles are not DRY :( */
-      /*--paper-input-container-label: {
-        font-size: 20px;
-        font-family: 'Roboto Slab', 'Roboto', 'Helvetica', 'Arial', sans-serif;
-        font-weight: normal;
-        color: #9E9E9E;
-      };
-      --paper-input-container-input: {
-        font-size: 20px;
-        font-family: 'Roboto Slab', 'Roboto', 'Helvetica', 'Arial', sans-serif;
-      };
-      --paper-input-container-underline: {
-        top: 7px;
-        background: #9E9E9E;
-      };
-      --paper-input-container-underline-focus: {
-        top: 7px;
-      };
-    }*/
-    /*paper-input[focused] + paper-input + paper-button,
-    paper-input[focused] + paper-button,
-    paper-button[focused] {
-      background: var(--default-primary-color);
-      color: var(--text-primary-color);
-    }*/
-
-    /*paper-button {
-      background: #E0E0E0;
-      color: #9E9E9E;
-      font-size: 14px;
-    }*/
-
-    /*paper-button[focused] {*/
-      /* https://github.com/PolymerElements/paper-button/pull/43 */
-      /*outline-width: 3px;
-    }*/
-
-    .selected-car{
-      display: inline-block;
-      background-color:rgb(55, 95, 146);
-      border-radius: 2px;
-      color: #fff;
-      /*padding: 10px;*/
-      text-transform: uppercase;
-      width: 63%;
-    }
-    .selected-car[selected] .sticker {
-      background-color:orange;
-    }
-    .title .sticker {
-      display: inline-block;
-      background-color: rgba(255, 255, 255, 0.15);
-      margin-left: 5px;
-      border-radius: 2px;
-    }
-    .title .sticker span {
-      display: inline-block;
-      background-color: rgba(255, 255, 255, 0.75);
-      font-size: 16px;
-      padding: 4px;
-      text-transform: uppercase;
-      color: rgba(0, 0, 0, 0.91);
-      border-radius: 0 2px 2px 0;
-    }
-    .title .sticker .label {
-      background-color: transparent;
-      padding: 4px 8px 4px 8px;
-      /*margin: 2px;*/
-      font-size: 12px;
-      color: #fff;
-      border-radius: 2px 0 0 2px;
-    }
-    paper-card{
-      width: 100%;
-      margin-top: 20px;
-    }
-    paper-fab {
-      background: #E6C629;
-      width: 45px;
-      height: 45px;
-    }
-    .title {
-      background-color:rgb(55, 95, 146);
-      border-radius: 2px;
-      color: #fff;
-      text-transform: uppercase;
-      padding: 5px 10px 5px 10;
-    }
-    .title .title {
-      padding: 0;
-    }
-    .sticker {
-      display: inline-block;
-      background-color: rgba(255, 255, 255, 0.15);
-      margin-left: 5px;
-      border-radius: 2px;
-    }
-    .sticker span {
-      display: inline-block;
-      background-color: rgba(255, 255, 255, 0.75);
-      font-size: 16px;
-      padding: 4px;
-      text-transform: uppercase;
-      color: rgba(0, 0, 0, 0.91);
-      border-radius: 0 2px 2px 0;
-    }
-    .sticker .label {
-      background-color: transparent;
-      padding: 4px 8px 4px 8px;
-      /*margin: 2px;*/
-      font-size: 12px;
-      color: #fff;
-      border-radius: 2px 0 0 2px;
-    }
-    .avatar {
-      color: rgba(255, 255, 255, 0.81);
-      display: inline-block;
-      /*width: 45px;
-      height: 45px;
-      border-radius: 50%;
-      overflow: hidden;
-      background: #E6C629;
-      display: flex;
-      flex-direction: column;
-      -ms-flex-align: center;
-      -webkit-align-items: center;
-      align-items: center;
-      -ms-flex-pack: center;
-      -webkit-justify-content: center;
-      justify-content: center;*/
-    }
-    .list paper-icon-item{
-      display: inline-flex;
-    }
-    .zlecenie {
-      margin-top: 1px;
-    }
-
-    .zlecenie-item span {
-      display: inline-block;
-      text-transform: uppercase;
-      color: var(--main-lighten-900);
-      font-size: 10px;
-      min-width: 20px;
-    }
-    .zlecenie [two-line] {
-      font-size: 12px;
-      margin: 0 5px 0 5px;
-    }
-
-    .zlecenie-item > div {
-      text-transform: uppercase;
-      color: var(--main-lighten-900);
-      font-size: 10px;
-      background-color: var(--main-template-500);
-      padding: 0 5px 0 5px;
-    }
-    .zlecenie .kierowca {
-      font-size: 12px;
-      font-weight: bold;
-    }
-    #kierowca {
-          margin-top: 40px;
-    }
-    #kierowca paper-item {
-      font-size: 14px;
-      max-height: 40px;
-      min-height: 30px;
-      overflow-x: hidden;
-    }
-    .zlecenie-item paper-input {
-      padding: 0;
-    }
+      .zlecenie-item > div {
+        text-transform: uppercase;
+        color: var(--main-lighten-900);
+        font-size: 10px;
+        background-color: var(--main-template-500);
+        padding: 0 5px 0 5px;
+      }
+      .zlecenie .kierowca {
+        font-size: 12px;
+        font-weight: bold;
+      }
+      #kierowca {
+            margin-top: 40px;
+      }
+      #kierowca paper-item {
+        font-size: 14px;
+        max-height: 40px;
+        min-height: 30px;
+        overflow-x: hidden;
+      }
+      .zlecenie-item paper-input {
+        padding: 0;
+      }
     </style>
 
     <paper-material elevation="1" >

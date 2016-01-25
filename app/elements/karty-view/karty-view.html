@@ -42,7 +42,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <firebase-collection
       log="true"
       location="https://zbk.firebaseio.com/rozliczenia/karty"
-      data="{{karty}}"></firebase-collection>
+      order-by-child="data"
+      start-at="{{startAtDate}}"
+      end-at="{{endAtDate}}"
+      data="{{karty}}">   </firebase-collection>
 
     <array-selector id="selector" items="{{samlist}}" selected="{{selected}}"></array-selector>
 
@@ -57,6 +60,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </paper-menu>
       </div>
       <div  class="flex">
+        <paper-material elevation="0" class="main">
+          <karty-view-datepicker start-at={{startAtDate}} end-at="{{endAtDate}}"></karty-view-datepicker>
+          <!-- <div class="">START
+            {{startAtDate}} END
+            {{endAtDate}} -
+          </div> -->
+        </paper-material>
         <div class="layout vertical">
           <paper-material id="lista-kart" elevation="1" class="main">
             <karty-list karty={{karty}}></karty-list>
@@ -84,6 +94,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           value: [],
           notify: true
         }
+      },
+      _today: function() {
+        return (new Date()).toISOString().slice(0,10);
       },
       toggleSelection: function(e) {
         var item = this.$.samochodyList.itemForElement(e.target);
