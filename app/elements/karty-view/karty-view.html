@@ -65,7 +65,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <karty-view-datepicker start-at={{startAtDate}} end-at="{{endAtDate}}"></karty-view-datepicker>
           </paper-material>
           <paper-material id="lista-kart" elevation="1" class="main">
-            <karty-list karty={{karty}}></karty-list>
+            <karty-list karty={{karty}} selectedcar="[[selCarId]]"></karty-list>
           </paper-material>
           <karty-add on-add-karta="addKarta" samochod="[[selected]]"></karty-add>
         </div>
@@ -89,6 +89,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: Array,
           value: [],
           notify: true
+        },
+        selCarId: {
+          type: String,
+          notify: true,
+          value: ""
         }
       },
       _today: function() {
@@ -96,7 +101,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       toggleSelection: function(e) {
         var item = this.$.samochodyList.itemForElement(e.target);
-        // console.log("ITEMS",item);
+        this.selCarId = item.__firebaseKey__;
+        //  console.log("ITEMS",this.selCarId);
         this.$.selector.select(item);
       },
       addKarta: function(e) {

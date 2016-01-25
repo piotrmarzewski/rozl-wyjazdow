@@ -17,7 +17,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
     </style>
-    <template is="dom-repeat" items="{{karty}}" as="karta">
+    <template is="dom-repeat" items="{{karty}}" as="karta" filter="{{computeFilter(selectedcar)}}">
       <karty-item karta="{{karta}}"></karty-item>
     </template>
   </template>
@@ -29,8 +29,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'karty-list',
 
       properties: {
-        karty: Array
+        karty: Array,
+        selectedcar: {
+          type: String,
+          notify: true
+        }
       },
+      // static filter, re-filtering only on data changes
+      filter: function(item){
+          // set filter to all
+          console.log("FILTER ITEM", item.samochodId, this.selectedcar);
+          return (item.samochodId === this.selectedcar);
+      },
+      // dynamic changes to filter need to return new filter function
+      // each time changes the value of additional observed properties
+      // in this case selectedcar
+      computeFilter: function(selecCar){
+        //if no car selected show all
+        if (!selecCar) return null ;
+        // else return filter function
+        return function(item){
+          return (item.samochodId === selecCar);
+        }
+      }
     });
   })();
   </script>
