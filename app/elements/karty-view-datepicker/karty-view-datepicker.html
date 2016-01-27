@@ -16,10 +16,72 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
-    </style>
-    <paper-input id="data" no-label-float label="" value="{{selMonth}}" type="month" on-keydown="_checkAdd"></paper-input>
+      iron-selector > * {
+        padding: 8px;
+      }
 
-    <div>Miesiąc <span>{{selMonth}}</span>--{{startAt}} -- {{endAt}}--</div>
+      .horizontal-section {
+        padding: 0;
+      }
+
+      .iron-selected {
+        background-color: var(--google-blue-500);
+        color: white;
+        display: inline-flex important!;
+      }
+
+      .selector{
+        background-color: yellow;
+      }
+      .year-item,
+      .month-item{
+        width: 85px;
+        margin: 2px;
+        padding: 2px;
+        background-color: orange;
+        /*display: inline-flex;*/
+        display: none;
+        font-size: 12px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        text-align: center;
+      }
+      .year-item.iron-selected,
+      .month-item.iron-selected {
+        background-color: rgb(55, 95, 146) !important;
+        display: inline-block !important;
+      }
+      .month-selector,
+      .year-selector {
+        display: inline-block;
+      }
+
+    </style>
+    <!-- <div>--{{startAt}} -- {{endAt}}--{{selYear}}--{{selMonth}}--</div> -->
+    <!-- month selector -->
+    <div class="month-selector">
+      <paper-icon-button on-tap="selectPrevMonth" icon="icons:chevron-left"></paper-icon-button>
+        <iron-selector id="months" selected="0" selected-attribute="my-sel-item">
+          <template is="dom-repeat" items="{{monthNames}}" as="month">
+            <div class="month-item">{{month}}</div>
+          </template>
+        </iron-selector>
+      <paper-icon-button on-tap="selectNextMonth" icon="icons:chevron-right"></paper-icon-button>
+    </div>
+    <!-- rear selector -->
+    <div class="year-selector">
+      <paper-icon-button on-tap="selectPrevYear" icon="icons:chevron-left"></paper-icon-button>
+        <iron-selector id="years" selected="0" selected-attribute="my-sel-item">
+          <template is="dom-repeat" items="{{years}}" as="year">
+            <div id="yearitem" class="year-item">{{year}}</div>
+          </template>
+        </iron-selector>
+      <paper-icon-button on-tap="selectNextYear" icon="icons:chevron-right"></paper-icon-button>
+    </div>
+
+    <div class="selector layout horizontal wrap">
+
+    </div>
   </template>
   <script>
   (function() {
@@ -29,32 +91,96 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'karty-view-datepicker',
 
       properties: {
-        selMonth: {
+        selDate: {
           type: String,
           value: "2016-01",
           notify: true
         },
-        foo: {
+        selMonth: {
           type: String,
-          value: 'karty-view-datepicker',
+          notify: true
+        },
+        selYear: {
+          type: String,
           notify: true
         },
         startAt: {
           type: String,
-          computed: 'computeStartAt(selMonth)',
+          computed: 'computeStartAt(selYear,selMonth)',
           notify: true
         },
         endAt: {
           type: String,
-          computed: 'computeEndAt(selMonth)',
+          computed: 'computeEndAt(selYear,selMonth)',
           notify: true
+        },
+        monthNames: {
+          type: Array,
+          value: [ 'Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec',
+            'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień' ],
+          readonly: true
+        },
+        years: {
+          type: Array,
+          value: function(){
+            for (var _listOfYears = [], i = 1900; i <= 2099; i++) {
+              _listOfYears.push(i);
+            };
+            return _listOfYears;
+          }
         }
       },
-      computeStartAt: function (month){
-        return  month +"-01";
+      dayNames: [
+        'Sunday', 'Monday', 'Tuesday', 'Wednesday',
+        'Thursday', 'Friday', 'Saturday'
+      ],
+      ready: function(){
+        // selecting current month and year
+        var today = this._today();
+        var year = Number(today.slice(0,4));
+        var month = Number(today.slice(5,7));
+        console.log("DATE", today, year, month);
+        this.$.months.selected = month-1;
+        this.$.years.selected = year-1900;
+        this.update();
       },
-      computeEndAt: function (month){
-        return  month +"-99";
+      _today: function() {
+        return (new Date()).toISOString().slice(0,10);
+      },
+      computeStartAt: function (year, month){
+        month = (month + 100) + " " ;
+        month = month.slice(1,3);
+        // < 2 ? ' 0' + month : month;
+        return year +'-'+month+'-00';
+      },
+      computeEndAt: function (year, month){
+        month = (month + 100) + " " ;
+        month = month.slice(1,3);
+        return  year +'-'+month+'-99';
+      },
+      selectNextMonth: function () {
+        this.$.months.selectNext();
+        if (this.$.months.selected == 0){
+          this.selectNextYear();
+        };
+        this.update();
+      },
+      selectPrevMonth: function () {
+        this.$.months.selectPrevious();
+        if (this.$.months.selected == 11){
+          this.selectPrevYear();
+        };
+        this.update();
+      },
+      selectNextYear: function () {
+        this.$.years.selectNext();
+      },
+      selectPrevYear: function () {
+        this.$.years.selectPrevious();
+      },
+      update: function(){
+        this.selYear = this.$.years.selected+1900;
+        this.selMonth = this.$.months.selected+1;
       }
     });
   })();
