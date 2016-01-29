@@ -19,7 +19,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       iron-selector > * {
         padding: 8px;
       }
-
+      paper-icon-button{
+        color: #D3E5FF;
+      }
       .horizontal-section {
         padding: 0;
       }
@@ -173,9 +175,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       selectNextYear: function () {
         this.$.years.selectNext();
+        this.update();
       },
       selectPrevYear: function () {
         this.$.years.selectPrevious();
+        this.update();
       },
       update: function(){
         this.selYear = this.years[this.$.years.selected];

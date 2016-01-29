@@ -22,9 +22,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             color: #fff;
             font-weight: normal;
         }
-
-      }
-
+    }
+    karty-view-datepicker {
+        display: inline-block;
+        float: left;
+    }
+    karty-view-search {
+        display: inline-block;
+        float: right;
+    }
     paper-menu{
       width: 250px;
     }
@@ -37,6 +43,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
     #lista-kart{
       min-height: 200px;
+    }
+    #filter-cards {
+      background-color: rgba(55, 95, 146, 0.45);
     }
     </style>
     <firebase-collection
@@ -61,8 +70,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
       <div  class="flex">
         <div class="layout vertical">
-          <paper-material elevation="1" class="main">
-            <karty-view-datepicker start-at={{startAtDate}} end-at="{{endAtDate}}"></karty-view-datepicker>
+          <paper-material id="filter-cards" elevation="1" class="main">
+            <!-- {{searchString}} -->
+            <karty-view-datepicker id="datepicker" start-at={{startAtDate}} end-at="{{endAtDate}}"></karty-view-datepicker>
+            <karty-view-search id="search" search-value="{{searchString}}"></karty-view-search>
           </paper-material>
           <paper-material id="lista-kart" elevation="1" class="main">
             <karty-list karty={{karty}} selectedcar="[[selCarId]]"></karty-list>
@@ -94,7 +105,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: String,
           notify: true,
           value: ""
-        }
+        },
+        searchString: String
       },
       _today: function() {
         return (new Date()).toISOString().slice(0,10);
