@@ -17,7 +17,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
     </style>
-    <template is="dom-repeat" items="{{karty}}" as="karta" filter="{{computeFilter(selectedcar)}}">
+    <template is="dom-repeat" items="{{karty}}" as="karta" filter="{{computeFilter(selectedcar, searchString)}}">
       <karty-item karta="{{karta}}"></karty-item>
     </template>
   </template>
@@ -33,6 +33,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         selectedcar: {
           type: String,
           notify: true
+        },
+        searchString: {
+          type: String,
+          value: "01"
         }
       },
       // static filter, re-filtering only on data changes
@@ -44,12 +48,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       // dynamic changes to filter need to return new filter function
       // each time changes the value of additional observed properties
       // in this case selectedcar
-      computeFilter: function(selecCar){
+      computeFilter: function(selecCar, searchStr){
         //if no car selected show all
-        if (!selecCar) return null ;
+        if (!selecCar && !searchStr) return null ;
+
         // else return filter function
         return function(item){
-          return (item.samochodId === selecCar);
+          var instring = 1; //if string not selected dont check it
+          if ( searchStr ) instring = item.numer.indexOf(searchStr);
+          instring >= 0 ? instring = 1 : instring = 0;
+
+          var isCar = 1; //if car not selected dont check it
+          if (selecCar) isCar = (item.samochodId === selecCar);
+          // console.log('INSTRING2', searchStr, instring, isCar);
+          return (isCar && instring);
         }
       }
     });

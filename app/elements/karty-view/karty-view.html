@@ -76,7 +76,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <karty-view-search id="search" search-value="{{searchString}}"></karty-view-search>
           </paper-material>
           <paper-material id="lista-kart" elevation="1" class="main">
-            <karty-list karty={{karty}} selectedcar="[[selCarId]]"></karty-list>
+            <karty-list karty={{karty}} search-string="{{searchString}}" selectedcar="[[selCarId]]"></karty-list>
           </paper-material>
           <karty-add on-add-karta="addKarta" samochod="[[selected]]"></karty-add>
         </div>
@@ -106,14 +106,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           notify: true,
           value: ""
         },
-        searchString: String
+        searchString: {
+          type: String,
+          notify: true,
+          value: ""
+        }
       },
       _today: function() {
         return (new Date()).toISOString().slice(0,10);
       },
       toggleSelection: function(e) {
         var item = this.$.samochodyList.itemForElement(e.target);
-        this.selCarId = item.__firebaseKey__;
+        // this.selCarId = item.__firebaseKey__;
+        this.set('selCarId', item.__firebaseKey__);
         //  console.log("ITEMS",this.selCarId);
         this.$.selector.select(item);
       },
