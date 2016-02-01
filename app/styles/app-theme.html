@@ -35,14 +35,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     --main-template-dark: rgb(55, 95, 146);
     --main-template-700: rgb(55, 95, 146);
     --main-accent-500: #E6C629;
-
-    --main-template-dark: rgb(55, 95, 146)
-    --main-lighten-100: rgba(255, 255, 255, 0.10)
-    --main-lighten-300: rgba(255, 255, 255, 0.30)
-    --main-lighten-500: rgba(255, 255, 255, 0.50)
-    --main-lighten-700: rgba(255, 255, 255, 0.70)
-    --main-lighten-750: rgba(255, 255, 255, 0.75)
-    --main-lighten-900: rgba(255, 255, 255, 0.90)
+    --main-background-color: rgba(234, 231, 210, 0.34); /*paper background color*/
+    --main-template-dark: rgb(55, 95, 146);
+    --main-lighten-100: rgba(255, 255, 255, 0.10);
+    --main-lighten-300: rgba(255, 255, 255, 0.30);
+    --main-lighten-500: rgba(255, 255, 255, 0.50);
+    --main-lighten-700: rgba(255, 255, 255, 0.70);
+    --main-lighten-750: rgba(255, 255, 255, 0.75);
+    --main-lighten-900: rgba(255, 255, 255, 0.90);
 
     /* Components */
     --my-template-background-color: pink;
@@ -58,11 +58,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   }
 
   /* General styles */
+  body {
+    background-color: rgba(234, 231, 210, 0.34);
+  }
 
   #drawerToolbar {
     color: var(--secondary-text-color);
     background-color: var(--drawer-menu-color);
     border-bottom: var(--drawer-toolbar-border-color);
+  }
+  iron-pages {
+    padding: 48px 62px;
   }
 
   paper-scroll-header-panel {

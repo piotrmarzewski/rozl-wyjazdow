@@ -33,19 +33,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
     paper-menu{
       width: 250px;
+      color: #f5f5f5;
+      background-color: rgba(160, 178, 198, 0.65)
     }
     .main {
       padding: 25px;
     }
-    #lista-samochodow {
-      border-radius: 4px 0 0 4px;
+    #samochody-card {
+      border-radius: 2px;
       min-height: 200px;
+      margin-right: 20px;
+      padding: 0;
+    }
+    .title {
+    }
+    .title {
+      padding: 8px;
+      color: rgba(255, 255, 255, 0.80);
+      /*background-color: var(--google-grey-500);*/
+      background-color: var(--default-primary-color);
+      font-size: 16px;
+      border-radius: 2px 2px 0 0 ;
+    }
+    .card-content {
+      padding: 0;
+    }
+    #samochody-menu .iron-selected  {
+      background-color: rgb(55, 95, 146);
     }
     #lista-kart{
       min-height: 200px;
     }
     #filter-cards {
       background-color: rgba(55, 95, 146, 0.45);
+    }
+    #lista-kart {
+      background-color: #f9f9f9;
     }
     </style>
     <firebase-collection
@@ -60,13 +83,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <div class="layout horizontal ">
       <div class="">
-          <paper-menu id="lista-samochodow">
-              <template is="dom-repeat" id="samochodyList" items="[[samlist]]" as="samochod">
-                <paper-item on-tap="toggleSelection" disabled="[[!samochod.isActive]]">
-                  <div><span>{{samochod.marka}}</span> <span>{{samochod.nazwa}}</span></div>
-                </paper-item>
-              </template>
-          </paper-menu>
+        <paper-card id="samochody-card">
+          <div class="title">
+            <div > <iron-icon icon="account-circle"></iron-icon> Samochody</div>
+          </div>
+          <div class="card-content">
+            <paper-menu id="samochody-menu">
+                <template is="dom-repeat" id="samochodyList" items="[[samlist]]" as="samochod">
+                  <paper-item on-tap="toggleSelection" disabled="[[!samochod.isActive]]">
+                    <div><span>{{samochod.marka}}</span> <span>{{samochod.nazwa}}</span></div>
+                  </paper-item>
+                </template>
+            </paper-menu>
+          </div>
+          <div class="card-actions"></div>
+        </paper-card>
       </div>
       <div  class="flex">
         <div class="layout vertical">
