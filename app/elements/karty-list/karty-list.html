@@ -55,7 +55,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // else return filter function
         return function(item){
           var instring = 1; //if string not selected dont check it
-          if ( searchStr ) instring = item.numer.indexOf(searchStr);
+          var itemSearch = item.numer + item.kierowca + item.data;
+          if ( searchStr ) instring = itemSearch.toLowerCase().indexOf(searchStr.toLowerCase());
           instring >= 0 ? instring = 1 : instring = 0;
 
           var isCar = 1; //if car not selected dont check it

@@ -96,7 +96,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       properties: {
         selDate: {
           type: String,
-          value: "2016-01",
+          value: '2016-01',
           notify: true
         },
         selMonth: {
@@ -150,25 +150,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         return (new Date()).toISOString().slice(0,10);
       },
       computeStartAt: function (year, month){
-        month = (month + 100) + " " ;
+        month = (month + 100) + ' ' ;
         month = month.slice(1,3);
         return year +'-'+month+'-00';
       },
       computeEndAt: function (year, month){
-        month = (month + 100) + " " ;
+        month = (month + 100) + ' ' ;
         month = month.slice(1,3);
         return  year +'-'+month+'-99';
       },
       selectNextMonth: function () {
         this.$.months.selectNext();
-        if (this.$.months.selected == 0){
+        if (this.$.months.selected === 0){
           this.selectNextYear();
         };
         this.update();
       },
       selectPrevMonth: function () {
         this.$.months.selectPrevious();
-        if (this.$.months.selected == 11){
+        if (this.$.months.selected === 11){
           this.selectPrevYear();
         };
         this.update();
