@@ -87,7 +87,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       editKierowca: function(e) {
-        console.log("Kierowca edit", e.detail.kierowca, this.kierowcy);
+        console.log('Kierowca edit', e.detail.kierowca, this.kierowcy);
         // this.set('kierowcy', e.detail.kierowca);
       },
 
@@ -95,7 +95,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         console.log(this.localName + '#' + this.id + ' was attached', this.kierowcy );
       },
 
-      _dataChanged: function(changes) {
+      _dataChanged: function() {
         // kopiuj tablice z lista kierowcow
         this.kierlist = this.kierowcy.slice();
       },
@@ -108,7 +108,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       //     }
       //   }
       // },
-      attributeChanged: function(name, type) {
+      attributeChanged: function(name) {
         console.log(this.localName + '#' + this.id + ' attribute ' + name +
         ' was changed to ' + this.getAttribute(name));
       },

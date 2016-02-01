@@ -175,20 +175,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.fire('delete-samochod', {samochod: this.samochod});
       },
       _computeClass: function(active) {
-        return active ? "active" : ""
+        return active ? 'active' : '';
       },
       _computeStatusName: function(active) {
-        console.log("Aktywny",active);
-        return active ? "visibility" : "visibility-off";
+        console.log('Aktywny',active);
+        return active ? 'visibility' : 'visibility-off';
       },
       _toggleActiveName: function() {
         console.log(this.$.active.checked);
       },
       _toggleEditMode: function() {
         this.edit = !this.edit;
-        //this.toggleAttribute("hidden", this.edit, this.$.kierowcaview);
-        //this.toggleAttribute("hidden", !this.edit, this.$.kierowcaedit);
-        console.log("edit", !this.edit)
       },
       _onClear: function() {
         this._toggleEditMode();
@@ -210,7 +207,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.set('samochod.norma',this.$.norma.value);
 
         this._toggleEditMode();
-        console.log("Edit mode off", this.edit, this.samopchod);
+        console.log('Edit mode off', this.edit, this.samopchod);
         this.fire('edit-samochod', {samochod: this.samochod});
       }
     });
