@@ -1,0 +1,136 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="app-dashboard">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .card {
+        border-radius: 2px;
+        min-height: 250px;
+        margin-right: 20px;
+        padding: 0;
+        min-width: 250px;
+        background-color:  rgba(55, 95, 146, 0.53);;
+      }
+      .title {
+      }
+      .title {
+        padding: 8px;
+        color: rgba(255, 255, 255, 0.80);
+        /*background-color: var(--google-grey-500);*/
+        background-color: var(--default-primary-color);
+        font-size: 16px;
+        border-radius: 2px 2px 0 0 ;
+      }
+      .card-content {
+        padding: 0;
+        min-height: 180px;
+        margin: 4px;
+      }
+      .card-content {
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+      .kierowcy .card-content {
+        background-image: url('/images/g1.png');
+      }
+      .samochody .card-content {
+        background-image: url('/images/g2.png');
+      }
+      .karty .card-content {
+        background-image: url('/images/g3.png');
+      }
+      .card-actions {
+        text-align: right;
+        background-color: #d3e5ff;
+      }
+      paper-button {
+        background: #375F92;
+        color: #C3CFDE;
+        font-size: 14px;
+        transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s !important;
+      }
+      paper-button:hover {
+        background-color: #FFD55C;
+        color: #375F92;
+      }
+      iron-icon {
+        margin-right: 5px;
+      }
+    </style>
+    <div class="layout horizontal wrap">
+      <div class="">
+        <paper-card class="card kierowcy">
+          <div class="title">
+            <div > <iron-icon icon="account-circle"></iron-icon>Kierowcy</div>
+          </div>
+          <div class="card-content">
+            <!-- <div>Hello from <span>{{foo}}</span></div> -->
+          </div>
+          <div class="card-actions">
+            <paper-button id="kierowcy" raised on-tap='goToPage'>Otwórz</paper-button>
+          </div>
+        </paper-card>
+        <paper-card class="card samochody">
+          <div class="title">
+            <div > <iron-icon icon="maps:directions-car"></iron-icon>Samochody</div>
+          </div>
+          <div class="card-content">
+            <!-- <div>Hello from <span>{{foo}}</span></div> -->
+          </div>
+          <div class="card-actions">
+            <paper-button  id="samochody" raised on-tap='goToPage'>Otwórz</paper-button>
+          </div>
+        </paper-card>
+        <paper-card class="card karty">
+          <div class="title">
+            <div > <iron-icon icon="chrome-reader-mode"></iron-icon>Karty drogowe</div>
+          </div>
+          <div class="card-content">
+            <!-- <div>Hello from <span>{{foo}}</span></div> -->
+          </div>
+          <div class="card-actions">
+            <paper-button id="karty" raised on-tap='goToPage'>Otwórz</paper-button>
+          </div>
+        </paper-card>
+      </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'app-dashboard',
+
+      properties: {
+        foo: {
+          type: String,
+          value: 'app-dashboard',
+          notify: true
+        }
+      },
+      goToPage: function(e){
+        page('/kierowcy');
+        console.log(e.target.id);
+        page('/' + e.target.id);
+      },
+      _gotoEditPage: function () {
+        page('/karty/'+this.karta.__firebaseKey__);
+      }
+    });
+  })();
+  </script>
+</dom-module>
