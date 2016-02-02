@@ -78,11 +78,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <paper-menu class="list" attr-for-selected="data-route" selected="[[route]]">
           <a data-route="home" href="{{baseUrl}}">
             <iron-icon icon="home"></iron-icon>
-            <span>Home</span>
+            <span>Start</span>
           </a>
 
           <a data-route="kierowcy" href="{{baseUrl}}kierowcy">
-            <iron-icon icon="face"></iron-icon>
+            <iron-icon icon="account-circle"></iron-icon>
             <span>Kierowcy</span>
           </a>
 
@@ -138,33 +138,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <section data-route="home">
 
               <paper-material elevation="1">
-                <my-greeting></my-greeting>
+                <app-dashboard></app-dashboard>
 
-                <p class="paper-font-subhead">You now have:</p>
-                <my-list></my-list>
-
-                <p class="paper-font-body2">Looking for more Web App layouts? Check out our <a href="https://github.com/PolymerElements/app-layout-templates">layouts</a> collection. You can also <a href="http://polymerelements.github.io/app-layout-templates/">preview</a> them live.</p>
-              </paper-material>
-              <paper-material elevation="1">
-                <p class="paper-font-body2">This is another card.</p>
-              </paper-material>
-
-              <paper-material elevation="1" class="paper-font-body2">
 
               </paper-material>
 
             </section>
 
-            <section data-route="users">
+            <!-- <section data-route="users">
               <paper-material elevation="1">
                 <h2 class="page-title">Users</h2>
                 <p>This is the users section</p>
                 <a href$="{{baseUrl}}users/Addy">Addy</a><br>
-                <a href$="{{baseUrl}}users/Rob">Rob</a><br>
-                <a href$="{{baseUrl}}users/Chuck">Chuck</a><br>
-                <a href$="{{baseUrl}}users/Sam">Sam</a>
               </paper-material>
-            </section>
+            </section> -->
 
             <section data-route="kierowcy">
                 <kierowcy-view kierlist="{{drivers}}"></kierowcy-view>
