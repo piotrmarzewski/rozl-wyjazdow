@@ -28,7 +28,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         background-color: var(--my-card-bg-color-not-active);
       }
 
-      paper-toggle-button{
+      paper-toggle-button {
         --paper-toggle-button-checked-bar-color:  var(--main-template-dark);
         --paper-toggle-button-checked-button-color:  var(--main-template-dark);
         --paper-toggle-button-checked-ink-color: var(--main-template-dark);
@@ -38,20 +38,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         height: 150px;
       }
 
-      .fancy.active .title {
-        background-color: var(--default-primary-color);
-      }
       .fancy .title {
         padding: 8px;
-        color: rgba(255, 255, 255, 0.80);
+        color: var(--main-lighten-800);
         background-color: var(--my-card-title-color-not-active);
         font-size: 16px;
         border-radius: 2px 2px 0 0 ;
       }
-      .fancy img {
-        width: 100%;
+      .fancy.active .title {
+        background-color: var(--default-primary-color);
       }
-
       .fancy .big {
         font-size: 22px;
         padding: 8px 0 16px;
@@ -69,8 +65,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .not-active .card-actions {
         background-color: var(--my-card-actions-color-not-active);
       }
-      .edit input {
-        color: #fff !important;
+      #card-content[edit] {
+        background-color: var(--my-cadr-edit-bg-color);
       }
 
     </style>
@@ -78,8 +74,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div class="title">
         <div > <iron-icon icon="account-circle"></iron-icon> Kierowca</div>
       </div>
-      <div id="card-content" class="card-content">
-        <div id="kierowcaview" hidden$={{edit}} >
+      <div id="card-content" class="card-content" edit$={{edit}}>
+        <div id="kierowcaview" hidden$={{edit}}>
           <div class="big">{{kierowca.imie}}<br> {{kierowca.nazwisko}}</div>
           <my-sticker label="stan" data="[[_computeStatusName(kierowca.isActive)]]"></my-sticker>
         </div>

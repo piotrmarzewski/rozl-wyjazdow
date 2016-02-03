@@ -23,6 +23,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin-bottom: 16px;
         background-color: #fff;
       }
+      paper-card.active {
+        background-color: var(--my-card-background-color);
+      }
+      paper-card.not-active {
+        background-color: var(--my-card-bg-color-not-active);
+      }
       iron-icon {
         margin-right: 10px;
       }
@@ -31,22 +37,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       .fancy .title {
         padding: 8px;
-        color: rgba(255, 255, 255, 0.80);
-        background-color: var(--google-grey-500);
+        color: var(--main-lighten-750);
+        background-color: var(--my-card-title-color-not-active);
         font-size: 16px;
         border-radius: 2px 2px 0 0 ;
       }
       .fancy.active .title {
         background-color: var(--default-primary-color);
       }
-      .fancy img {
-        width: 100%;
-      }
 
       .fancy .big {
-        font-size: 22px;
+        font-size: 28px;
         padding: 8px 0 16px;
-        color: var(--google-grey-500);
+        color: var(--main-lighten-900);
       }
 
       .fancy .medium {
@@ -54,18 +57,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         padding-bottom: 8px;
       }
 
-      .prop {
-        display: inline-block;
-        background-color: #EEE;
-        padding: 4px;
-        margin: 2px;
-        border-radius: 2px;
-        color: #B7B7B7;
-      }
-      .active .prop {
-        background-color: #738498;
-        color: #EEE;
-      }
       .title .active-icon {
         position: absolute;
         right: 0;
@@ -96,40 +87,56 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         top: 15px;
         left: 10px;
       }
-      paper-material {
+      paper-material.edit {
         margin: 15px 0;
+        background-color: var(--main-lighten-700);
       }
       paper-dropdown-menu {
         margin-left: 45px;
+      }
+      #card-content[edit] {
+        background-color: var(--my-cadr-edit-bg-color);
+      }
+      .card-actions {
+        text-align: right;
+        background-color: var(--my-card-actions-color);
+      }
+      .not-active .card-actions {
+        background-color: var(--my-card-actions-color-not-active);
+      }
+      my-sticker {
+        margin-bottom: 10px;
+        display: inline-block;
       }
     </style>
     <paper-card  animated-shadow="true" class$="fancy [[_computeClass(samochod.isActive)]]">
       <div class="title">
         <div> <iron-icon icon="maps:directions-car"></iron-icon>Samochod <span class="active-icon"><iron-icon icon="[[_computeStatusName(samochod.isActive)]]"></iron-icon></span></div>
       </div>
-      <div id="card-content" class="card-content">
+      <div id="card-content" class="card-content" edit$={{edit}}>
         <div id="samochod-view" hidden$={{edit}} >
           <div class="big">[[samochod.marka]]<br> [[samochod.nazwa]]</div>
-          <span class="prop"><iron-icon icon="assignment-ind"></iron-icon>[[samochod.kierowca]]</span>
-          <span class="prop"><iron-icon icon="inbox"></iron-icon>[[samochod.norma]]</span>
-          <span class="prop"><iron-icon icon="maps:local-gas-station"></iron-icon>[[samochod.paliwo]]</span>
-          <span class="prop"><iron-icon icon="maps:local-offer"></iron-icon>[[samochod.rejestracja]]</span>
+          <my-sticker label="nr rejestracyjny" data="[[samochod.rejestracja]]"></my-sticker>
+          <my-sticker label="kierowca" data="[[samochod.kierowca]]"></my-sticker>
+          <my-sticker label="rodzaj paliwa" data="[[samochod.paliwo]]"></my-sticker>
+          <my-sticker label="norma zużycia" data="[[samochod.norma]]"></my-sticker>
+          <my-sticker label="stan" data="[[_computeStatusName(samochod.isActive)]]"></my-sticker>
         </div>
         <div id="samochod-edit" class="edit" hidden$="{{!edit}}">
           <paper-toggle-button id="active" name="Aktywny" checked="[[samochod.isActive]]" on-change="_toggleActiveName"></paper-toggle-button>
           <paper-input id="nazwa" label="Nazwa" value="[[samochod.nazwa]]" ></paper-input>
           <paper-input id="marka" label="Marka" value="[[samochod.marka]]" ></paper-input>
           <paper-input id="rejestracja" label="Rejestracja" value="[[samochod.rejestracja]]"></paper-input>
-          <paper-material elevation="1">
+          <paper-material elevation="1" class='edit'>
             <paper-radio-group id="paliwo" selected="[[samochod.paliwo]]"><iron-icon icon="maps:local-gas-station"></iron-icon>
               <paper-radio-button name="ON">ON</paper-radio-button>
               <paper-radio-button name="benzyna">benzyna</paper-radio-button>
             </paper-radio-group>
           </paper-material>
-          <paper-material elevation="1" class="horizontal">
+          <paper-material elevation="1" class="horizontal edit">
             <iron-icon class="prop-icon" icon="inbox"></iron-icon><paper-slider id="norma" pin snaps min="1" max="20" step="1" value="[[samochod.norma]]"></paper-slider>
           </paper-material>
-          <paper-material elevation="1" class="horizontal"><iron-icon  class="prop-icon" icon="assignment-ind"></iron-icon>
+          <paper-material elevation="1" class="horizontal edit"><iron-icon  class="prop-icon" icon="assignment-ind"></iron-icon>
           <!-- Drop down menu - lista kierowcow -->
             <paper-dropdown-menu id="kierowca" label="" placeholder="[[samochod.kierowca]]">
               <paper-menu  class="dropdown-content">
@@ -175,11 +182,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.fire('delete-samochod', {samochod: this.samochod});
       },
       _computeClass: function(active) {
-        return active ? 'active' : '';
+        return active ? 'active' : 'not-active';
       },
+      // _computeStatusName: function(active) {
+      //   console.log('Aktywny',active);
+      //   return active ? 'visibility' : 'visibility-off';
+      // },
       _computeStatusName: function(active) {
-        console.log('Aktywny',active);
-        return active ? 'visibility' : 'visibility-off';
+        return active ? 'Aktywny' : 'Nieaktywny';
       },
       _toggleActiveName: function() {
         console.log(this.$.active.checked);
