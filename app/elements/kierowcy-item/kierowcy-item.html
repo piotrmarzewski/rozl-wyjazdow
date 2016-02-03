@@ -20,34 +20,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       paper-card {
         width: 220px;
         margin-bottom: 16px;
-        background-color: #fff;
       }
+      paper-card.active {
+        background-color: var(--my-card-background-color);
+      }
+      paper-card.not-active {
+        background-color: var(--my-card-bg-color-not-active);
+      }
+
       paper-toggle-button{
         --paper-toggle-button-checked-bar-color:  var(--main-template-dark);
         --paper-toggle-button-checked-button-color:  var(--main-template-dark);
         --paper-toggle-button-checked-ink-color: var(--main-template-dark);
       }
-      /*paper-icon-button{
-        color: var(--main-template-700);
-      }
-      paper-icon-button[disabled="true"]{
-        color:#999;
-      }*/
+
       .card-content {
         height: 150px;
       }
-      /*.fancy .title div {
-        padding: 8px;
-        background-color:var(--main-darken-300);
-        font-size: 16px;
-      }*/
+
       .fancy.active .title {
         background-color: var(--default-primary-color);
       }
       .fancy .title {
         padding: 8px;
         color: rgba(255, 255, 255, 0.80);
-        background-color: var(--google-grey-500);
+        background-color: var(--my-card-title-color-not-active);
         font-size: 16px;
         border-radius: 2px 2px 0 0 ;
       }
@@ -58,13 +55,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .fancy .big {
         font-size: 22px;
         padding: 8px 0 16px;
-        color: var(--google-grey-500);
-        background-color: ;
+        color: var(--main-lighten-900);
       }
 
       .fancy .medium {
         font-size: 16px;
         padding-bottom: 8px;
+      }
+      .card-actions {
+        text-align: right;
+        background-color: var(--my-card-actions-color);
+      }
+      .not-active .card-actions {
+        background-color: var(--my-card-actions-color-not-active);
+      }
+      .edit input {
+        color: #fff !important;
       }
 
     </style>
@@ -75,11 +81,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div id="card-content" class="card-content">
         <div id="kierowcaview" hidden$={{edit}} >
           <div class="big">{{kierowca.imie}}<br> {{kierowca.nazwisko}}</div>
-          <div class="medium">[[_computeStatusName(kierowca.isActive)]]</div>
+          <my-sticker label="stan" data="[[_computeStatusName(kierowca.isActive)]]"></my-sticker>
         </div>
         <div id="kierowcaedit" class="edit" hidden$="{{!edit}}">
-          <paper-input id="imie" label="Imię" value="[[kierowca.imie]]" ></paper-input>
-          <paper-input id="nazwisko" label="Nazwisko" value="[[kierowca.nazwisko]]" ></paper-input><br>
+          <paper-input id="imie" class="edit" label="Imię" value="[[kierowca.imie]]" ></paper-input>
+          <paper-input id="nazwisko" class="edit" label="Nazwisko" value="[[kierowca.nazwisko]]" ></paper-input><br>
           <paper-toggle-button id="active" name="Aktywny" checked="[[kierowca.isActive]]" on-change="_toggleActiveName"></paper-toggle-button>
         </div>
       </div>
@@ -117,7 +123,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.fire('delete-kierowca', {kierowca: this.kierowca});
       },
       _computeClass: function(active) {
-        return active ? 'active' : '' ;
+        return active ? 'active' : 'not-active' ;
       },
       _computeStatusName: function(active) {
         return active ? 'Aktywny' : 'Nieaktywny';

@@ -16,8 +16,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
+      .sticker {
+        display: inline-block;
+        background-color: rgba(0, 0, 0, 0.30);
+        margin-right: 5px;
+        border-radius: 2px;
+      }
+      .sticker span {
+        display: inline-block;
+        background-color: rgba(255, 255, 255, 0.75);
+        font-size: 14px;
+        padding: 4px;
+        text-transform: uppercase;
+        color: rgba(0, 0, 0, 0.9);
+        /*color: var(--main-darken-900);*/
+        border-radius: 0 2px 2px 0;
+      }
+      .sticker .label {
+        background-color: transparent;
+        padding: 4px;
+        /*margin: 2px;*/
+        font-size: 10px;
+        color: #fff;
+        border-radius: 2px 0 0 2px;
+      }
     </style>
-    <div>Hello from <span>{{foo}}</span></div>
+    <div class="sticker">
+      <span class="label">[[label]]</span>
+      <span>[[data]]</span>
+    </div>
   </template>
   <script>
   (function() {
@@ -25,12 +52,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     Polymer({
       is: 'my-sticker',
-
       properties: {
-        foo: {
+        data: {
           type: String,
           value: 'my-sticker',
           notify: true
+        },
+        label: {
+          type: String,
+          value: 'dane'
         }
       }
     });
