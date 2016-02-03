@@ -37,7 +37,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       .fancy .title {
         padding: 8px;
-        color: var(--main-lighten-750);
+        color: var(--main-lighten-800);
         background-color: var(--my-card-title-color-not-active);
         font-size: 16px;
         border-radius: 2px 2px 0 0 ;
@@ -105,8 +105,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         background-color: var(--my-card-actions-color-not-active);
       }
       my-sticker {
-        margin-bottom: 10px;
+        margin-bottom: 5px;
         display: inline-block;
+      }
+      my-sticker[label="stan"]{
+        margin-top: 20px;
       }
     </style>
     <paper-card  animated-shadow="true" class$="fancy [[_computeClass(samochod.isActive)]]">
@@ -120,7 +123,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <my-sticker label="kierowca" data="[[samochod.kierowca]]"></my-sticker>
           <my-sticker label="rodzaj paliwa" data="[[samochod.paliwo]]"></my-sticker>
           <my-sticker label="norma zużycia" data="[[samochod.norma]]"></my-sticker>
-          <my-sticker label="stan" data="[[_computeStatusName(samochod.isActive)]]"></my-sticker>
+          <my-sticker label="stan" class="stan" data="[[_computeStatusName(samochod.isActive)]]"></my-sticker>
         </div>
         <div id="samochod-edit" class="edit" hidden$="{{!edit}}">
           <paper-toggle-button id="active" name="Aktywny" checked="[[samochod.isActive]]" on-change="_toggleActiveName"></paper-toggle-button>

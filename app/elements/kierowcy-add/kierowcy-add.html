@@ -21,19 +21,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         padding: 20px;
       }
 
-      .input-wrapper {
+      /*.input-wrapper {
         padding-left: 70px;
-      }
-
+      }*/
+/*
       paper-input {
         display: inline-block;
         width: 65%;
         --paper-input-container: {
           padding-bottom: 0;
-        };
+        };*/
 
         /* These styles are not DRY :( */
-        --paper-input-container-label: {
+        /*--paper-input-container-label: {
           font-size: 20px;
           font-family: 'Roboto Slab', 'Roboto', 'Helvetica', 'Arial', sans-serif;
           font-weight: normal;
@@ -49,14 +49,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         };
         --paper-input-container-underline-focus: {
           top: 7px;
-        };
+        };*/
       }
-      paper-input[focused] + paper-input + paper-button,
+      /*paper-input[focused] + paper-input + paper-button,
       paper-input[focused] + paper-button,
       paper-button[focused] {
         background: var(--default-primary-color);
         color: var(--text-primary-color);
-      }
+      }*/
 
       paper-button {
         background: #E0E0E0;
@@ -68,19 +68,96 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         /* https://github.com/PolymerElements/paper-button/pull/43 */
         outline-width: 3px;
       }
+      .input-wrapper {
+        padding: 5px;
+      }
+
+      paper-card{
+        width: 100%;
+        margin-top: 5px;
+      }
+      paper-fab {
+        background: #E6C629;
+        width: 45px;
+        height: 45px;
+      }
+      .title {
+        background-color:rgb(55, 95, 146);
+        border-radius: 2px;
+        color: #fff;
+        text-transform: uppercase;
+        padding: 5px 10px 5px;
+      }
+      .title .title {
+        padding: 0;
+      }
+
+      .list paper-icon-item{
+        display: inline-flex;
+      }
+      .form {
+        margin-top: 1px;
+      }
+
+      .item span {
+        display: inline-block;
+        text-transform: uppercase;
+        color: var(--main-lighten-900);
+        font-size: 10px;
+        min-width: 20px;
+      }
+      .form [two-line] {
+        font-size: 12px;
+        margin: 0 5px 0 5px;
+      }
+
+      .item > div {
+        text-transform: uppercase;
+        color: var(--main-lighten-900);
+        font-size: 10px;
+        background-color: var(--main-template-500);
+        padding: 0 5px 0 5px;
+      }
+      .form .kierowca {
+        font-size: 12px;
+        font-weight: bold;
+      }
+      .form-item paper-input {
+        padding: 0;
+      }
     </style>
 
     <paper-material elevation="1">
-      <h2 class="page-title">Dodaj kierowcę</h2>
-      <!-- <paper-fab icon="add" title="Dodaj" class="green"></paper-fab> -->
       <div class="input-wrapper">
 
-          <paper-input id="imie" label="Imię" on-keydown="_checkAdd"></paper-input>
-          <paper-input id="nazwisko" label="Nazwisko" on-keydown="_checkAdd"></paper-input>
-
-          <paper-button on-tap="_add">Dodaj</paper-button>
-
       </div>
+      <!-- kierowcy-add -->
+      <paper-card  class="fancy active" animated-shadow="true" elevation="0">
+        <div class="title active">
+            <span>Dodaj kierowcę</span>
+        </div>
+      </paper-card>
+      <div id="card-content" class="card-content">
+        <div class="input-wrapper">
+          <paper-icon-item class="form">
+            <div class="avatar" item-icon>
+              <paper-fab icon="icons:add" disabled$="[[!selected]]" on-tap="_add"></paper-fab>
+
+            </div>
+            <paper-item-body two-line>
+              <div class="item">
+                <div class="">Imię</div>
+                <paper-input id="imie"  no-label-float prevent-invalid-input autocapitalize allowed-pattern="[-,a-z,A-Z,ąęśżźńółćĄĘŚŻŹÓŁŃĆ]" label="Imię" on-keydown="_checkAdd" on-keydown="_checkAdd"></paper-input>
+              </div>
+            </paper-item-body>
+            <paper-item-body two-line>
+              <div class="item">
+                <div class="">Nazwisko</div>
+                <paper-input id="nazwisko" no-label-float prevent-invalid-input allowed-pattern="[-,a-z,A-Z,ąęśżźńółćĄĘŚŻŹÓŁŃĆ]" label="Nazwisko" on-keydown="_checkAdd"></paper-input>
+              </div>
+            </paper-item-body>
+          </paper-icon-item>
+        </div>
 
     </paper-material>
   </template>
