@@ -14,42 +14,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <template>
     <style>
       :host {
-        display: block;
-        background-color: #f9f9f9;
-      }
-      paper-material {
-        padding: 20px;
-      }
-
-      /*.input-wrapper {
-        padding-left: 70px;
-      }*/
-/*
-      paper-input {
-        display: inline-block;
-        width: 65%;
-        --paper-input-container: {
-          padding-bottom: 0;
-        };*/
-
-        /* These styles are not DRY :( */
-        /*--paper-input-container-label: {
-          font-size: 20px;
-          font-family: 'Roboto Slab', 'Roboto', 'Helvetica', 'Arial', sans-serif;
-          font-weight: normal;
-          color: #9E9E9E;
-        };
-        --paper-input-container-input: {
-          font-size: 20px;
-          font-family: 'Roboto Slab', 'Roboto', 'Helvetica', 'Arial', sans-serif;
-        };
-        --paper-input-container-underline: {
-          top: 7px;
-          background: #9E9E9E;
-        };
-        --paper-input-container-underline-focus: {
-          top: 7px;
-        };*/
+          display: block;
+          background-color: #f9f9f9;
+        }
+        paper-material {
+          padding: 20px;
+        }
       }
       /*paper-input[focused] + paper-input + paper-button,
       paper-input[focused] + paper-button,
@@ -58,16 +28,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         color: var(--text-primary-color);
       }*/
 
-      paper-button {
+      /*paper-button {
         background: #E0E0E0;
         color: #9E9E9E;
         font-size: 14px;
-      }
+      }*/
 
-      paper-button[focused] {
-        /* https://github.com/PolymerElements/paper-button/pull/43 */
-        outline-width: 3px;
-      }
       .input-wrapper {
         padding: 5px;
       }
@@ -147,13 +113,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <paper-item-body two-line>
               <div class="item">
                 <div class="">Imię</div>
-                <paper-input id="imie"  no-label-float prevent-invalid-input autocapitalize allowed-pattern="[-,a-z,A-Z,ąęśżźńółćĄĘŚŻŹÓŁŃĆ]" label="Imię" on-keydown="_checkAdd" on-keydown="_checkAdd"></paper-input>
+                <paper-input id="imie"  prevent-invalid-input autocapitalize allowed-pattern="[-,a-z,A-Z,ąęśżźńółćĄĘŚŻŹÓŁŃĆ]" label="Imię" on-keydown="_checkAdd" on-keydown="_checkAdd"></paper-input>
               </div>
             </paper-item-body>
             <paper-item-body two-line>
               <div class="item">
                 <div class="">Nazwisko</div>
-                <paper-input id="nazwisko" no-label-float prevent-invalid-input allowed-pattern="[-,a-z,A-Z,ąęśżźńółćĄĘŚŻŹÓŁŃĆ]" label="Nazwisko" on-keydown="_checkAdd"></paper-input>
+                <paper-input id="nazwisko" prevent-invalid-input allowed-pattern="[-,a-z,A-Z,ąęśżźńółćĄĘŚŻŹÓŁŃĆ]" label="Nazwisko" on-keydown="_checkAdd"></paper-input>
               </div>
             </paper-item-body>
           </paper-icon-item>

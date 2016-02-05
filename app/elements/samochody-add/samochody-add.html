@@ -22,16 +22,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       .input-wrapper {
-        padding-left: 70px;
+        /*padding-left: 70px;*/
       }
-      paper-dropdown-menu,
+      /*paper-dropdown-menu,
       paper-input {
         display: inline-block;
         width: 65%;
         --paper-input-container: {
           padding-bottom: 0;
         };
-        /* These styles are not DRY :( */
         --paper-input-container-label: {
           font-size: 18px;
           font-family: 'Roboto Slab', 'Roboto', 'Helvetica', 'Arial', sans-serif;
@@ -49,105 +48,139 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --paper-input-container-underline-focus: {
           top: 7px;
         };
-      }
-      paper-input[focused] + paper-input + paper-button,
-      paper-input[focused] + paper-button,
-      paper-button[focused] {
-        background: var(--default-primary-color);
-        color: var(--text-primary-color);
+      }*/
+
+      .input-wrapper {
+        padding: 5px;
       }
 
-      paper-button {
-        background: #E0E0E0;
-        color: #9E9E9E;
-        font-size: 14px;
+      paper-card{
+        width: 100%;
+        background-color: yellow;
+        /*margin-top: 5px;*/
       }
-      paper-item {
-        width: 200px;
+      paper-fab {
+        background: #E6C629;
+        width: 45px;
+        height: 45px;
       }
-      paper-button[focused] {
-        /* https://github.com/PolymerElements/paper-button/pull/43 */
-        outline-width: 3px;
+      .title {
+        background-color:rgb(55, 95, 146);
+        border-radius: 2px;
+        color: #fff;
+        text-transform: uppercase;
+        padding: 5px 10px 5px;
       }
-      paper-radio-button {
+      .title .title {
+        padding: 0;
+      }
+
+      .list paper-icon-item{
+        display: inline-flex;
+      }
+      .form {
+        margin-top: 1px;
+      }
+
+      .item span {
         display: inline-block;
+        text-transform: uppercase;
+        color: var(--main-lighten-900);
+        font-size: 10px;
+        min-width: 20px;
       }
-      .horizontal-section {
-        width: 65%;
-        margin-top: 20px;
+      .form [two-line] {
+        font-size: 12px;
+        margin: 0 5px 0 5px;
       }
-      .horizontal-section .section-label {
-        font-size: 14px;
-        font-family: 'Roboto Slab', 'Roboto', 'Helvetica', 'Arial', sans-serif;
-        font-weight: normal;
-        color: #3F51B5;
+
+      .item > div {
+        text-transform: uppercase;
+        color: var(--main-lighten-900);
+        font-size: 10px;
+        background-color: var(--main-template-500);
+        padding: 0 5px 0 5px;
       }
+      .form .kierowca {
+        font-size: 12px;
+        font-weight: bold;
+      }
+      .form-item paper-input {
+        padding: 0;
+      }
+
       .section-label span {
         font-weight: bold;
         color: #333;
         font-size: 18px;
       }
-      paper-radio-button{
-        font-size: 16px;
-        font-family: 'Roboto Slab', 'Roboto', 'Helvetica', 'Arial', sans-serif;
-        font-weight: normal;
-        --paper-radio-button-label-color: #9E9E9E;
-      }
-      paper-slider {
-        width: 60%;
-        display: inline-block;
-      }
+
       paper-menu {
           overflow: hidden;
       }
-      paper-item {
+      paper-dropdown-menu {
+        /*background-color: yellow;*/
+        width: 100%;
+      }
+      /*paper-item {
         width: 300px;
-
+      }*/
+      paper-input#norma {
+        /*background-color: aqua;*/
       }
       #contentWrapper.iron-dropdown > * {
         /* overflow: hidden; */
       overflow-x: hidden;
       }
+      paper-radio-group {
+        height: 60px;
+      }
     </style>
     <paper-material elevation="1">
-      <h2 class="page-title">Dodaj samochod</h2>
-      <!-- <paper-fab icon="add" title="Dodaj" class="green"></paper-fab> -->
+    <div class="input-wrapper">
+    <!-- samochod-add -->
+    <paper-card  class="fancy active" animated-shadow="true" elevation="0">
+      <div class="title active">
+          <span>Dodaj samochód</span>
+      </div>
+    </paper-card>
+    <div id="card-content" class="card-content">
       <div class="input-wrapper">
-
-          <paper-input id="marka" label="Marka" on-keydown="_checkAdd"></paper-input>
-          <paper-input id="nazwa" label="Nazwa" on-keydown="_checkAdd"></paper-input>
-          <paper-input id="rejestracja" label="Rejestracja" on-keydown="_checkAdd"></paper-input>
-          <div class="horizontal-section">
-            <div class="section-label">
-              Rodzaj paliwa
-            </div>
-            <paper-radio-group id="paliwo" selected="ON">
-              <paper-radio-button name="ON">olej napędowy</paper-radio-button>
-              <paper-radio-button name="benzyna">benzyna</paper-radio-button>
-            </paper-radio-group>
+        <paper-icon-item class="form">
+          <div class="avatar" item-icon>
+            <paper-fab icon="icons:add" disabled$="[[!selected]]" on-tap="_add"></paper-fab>
           </div>
-          <div class="horizontal-section">
-            <div class="section-label">
-              Norma zużycia paliwa= <span>{{normaPal}} </span> litrow na 100km
+          <paper-item-body two-line>
+            <div class="item">
+              <paper-input id="marka"  prevent-invalid-input autocapitalize allowed-pattern="[-,a-z,A-Z,ąęśżźńółćĄĘŚŻŹÓŁŃĆ]" label="Marka" on-keydown="_checkAdd" on-keydown="_checkAdd"></paper-input>
+              <paper-input id="nazwa" prevent-invalid-input allowed-pattern="[-,a-z,A-Z,ąęśżźńółćĄĘŚŻŹÓŁŃĆ]" label="Nazwa" on-keydown="_checkAdd"></paper-input>
             </div>
-            <paper-slider id="norma" pin snaps min="1" max="20" step="1" value="{{normaPal}}"></paper-slider>
-          </div>
-          <!-- Drop down menu - lista kierowcow -->
-          <paper-dropdown-menu id="kierowca" label="Kierowca">
-            <paper-menu  class="dropdown-content">
-              <template is="dom-repeat" items="[[kierlist]]" as="kierowca">
-                <paper-item >[[kierowca.imie]] [[kierowca.nazwisko]]</paper-item>
-              </template>
-            </paper-menu>
-          </paper-dropdown-menu>
+          </paper-item-body>
+          <paper-item-body two-line>
+            <div class="item">
+              <paper-dropdown-menu id="kierowca" label="Kierowca">
+                <paper-menu  class="dropdown-content">
+                  <template is="dom-repeat" items="[[kierlist]]" as="kierowca">
+                    <paper-item >[[kierowca.imie]] [[kierowca.nazwisko]]</paper-item>
+                  </template>
+                </paper-menu>
+              </paper-dropdown-menu>
+              <paper-input id="rejestracja" prevent-invalid-input allowed-pattern="[-,a-z,A-Z,ąęśżźńółćĄĘŚŻŹÓŁŃĆ]" label="Rejestracja" on-keydown="_checkAdd"></paper-input>
+            </div>
+          </paper-item-body>
+          <paper-item-body two-line>
+            <div class="item">
+              <paper-input id="norma" type="number" prevent-invalid-input allowed-pattern="[0-9]" label="Norma zużycia paliwa" on-keydown="_checkAdd"></paper-input>
+              <paper-radio-group id="paliwo" selected="ON">
+                <paper-radio-button name="ON">olej napędowy</paper-radio-button>
+                <paper-radio-button name="benzyna">benzyna</paper-radio-button>
+              </paper-radio-group>
+            </div>
+          </paper-item-body>
 
-
-          <paper-button on-tap="_add">Dodaj</paper-button>
-
+        </paper-icon-item>
       </div>
 
-      <todo-input on-add-todo="addTodo"></todo-input>
-    </paper-material>
   </template>
   <script>
   (function() {
@@ -184,8 +217,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.$.marka.value = null;
           this.$.paliwo.value = 'ON';
           this.$.rejestracja.value = null;
-          // this.$.kierowca.selectedItemLabel = null;
-          this.$.rejestracja.value = null;
+          this.$.norma.value = 10;
           console.log(this.kierowcy);
           console.log('Dodawanie',this.$.kierowca.selectedItemLabel);
         }
