@@ -1,0 +1,90 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="stylesheet" href="..\..\bower_components\weather-icons\css\weather-icons.css">
+
+<dom-module id="pm-weather">
+  <template>
+    <style>
+      :host {
+        display: block;
+        padding: 40px 0;
+      }
+      .weather {
+        font-size: 68px;
+        color: #eee;
+        text-align: right;
+      }
+    </style>
+    <paper-material elevation="0">
+      <iron-ajax
+          auto
+          url="http://api.openweathermap.org/data/2.5/weather"
+          params='{"q":"Barczewo, pl", "appid":"44db6a862fba0b067b1930da0d769e98"}'
+          handle-as="json"
+          on-response="handleResponse"
+          last-response="{{ajaxResponse}}"
+          debounce-duration="300" >
+
+        </iron-ajax>
+
+      <div class="weather">
+        {{ajaxResponse.name}}
+        {{temp}}&deg;C
+        <!-- {{ajaxResponse.weather.0.id}} -->
+        <i id="weater-icon" class$="wi [[weatherIcon]]"></i>
+      </div>
+    </paper-material>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'pm-weather',
+
+      properties: {
+        foo: {
+          type: String,
+          value: 'pm-weather',
+          notify: true
+        },
+        ajaxResponse: {
+          type: Object,
+          notify: true
+        },
+        temp: {
+          type: Number,
+          computed: '_computeTemp(ajaxResponse.main.temp)',
+          notify: true
+        },
+        weatherIcon: {
+          type: String,
+          computed: '_computeIcon(ajaxResponse.weather.0.id)',
+          notify: true
+        }
+      },
+      _computeTemp: function(tempKelvin) {
+        // console.log('ICON');
+        return Math.round(tempKelvin - 273.15);
+      },
+      _computeIcon: function(id) {
+        console.log('ICON2');
+        // return Math.round(tempKelvin - 273.15);
+        return 'wi-' + id;
+      },
+      handleResponse: function(e) {
+        // console.log('RESPONSE', e, this.ajaxResponse);
+      }
+    });
+  })();
+  </script>
+</dom-module>
