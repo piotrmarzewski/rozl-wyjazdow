@@ -40,7 +40,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     </style>
     <div id="search" class="search"><span></span>
-      <input id="input" is="iron-input" class="input" bind-value="{{searchValue}}"  type="search" id="input" on-keyup="onKeyPress" on-blur="disableSearch" autocomplete="off">
+      <input is="iron-input" class="input" bind-value="{{searchValue}}"  type="search" id="input" on-keyup="onKeyPress" on-blur="disableSearch" autocomplete="off">
       <paper-icon-button id="sbutton" icon="icons:search" on-tap="toggleInput" toggles></paper-icon-button>
       <!-- <iron-icon icon="icons:search"></iron-icon> -->
     </div>
@@ -67,8 +67,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.toggleClass('opened');
         // clear input value
         this.set('searchValue','');
-        //focus on search field
-        this.className.indexOf('opened') >0  &&  this.$.input.focus();
       },
       disableSearch: function (e) {
         console.log("BLUR")
