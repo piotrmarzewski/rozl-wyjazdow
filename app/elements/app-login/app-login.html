@@ -72,8 +72,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <paper-dialog id="login" modal="true" >
       <p>Logowanie do aplikacji </p>
-        <paper-input label="Email" value="{{email::input}}"></paper-input>
-        <paper-input type="password" label="Hasło" value="{{password::input}}"></paper-input>
+        <paper-input id="email" label="Email" value="{{email::input}}"></paper-input>
+        <paper-input id="password" type="password" label="Hasło" value="{{password::input}}"></paper-input>
         <div class="buttons">
           <paper-button dialog-dismiss >Anuluj</paper-button>
           <paper-button on-tap="login" autofocus>Login</paper-button>
@@ -176,6 +176,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _loginChanged: function () {
         if (this.logged) {
           this.$.login.close();
+          this.$.email.value = "";
+          this.$.password.value = "";
         }
       }
     });
