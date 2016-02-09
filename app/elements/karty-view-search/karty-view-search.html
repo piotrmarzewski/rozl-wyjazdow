@@ -9,6 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/paper-icon-button/paper-icon-button.html">
 
 <dom-module id="karty-view-search">
   <template>
@@ -71,10 +72,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.className.indexOf('opened') >0  &&  this.$.input.focus();
       },
       disableSearch: function (e) {
-        console.log("BLUR")
+        // console.log("BLUR")
       },
       onKeyPress: function(e) {
-        console.log("KEYPRESS");
+        // console.log("KEYPRESS");
       }
     });
   })();

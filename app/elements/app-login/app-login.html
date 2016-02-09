@@ -1,0 +1,184 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="app-login">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      paper-toast {
+        background-color: red;
+      }
+      paper-dialog.colored {
+        border: 2px solid;
+        border-color: var(--paper-green-500);
+        background-color: var(--paper-light-green-50);
+        color: var(--paper-green-500);
+      }
+
+      paper-dialog.size-position {
+        position: fixed;
+        top: 16px;
+        right: 16px;
+        width: 300px;
+        height: 600px;
+        overflow: auto;
+      }
+      paper-dialog {
+        background-color: #FFF;
+      }
+      paper-input {
+        display: block;
+      }
+      paper-tooltip {
+        --paper-tooltip-background: rgba(0,0,0,0.5);
+        --paper-tooltip {
+          font-size: 12px;
+        }
+      }
+    </style>
+    <firebase-auth id="firebaseLogin"
+      user="{{user}}"
+      status-known="{{statusKnown}}"
+      location="https://zbk.firebaseio.com"
+      provider="password"
+      on-error="errorHandler">
+    </firebase-auth>
+
+    <br>
+    <div>
+      <span hidden$="{{computeLoginHidden(statusKnown, user)}}"> {{computeLoginStatus(statusKnown, user)}} </span>
+      <iron-icon icon="account-circle" hidden$="{{computeLogoutHidden(statusKnown, user)}}"></iron-icon> [[user.password.email]]
+      <!-- <span>Not logged {{!logged}}</span> -->
+      <paper-icon-button id="logoutUser" on-tap="logout"  icon="power-settings-new" hidden$="{{computeLogoutHidden(statusKnown, user)}}"></paper-icon-button>
+      <paper-tooltip for="logoutUser"> Wyloguj </paper-tooltip>
+
+      <paper-icon-button id="loginUser" on-tap="openDialog"  icon="input" hidden$="{{computeLoginHidden(statusKnown, user)}}"></paper-icon-button>
+      <paper-tooltip for="loginUser"> Zaloguj </paper-tooltip>
+
+    </div>
+    <div hidden$="{{computeLoginHidden(statusKnown, user)}}">
+    </div>
+
+    <paper-dialog id="login" modal="true" >
+      <p>Logowanie do aplikacji </p>
+        <paper-input label="Email" value="{{email::input}}"></paper-input>
+        <paper-input type="password" label="Hasło" value="{{password::input}}"></paper-input>
+        <div class="buttons">
+          <paper-button dialog-dismiss >Anuluj</paper-button>
+          <paper-button on-tap="login" autofocus>Login</paper-button>
+      </div>
+    </paper-dialog>
+    <!-- error toast -->
+    <paper-toast id="errormsg" text="[[message]]" ></paper-toast>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'app-login',
+
+      properties: {
+        foo: {
+          type: String,
+          value: 'app-login',
+          notify: true
+        },
+
+        message: {
+          type: String,
+          value: ''
+        },
+
+        email: {
+          type: String,
+          value: ''
+        },
+
+        password: {
+          type: String,
+          value: ''
+        },
+
+        user: {
+          type: Object,
+          value: null,
+          notify: true
+        },
+
+        statusKnown: {
+          type: Boolean,
+          notify: true
+        },
+
+        logged: {
+          type: Boolean,
+          computed: 'computeLogged(statusKnown, user)',
+          observer: '_loginChanged'
+        }
+      },
+
+      login: function() {
+        var params;
+        params = params || {};
+        params.email = this.email;
+        params.password = this.password;
+        if (!params.email || !params.password ) {
+          this.message = 'Błąd: email i hasło musza byc wprowadzone';
+          return this.$.errormsg.open();
+        }
+        this.$.firebaseLogin.login(params);
+      },
+      logout: function() {
+        this.$.firebaseLogin.logout();
+      },
+      errorHandler: function(e) {
+        this.message = 'Error: ' + e.detail.message;
+        this.$.errormsg.open();
+      },
+      openDialog: function () {
+        this.$.login.open();
+        console.log('DIALOG ', this.$.login.fitInto, this.$.login.backdropElement );
+      },
+      computeLoginStatus: function(statusKnown, user) {
+        if (statusKnown && user) {
+          console.log('USER ',user);
+          return 'Wyloguj';
+        }
+
+        if (statusKnown) {
+          return 'Zaloguj';
+        }
+
+        return 'Status nieznany (Sprawdzanie statusu...)';
+      },
+      computeLoginHidden: function (statusKnown, user) {
+        return !statusKnown || !!user;
+      },
+      computeLogoutHidden: function (statusKnown, user) {
+        return !statusKnown || !user;
+      },
+      computeLogged: function (status, user){
+        console.log('LOGGED', status, !!user, (status && !!user) );
+        return (status && !!user);
+      },
+      _loginChanged: function () {
+        if (this.logged) {
+          this.$.login.close();
+        }
+      }
+    });
+  })();
+  </script>
+</dom-module>

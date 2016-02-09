@@ -15,8 +15,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <meta charset="utf-8">
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="generator" content="Polymer Starter Kit" />
-  <title>Polymer Starter Kit</title>
+  <meta name="app" content="Rozliczenia wyjazdow" />
+  <title>Rozliczenia wyjazdów</title>
   <!-- Place favicon.ico in the `app/` directory -->
 
   <!-- Chrome for Android theme color -->
@@ -64,6 +64,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <body unresolved class="fullbleed layout vertical">
   <span id="browser-sync-binding"></span>
   <template is="dom-bind" id="app">
+    <!-- <app-login user="{{user}}" logged="{{logged}}"></app-login> -->
 
     <paper-drawer-panel id="paperDrawerPanel">
       <!-- Drawer Scroll Header Panel -->
@@ -96,14 +97,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <span>Karty drogowe</span>
           </a>
 
-          <!-- <a data-route="users" href="{{baseUrl}}users">
-            <iron-icon icon="info"></iron-icon>
-            <span>Users</span>
-          </a> -->
-          <!-- <a data-route="contact" href="{{baseUrl}}contact">
-            <iron-icon icon="mail"></iron-icon>
-            <span>Contact</span>
-          </a> -->
         </paper-menu>
       </paper-scroll-header-panel>
 
@@ -112,12 +105,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <!-- Main Toolbar -->
         <paper-toolbar id="mainToolbar" class="tall">
+
           <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
           <span class="flex"></span>
-
           <!-- Toolbar icons -->
-          <paper-icon-button icon="refresh"></paper-icon-button>
-          <paper-icon-button icon="search"></paper-icon-button>
+          <!-- <paper-icon-button icon="refresh"></paper-icon-button> -->
+          <!-- <paper-icon-button icon="search"></paper-icon-button> -->
 
           <!-- Application name -->
           <div class="middle middle-container center horizontal layout">
@@ -129,6 +122,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div class="bottom-title paper-font-subhead">ZBK Barczewo</div>
           </div>
 
+          <app-login user="{{user}}" logged="{{logged}}"></app-login>
         </paper-toolbar>
 
         <!-- Main Content -->
@@ -139,8 +133,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
               <paper-material elevation="1">
                 <app-dashboard></app-dashboard>
-
-
               </paper-material>
 
             </section>
@@ -197,7 +189,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <paper-toast id="toast">
       <span class="toast-hide-button" role="button" tabindex="0" onclick="app.$.toast.hide()">Ok</span>
     </paper-toast>
-
+    <!-- <paper-dialog id="login" modal="true" opened="true">
+      <p>Logowanie do aplikacji </p>
+        <paper-input label="Email" value="{{email::input}}"></paper-input>
+        <paper-input label="Hasło" value="{{password::input}}"></paper-input>
+        <div class="buttons">
+        <paper-button on-tap="login" autofocus>Login</paper-button>
+      </div>
+    </paper-dialog> -->
     <!-- Uncomment next block to enable Service Worker support (1/2) -->
     <!--
     <paper-toast id="caching-complete"
