@@ -41,9 +41,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
       paper-tooltip {
-        --paper-tooltip-background: rgba(0,0,0,0.5);
+        --paper-tooltip-background: rgba(0,0,0,0.6);
         --paper-tooltip {
           font-size: 12px;
+        }
+      }
+      #user {
+        font-size: 12px;
+      }
+      @media (max-width: 400px) {
+        #user > span {
+          display: none;
+        }
+      }
+      @media (max-width: 601px) {
+        #user {
+          font-size: 10px;
         }
       }
     </style>
@@ -58,7 +71,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <br>
     <div>
       <span hidden$="{{computeLoginHidden(statusKnown, user)}}"> {{computeLoginStatus(statusKnown, user)}} </span>
-      <iron-icon icon="account-circle" hidden$="{{computeLogoutHidden(statusKnown, user)}}"></iron-icon> [[user.password.email]]
+      <span id="user"><iron-icon id="usericon" icon="account-circle" hidden$="{{computeLogoutHidden(statusKnown, user)}}"></iron-icon><span> [[user.password.email]]</span></span>
+      <paper-tooltip for="usericon">  [[user.password.email]] </paper-tooltip>
+
       <!-- <span>Not logged {{!logged}}</span> -->
       <paper-icon-button id="logoutUser" on-tap="logout"  icon="power-settings-new" hidden$="{{computeLogoutHidden(statusKnown, user)}}"></paper-icon-button>
       <paper-tooltip for="logoutUser"> Wyloguj </paper-tooltip>

@@ -31,6 +31,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --paper-toast-background-color: green;
         --paper-toast-color: white;
       }
+      @media (max-width: 600px) {
+
+        paper-material {
+          /*--menu-container-display: none;*/
+          width: calc(97.33% - 31px);
+          /*min-width: 280px;*/
+          padding-left: 15px;
+          padding-right: 15px;
+        }
+
+      }
     </style>
 
     <paper-material elevation="1">
