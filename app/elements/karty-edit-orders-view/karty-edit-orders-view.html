@@ -77,7 +77,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
       </div>
       <div id="card-content" class="card-content">
-        <template is="dom-repeat" id="zleceniaList" items="[[zlecenia]]" as="zlecenie">
+        <template is="dom-repeat" id="zleceniaList" items="{{zlecenia}}" as="zlecenie">
         <karty-edit-orders-item index="{{index}}" on-delete-order="deleteOrder" zlecenie="{{zlecenie}}"></karty-edit-orders-item>
         </template>
         <!-- <karty-edit-maindata karta={{karta}}></karty-edit-maindata>
@@ -87,7 +87,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <karty-edit-orders-add
           on-add-karta-order="addKartaOrder"
           kierowca-nazw="[[kierowcaNazw]]"
-          kierlist="[[kierlist]]"></karty-edit-orders-add>
+          kierlist="[[kierlist]]">
+    </karty-edit-orders-add>
 
   </template>
   <script>

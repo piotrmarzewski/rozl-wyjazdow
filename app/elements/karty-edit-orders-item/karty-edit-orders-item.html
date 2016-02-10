@@ -45,6 +45,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .zlecenie {
         margin-top: 1px;
       }
+      .zlecenie-item {
+        min-width: 125px;
+      }
+      .razem .zlecenie-item {
+        min-width: 100px;
+      }
       .zlecenie-item .label {
         display: inline-block;
         text-transform: uppercase;
@@ -56,7 +62,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         content: " km";
         color: #D4D0D0;
       }
-      .zlecenie-item .czas::after{
+      .razem .zlecenie-item .czas::after{
         content: " min";
         color: #D4D0D0;
       }
@@ -80,25 +86,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .zlecenie-item .value{
         float: right;
       }
+      paper-item-body.wyjazd,
+      paper-item-body.przyjazd {
+        min-width: 125px;
+      }
+      paper-item-body.razem {
+        min-width: 100px;
+      }
       paper-icon-button{
         color: white;
         border-radius: 15px;
         padding: 2px;
         position: absolute;
         right: -11px;
-        /*background-color: var(--paper-light-blue-500);*/
         background-color: rgba(55, 95, 146, 0.45);
         width: 25px;
         height: 25px;
-        /*box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
-        0 3px 14px 2px rgba(0, 0, 0, 0.12),
-        0 5px 5px -3px rgba(0, 0, 0, 0.4);*/
 
       }
+      paper-icon-button.accept,
       paper-icon-button.edit {
         --paper-icon-button-ink-color: var(--paper-orange-500);
         top: 10px;
       }
+      paper-icon-button.cancel,
       paper-icon-button.delete {
         --paper-icon-button-ink-color: var(--paper-orange-500);
         top: 40px;
@@ -116,51 +127,141 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         height: 80%;
         margin: 10%;
       }
+      /*.trasa, .wyjazd, .przyjazd, .razem {
+        min-width: 135px;
+      }*/
+      paper-tooltip {
+        --paper-tooltip-background: rgba(55, 95, 146, 0.9);
+      }
+      /*paper-dialog {
+        background-color: #fff;
+      }*/
+      :host.edit paper-icon-item > paper-item-body {
+        display: none;
+      }
+
+
+      .editform,
+      paper-icon-button.cancel,
+      paper-icon-button.accept {
+        display: none;
+      }
+      :host.edit .editform,
+      :host.edit paper-icon-button.cancel,
+      :host.edit paper-icon-button.accept {
+        display: block;
+      }
+      :host.edit paper-icon-button.edit,
+      :host.edit paper-icon-button.delete{
+        display: none;
+      }
+      .editform {
+        /*background-color: yellow;*/
+        /*height: 100px;*/
+        width: 100%;
+      }
+      paper-input {
+        font-size: 10px;
+        --paper-input-container-color: rgba(55, 95, 146, 0.5);
+        --paper-input-container-focus-color: rgb(55, 95, 146);
+        --paper-input-container-input-color: #555;
+        --paper-input-container-input: {
+          font-size: 11px;
+        }
+        --paper-input-container: {
+          padding: 0;
+        }
+      }
+
     </style>
     <paper-icon-item class="zlecenie">
       <div class="avatar" item-icon>[[indexInc]]</iron-icon></div>
-      <paper-item-body two-line>
+      <paper-item-body two-line id="kierowca">
         <div class="zlecenie-item kierowca">
           <div class="">kierowca</div>
           [[zlecenie.kierowca]]<span></span><br>
           <span>&nbsp;</span>&nbsp;
         </div>
+        <paper-tooltip for="kierowca">Kierowca: [[zlecenie.kierowca]]</paper-tooltip>
       </paper-item-body>
-      <paper-item-body two-line>
+      <paper-item-body two-line id="trasa">
         <div class="zlecenie-item">
-          <div class="">trasa</div>
+          <div class="trasa">trasa</div>
           <span class="label">z: </span>[[zlecenie.trasa.z]]<br>
           <span class="label">do: </span>[[zlecenie.trasa.do]]
         </div>
+        <paper-tooltip for="trasa">Trasa z: [[zlecenie.trasa.z]] do: [[zlecenie.trasa.do]] </paper-tooltip>
       </paper-item-body>
-      <paper-item-body two-line>
+      <paper-item-body two-line class="wyjazd">
         <div class="zlecenie-item">
-          <div class=""> wyjazd </div>
-          <span class="label">Data: </span> <span class="czas value"> {{_computeDateFormat(zlecenie.wyjazd.data)}} </span> <br>
+          <div class="wyjazd"> wyjazd </div>
+          <span class="label">Data: </span> <span class="czas value"> [[_computeDateFormat(zlecenie.wyjazd.data)]] </span> <br>
           <span class="label">Licznik: </span><span class="dystans value">[[zlecenie.wyjazd.licznik]]</span>
         </div>
       </paper-item-body>
-      <paper-item-body two-line>
+      <paper-item-body two-line class="przyjazd">
         <div class="zlecenie-item">
-          <div class=""> przyjazd </div>
-          <span class="label">Data: </span><span class="czas value"> {{_computeDateFormat(zlecenie.przyjazd.data)}}</span><br>
+          <div class="przyjazd"> przyjazd </div>
+          <span class="label">Data: </span><span class="czas value"> [[_computeDateFormat(zlecenie.przyjazd.data)]]</span><br>
           <span class="label">Licznik: </span><span class="dystans value"> [[zlecenie.przyjazd.licznik]]</span>
         </div>
       </paper-item-body>
-      <paper-item-body two-line>
+      <paper-item-body two-line class="razem">
         <div class="zlecenie-item">
-          <div class=""> Razem </div>
+          <div class="razem"> Razem </div>
           <span class="label">Czas.: </span><span class="czas value"> [[zlecenie.czas]] </span> <br>
-          <span class="label">Dystans: </span><span class="dystans value"> [[zlecenie.dystans]]</span>
+          <span class="label">Dyst.: </span><span class="dystans value"> [[zlecenie.dystans]]</span>
         </div>
       </paper-item-body>
-      <!-- <paper-fab mini icon="create" class="edit"></paper-fab> -->
-      <paper-icon-button icon="create" class="edit"></paper-icon-button>
-      <paper-icon-button icon="clear" class="delete" on-tap="_onDelete" ></paper-icon-button>
-      <!-- <paper-fab mini icon="clear" on-tap="_onDelete" class="delete"></paper-fab> -->
+      <paper-icon-button icon="delete" class="delete" on-tap="_onDelete" ></paper-icon-button>
+      <paper-icon-button icon="create" class="edit" on-tap="_onEdit"></paper-icon-button>
+
+
+      <div class="editform">
+        <paper-item>
+          <paper-item-body two-line>
+            <div class="zlecenie-item kierowca">
+              <div class="">kierowca</div>
+              <paper-dropdown-menu id="kierowca" no-label-float   label="[[kierowcaNazw]]">
+                <paper-menu  class="dropdown-content" id="kierowcamenu">
+                  <template is="dom-repeat" items="[[kierlist]]" as="kierowca">
+                    <paper-item >[[kierowca.imie]] [[kierowca.nazwisko]]</paper-item>
+                  </template>
+                </paper-menu>
+              </paper-dropdown-menu>
+            </div>
+          </paper-item-body>
+          <paper-item-body two-line>
+            <div class="zlecenie-item">
+              <div class="">trasa</div>
+              <paper-input id="trasaz" value="[[zlecenie.trasa.z]]" label="Z" no-label-float autocomplete autocapitalize></paper-input>
+              <paper-input id="trasado" value="[[zlecenie.trasa.do]]" label="Do" no-label-float></paper-input>
+            </div>
+          </paper-item-body>
+          <paper-item-body two-line>
+            <div class="zlecenie-item">
+              <div class=""> wyjazd </div>
+              <paper-input id="wyjazddata" label="" value="[[zlecenie.wyjazd.data]]" type="datetime-local" no-label-float ></paper-input>
+              <paper-input id="wyjazdlicznik" label="Licznik" value="[[zlecenie.wyjazd.licznik]]" type="number" min="1" max="5000" step="1" no-label-float></paper-input>
+              <!-- <span>Data: </span> [[zlecenie.wyjazd.godz]]<br>
+              <span>Licznik: </span> [[zlecenie.wyjazd.licznik]] -->
+            </div>
+          </paper-item-body>
+          <paper-item-body two-line>
+            <div class="zlecenie-item">
+              <div class=""> przyjazd </div>
+              <paper-input id="przyjazddata" label="" value="[[zlecenie.przyjazd.data]]" type="datetime-local" no-label-float ></paper-input>
+              <paper-input id="przyjazdlicznik" label="Licznik" value="[[zlecenie.przyjazd.licznik]]" type="number" min="100" max="5000" step="1" no-label-float></paper-input>
+              <!-- <span>Data: </span> [[zlecenie.przyjazd.godz]]<br>
+              <span>Licznik: </span> [[zlecenie.przyjazd.licznik]] -->
+            </div>
+          </paper-item-body>
+        </paper-item>
+      </div>
+      <paper-icon-button icon="done" class="accept" on-tap="_onAccept"></paper-icon-button>
+      <paper-icon-button icon="clear" class="cancel" on-tap="_onCancel" ></paper-icon-button>
     </paper-icon-item>
   </template>
-  gold-cc-input
   <script>
 
   (function() {
@@ -184,22 +285,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: String,
           value: 'karty-edit-orders-item',
           notify: true
-        },
-        // formatedDataPrzyj: {
-        //   type: String,
-        //   computed: '_computeDateFormat(zlecenie.przyjazd.data)'
-        // },
-        // formatedDataWyj: {
-        //   type: String,
-        //   computed: '_computeDateFormat(zlecenie.wyjazd.data)'
-        // }
-
+        }
       },
       _computeIndexInc: function(i) {
         return ++i;
       },
       _computeDateFormat: function(data) {
-        var formDate = data.slice(0,10) + " g. " + data.slice(11,16);
+        var formDate = data.slice(0,10) + " " + data.slice(11,16);
         return formDate;
       },
       computeFullName: function(a) {
@@ -208,7 +300,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _onDelete: function() {
         this.fire('delete-order', {zlecenie: this.zlecenie});
       },
-
+      _onEdit: function() {
+        this.toggleClass('edit');
+      },
+      _onAccept: function() {
+        console.log("ZLECENIE EDIT2", this.zlecenie);
+        this.toggleClass('edit');
+      },
+      _onCancel: function() {
+        this.toggleClass('edit');
+      }
     });
   })();
   </script>
