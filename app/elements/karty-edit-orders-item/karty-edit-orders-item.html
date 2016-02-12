@@ -156,9 +156,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: none;
       }
       .editform {
-        /*background-color: yellow;*/
+        background-color: rgba(55, 95, 146, 0.1);
         /*height: 100px;*/
         width: 100%;
+        padding: 5px 0;
+        margin-bottom: 5px;
+        /*border: solid 1px #555;*/
       }
       paper-input {
         font-size: 10px;
@@ -169,7 +172,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           font-size: 11px;
         }
         --paper-input-container: {
-          padding: 0;
+          padding: 0 0 1px 0 ;
         }
       }
 
@@ -304,8 +307,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.toggleClass('edit');
       },
       _onAccept: function() {
-        console.log("ZLECENIE EDIT2", this.zlecenie);
+
+        this.zlecenie.trasa = {
+          z: this.$.trasaz.value.toUpperCase(),
+          do: this.$.trasado.value.toUpperCase()
+        };
+        this.zlecenie.przyjazd = {
+          data: this.$.przyjazddata.value,
+          licznik: this.$.przyjazdlicznik.value
+        };
+        this.zlecenie.wyjazd = {
+          data: this.$.wyjazddata.value,
+          licznik: this.$.wyjazdlicznik.value
+        };
+        var distance = this.$.przyjazdlicznik.value - this.$.wyjazdlicznik.value;
+        var timeDiff = Date.parse(this.$.przyjazddata.value) - Date.parse(this.$.wyjazddata.value);
+        timeDiff = timeDiff/60000; //minutes
+        this.zlecenie.czas = timeDiff;
+        this.zlecenie.dystans = distance;
+
+        //set timestamp and update all properties in zlecenie
+        this.set('zlecenie.timestamp', new Date());
+
+        console.log("ZLECENIE UPDATE", this.zlecenie);
         this.toggleClass('edit');
+        this.fire('edited-order', {});
       },
       _onCancel: function() {
         this.toggleClass('edit');
