@@ -170,22 +170,50 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --paper-input-container-input-color: #555;
         --paper-input-container-input: {
           font-size: 11px;
-        }
+        };
         --paper-input-container: {
           padding: 0 0 1px 0 ;
+        };
+      }
+      #kierowca {
+        margin-top: 8px;
+      }
+      #kierowca paper-item {
+        font-size: 12px;
+        max-height: 40px;
+        min-height: 30px;
+        overflow-x: hidden;
+      }
+      paper-dropdown-menu {
+        --paper-dropdown-menu-input {
+          --paper-input-container-color: rgba(55, 95, 146, 0.5);
+          --paper-input-container-focus-color: rgb(55, 95, 146);
+          --paper-input-container-input-color: #555;
+          --paper-input-container-input: {
+            font-size: 12px;
+          };
+          --paper-input-container-label {
+            font-size: 12px;
+            /*color: yellow;*/
+          };
+          --paper-input-container-label-focus {
+            font-size: 12px;
+            /*color: yellow;*/
+          };
+
         }
       }
 
     </style>
     <paper-icon-item class="zlecenie">
       <div class="avatar" item-icon>[[indexInc]]</iron-icon></div>
-      <paper-item-body two-line id="kierowca">
+      <paper-item-body two-line id="kierowca_nazw">
         <div class="zlecenie-item kierowca">
           <div class="">kierowca</div>
           [[zlecenie.kierowca]]<span></span><br>
           <span>&nbsp;</span>&nbsp;
         </div>
-        <paper-tooltip for="kierowca">Kierowca: [[zlecenie.kierowca]]</paper-tooltip>
+        <paper-tooltip for="kierowca_nazw">Kierowca: [[zlecenie.kierowca]]</paper-tooltip>
       </paper-item-body>
       <paper-item-body two-line id="trasa">
         <div class="zlecenie-item">
@@ -225,7 +253,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-item-body two-line>
             <div class="zlecenie-item kierowca">
               <div class="">kierowca</div>
-              <paper-dropdown-menu id="kierowca" no-label-float   label="[[kierowcaNazw]]">
+              <paper-dropdown-menu id="kierowca" no-label-float   placeholder="[[zlecenie.kierowca]]">
                 <paper-menu  class="dropdown-content" id="kierowcamenu">
                   <template is="dom-repeat" items="[[kierlist]]" as="kierowca">
                     <paper-item >[[kierowca.imie]] [[kierowca.nazwisko]]</paper-item>
@@ -273,6 +301,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'karty-edit-orders-item',
 
       properties: {
+        kierlist: Array,
         index: {
           type: Number
         },
@@ -320,6 +349,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           data: this.$.wyjazddata.value,
           licznik: this.$.wyjazdlicznik.value
         };
+        // var kierowca = this.$.kierowca.selectedItemLabel || this.zlecenie.kierowca;
+        this.zlecenie.kierowca = this.$.kierowca.value || this.zlecenie.kierowca;
+
         var distance = this.$.przyjazdlicznik.value - this.$.wyjazdlicznik.value;
         var timeDiff = Date.parse(this.$.przyjazddata.value) - Date.parse(this.$.wyjazddata.value);
         timeDiff = timeDiff/60000; //minutes
@@ -332,8 +364,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         console.log("ZLECENIE UPDATE", this.zlecenie);
         this.toggleClass('edit');
         this.fire('edited-order', {});
+
       },
       _onCancel: function() {
+        //reset form to actual values
+        this.$.trasaz.value = this.zlecenie.trasa.z;
+        this.$.trasado.value = this.zlecenie.trasa.do;
+        this.$.wyjazddata.value = this.zlecenie.wyjazd.data;
+        this.$.wyjazdlicznik.value = this.zlecenie.wyjazd.licznik;
+        this.$.przyjazddata.value = this.zlecenie.przyjazd.data;
+        this.$.przyjazdlicznik.value = this.zlecenie.przyjazd.licznik;
+        // deselect kierowca menu
+        this.$.kierowcamenu.select(-1);
         this.toggleClass('edit');
       }
     });

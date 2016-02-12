@@ -134,7 +134,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         window.history.back();
       },
       _calculateFuelUsage: function (distance, norm) {
-        var usage = Math.round((distance/100)*norm);
+        var usage = (Math.round(((distance/100)*norm)*10))/10;
         console.log("USAGE",usage);
         return usage;
       }

@@ -143,7 +143,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-material elevation="1" class="horizontal edit"><iron-icon  class="prop-icon" icon="assignment-ind"></iron-icon>
           <!-- Drop down menu - lista kierowcow -->
             <paper-dropdown-menu id="kierowca" label="" placeholder="[[samochod.kierowca]]">
-              <paper-menu  class="dropdown-content">
+              <paper-menu  id="kierowcamenu" class="dropdown-content">
                 <template is="dom-repeat" items="[[kierlist]]" as="kierowca">
                   <paper-item >[[kierowca.imie]] [[kierowca.nazwisko]]</paper-item>
                 </template>
@@ -209,7 +209,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.active.checked = this.samochod.isActive;
         this.$.paliwo.selected = this.samochod.paliwo;
         this.$.norma.value = this.samochod.norma;
-        this.$.kierowca.placeholder = this.samochod.kierowca;
+        // this.$.kierowca.placeholder = this.samochod.kierowca;
+        this.$.kierowcamenu.select(-1);
       },
       _onAccept: function() {
         this.set('samochod.nazwa',this.$.nazwa.value);
