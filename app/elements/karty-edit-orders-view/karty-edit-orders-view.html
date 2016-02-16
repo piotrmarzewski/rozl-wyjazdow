@@ -130,12 +130,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
       _computeLocation: function(lb, id) {
-        var loc =  lb + "/" + id;
-        console.log("ZLECENIA", loc);
+        var loc =  lb + '/' + id;
+        console.log('ZLECENIA', loc);
         return loc;
       },
       addKartaOrder: function(e) {
-        console.log("Add-Karta-Order: ", e.detail);
+        console.log('Add-Karta-Order: ', e.detail);
         this.push('zlecenia', e.detail);
         var suma = this._sumDistance(this.zlecenia);
         // console.log("Dystans:", suma);

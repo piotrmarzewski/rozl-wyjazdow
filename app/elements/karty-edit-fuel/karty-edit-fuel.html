@@ -1,0 +1,120 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="karty-edit-fuel">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      paper-fab {
+        width: 40px;
+        height: 40px;
+        /*position: absolute;*/
+        left: 6px;
+        top: 22px;
+        /*display: none;*/
+      }
+      paper-item.add {
+        position: relative;
+        height: 80px;
+        line-height: 12px;
+        display: inline-block;
+        padding-left: 6px;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        padding-right: 20px;
+        border-left: 8px solid #375F92;
+        background-color: rgba(139, 176, 220, 0.37);
+        margin-right: 15px;
+        border-radius: 2px;
+      }
+    </style>
+    <firebase-collection
+      log="true"
+      location="[[location]]"
+      data="{{tankowania}}">
+    </firebase-collection>
+
+    <paper-item>
+
+    <template is="dom-repeat" id="tankowania" items="{{tankowania}}" as="tankowanie">
+      <karty-edit-fuel-item
+          on-delete-fuel="_delete"
+          tankowanie="{{tankowanie}}">
+      </karty-edit-fuel-item>
+    </template>
+
+    <paper-item class="add">
+      <paper-fab icon="add" on-tap="_add"></paper-fab>
+    </paper-item>
+
+    </paper-item>
+
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'karty-edit-fuel',
+
+      properties: {
+        id: {
+          type: String
+        },
+        tankowania: {
+          type: Array,
+          notify: true,
+        },
+        location: {
+          type: String,
+          computed: '_computeLocation(locationBase, id)',
+          notify: true
+        },
+        locationBase: {
+          type: String,
+          value: 'https://zbk.firebaseio.com/rozliczenia/karty'
+        }
+      },
+      _computeLocation: function(lb, id) {
+        var loc =  lb + '/' + id + '/paliwo' ;
+        console.log('PALIWO1: ', loc, this.id);
+        return loc;
+      },
+      _add: function () {
+        var tankowanie = {
+          miejsce: '',
+          nrKwitu: '',
+          ilosc: ''
+        };
+        this.push('tankowania', tankowanie );
+      },
+      _delete: function (e) {
+        console.log('TANKOWANIE DELETE', e.detail);
+        this.arrayDelete('tankowania', e.detail.tankowanie);
+      },
+      ready: function () {
+        // console.log('PALIWO ready', this.locationBase, this.id);
+        var tank = {
+          1: 'a',
+          2: 'b',
+          3: 'c'
+        };
+        Object.keys(tank).map(function(i){
+          console.log('TANK', i, tank[i]);
+        });
+      }
+    });
+  })();
+  </script>
+</dom-module>

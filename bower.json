@@ -10,7 +10,8 @@
     "polymer": "Polymer/polymer#^1.2.0",
     "paper-menu": "PolymerElements/paper-menu#4fecb43601",
     "firebase-element": "GoogleWebComponents/firebase-element#~1.0.9",
-    "weather-icons": "~2.0.10"
+    "weather-icons": "~2.0.10",
+    "pdfmake": "~0.1.20"
   },
   "devDependencies": {},
   "ignore": [],
