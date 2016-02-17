@@ -151,19 +151,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.toggleClass('edit');
       },
       _onAccept: function() {
-        // Object.keys(this.tankowanie).map(function(i){
-        //   console.log('TANK ',i, this.tankowanie[i]);
-        // });
         this.tankowanie.miejsce = this.$.miejsce.value;
         this.tankowanie.nrKwitu = this.$.nrKwitu.value;
         this.tankowanie.ilosc = this.$.ilosc.value;
-
         //set timestamp and update all properties in zlecenie
-        this.set('tankowanie.timestamp', new Date());
+        this.set('tankowanie.timestamp', new Date().getTime());
 
-        console.log('TANKOWANIE UPDATE', this.tankowanie);
         this.toggleClass('edit');
-        // this.fire('edited-order', {});
+        this.fire('edited-fuel', {ilosc: this.tankowanie.ilosc });
+        console.log('TANKOWANIE UPDATE', this.tankowanie.ilosc);
 
       },
       _onCancel: function() {

@@ -71,6 +71,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <template is="dom-repeat" id="tankowania" items="{{tankowania}}" as="tankowanie">
           <karty-edit-fuel-item
               on-delete-fuel="_delete"
+              on-edited-fuel="editedFuel"
               tankowanie="{{tankowanie}}">
           </karty-edit-fuel-item>
         </template>
@@ -125,17 +126,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _delete: function (e) {
         console.log('TANKOWANIE DELETE', e.detail);
         this.arrayDelete('tankowania', e.detail.tankowanie);
+        this.editedFuel();
+      },
+      editedFuel: function () {
+        var sumaTank = 0;
+        this.tankowania.forEach(function(tankowanie){
+          // console.log(zlecenie.dystans);
+          sumaTank += Number(tankowanie.ilosc);
+        });
+        this.fire('update-fuel', {ilosc: sumaTank });
+        console.log('EDITEDFUEL ', sumaTank);
+        // this.set('karta.iloscPaliwaPobr', e.detail.ilosc);
       },
       ready: function () {
         // console.log('PALIWO ready', this.locationBase, this.id);
-        var tank = {
-          1: 'a',
-          2: 'b',
-          3: 'c'
-        };
-        Object.keys(tank).map(function(i){
-          console.log('TANK', i, tank[i]);
-        });
+        // var tank = {
+        //   1: 'a',
+        //   2: 'b',
+        //   3: 'c'
+        // };
+        // Object.keys(tank).map(function(i){
+        //   console.log('TANK', i, tank[i]);
+        // });
       }
     });
   })();

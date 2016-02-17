@@ -140,12 +140,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.active.checked = this.kierowca.isActive;
       },
       _onAccept: function() {
-        this.set('kierowca.imie',this.$.imie.value);
-        this.set('kierowca.nazwisko',this.$.nazwisko.value);
-        this.set('kierowca.isActive',this.$.active.checked);
+        this.kierowca.isActive = this.$.active.checked;
+        this.kierowca.nazwisko = this.$.nazwisko.value;
+        this.kierowca.imie = this.$.imie.value;
+        this.set('kierowca.timestamp', new Date().getTime());
+
         this._toggleEditMode();
         console.log('Edit mode off', this.edit, this.kierowca);
-        //  this.fire('edit-kierowca', {kierowca: this.kierowca});
       }
 
     });

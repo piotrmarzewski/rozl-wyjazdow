@@ -86,9 +86,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
         <div id="card-content" class="card-content">
           <karty-edit-maindata karta="{{karta}}"></karty-edit-maindata>
-          <karty-edit-fuel id="[[params.id]]"></karty-edit-fuel>
+          <karty-edit-fuel on-update-fuel="updateFuel" id="[[params.id]]"></karty-edit-fuel>
           <karty-edit-orders-view id="[[params.id]]"
               kierlist="[[kierlist]]"
+              licznik="[[licznik]]"
               kierowca-nazw="[[karta.kierowca]]"
               on-orders-changed='updateDistance'></karty-edit-orders-view>
           <!-- <karty-edit-orders-add on-add-karta-order="addKartaOrder" kierlist=[[kierlist]]></karty-edit-orders-add> -->
@@ -117,18 +118,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: String,
           value: 'https://zbk.firebaseio.com/rozliczenia/karty/'
         },
+        licznik: {
+          type: Number,
+          computed: '_computeMileage(karta.stanLicznikaPocz, karta.stanLicznika)',
+          notify: true
+        },
         kierlist: Array
       },
       updateDistance: function(e){
-        console.log("UPDATE", e.detail, this.karta.zuzyciePaliwaNorma);
+        // console.log('UPDATE', e.detail, this.karta.zuzyciePaliwaNorma);
         //update time and distance summ
         this.set('karta.dystans', e.detail.dystans);
         this.set('karta.czas', e.detail.czas);
         this.set('karta.zuzyciePaliwa', this._calculateFuelUsage(e.detail.dystans, this.karta.zuzyciePaliwaNorma));
+        console.log('COMPUTEFUEL');
+        this.computeFuelData();
       },
       _computeLocation: function(lb, id) {
         var loc =  lb + id;
-        console.log("LOCATION", loc);
+        console.log('LOCATION', loc);
         return loc;
       },
       _goBack: function(){
@@ -136,8 +144,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       _calculateFuelUsage: function (distance, norm) {
         var usage = (Math.round(((distance/100)*norm)*10))/10;
-        console.log("USAGE",usage);
+        console.log('USAGE',usage);
         return usage;
+      },
+      _computeMileage: function(lpocz, lakt){
+        console.log('LICZNIK ', lpocz, lakt);
+        return lakt || lpocz ;
+      },
+      updateFuel: function (e) {
+        console.log('EDITEDFUEL ', e.detail);
+        this.set('karta.iloscPaliwaPobr', e.detail.ilosc);
+        this.computeFuelData();
+      },
+      computeFuelData: function () {
+        var fuelAkt = Number(this.karta.iloscPaliwaPocz) + Number(this.karta.iloscPaliwaPobr) - Number(this.karta.zuzyciePaliwa);
+        console.log('FUELAKT ', this.karta.iloscPaliwaPocz, this.karta.iloscPaliwaPobr , this.karta.zuzyciePaliwa);
+
+        fuelAkt = Math.round(fuelAkt*10)/10;
+        this.set('karta.iloscPaliwaAkt', fuelAkt);
+        console.log('FUELAKT ', fuelAkt);
       }
     });
   })();

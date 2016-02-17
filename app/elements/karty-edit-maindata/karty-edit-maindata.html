@@ -60,6 +60,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         content: " min";
         color: #D4D0D0;
       }
+      .paliwo::after,
       .obl-item .paliwo::after{
         content: " l";
         color: #D4D0D0;
@@ -171,6 +172,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </paper-item-body>
       </paper-icon-item>
 
+      <paper-icon-item class$="[[_computeClass(karta.iloscPaliwaPocz)]]">
+        <div class="avatar" item-icon><iron-icon icon="maps:rate-review" item-icon></iron-icon></div>
+        <paper-item-body two-line>
+          <div secondary>Stan początkowy paliwa</div>
+          <div class="data paliwo view">[[karta.iloscPaliwaPocz]]</div>
+          <div class="edit">
+            <paper-input label="Stan licznika" value="{{karta.iloscPaliwaPocz}}" no-label-float></paper-input>
+          </div>
+          <paper-icon-button class="view" icon="create" on-tap="edit"></paper-icon-button>
+          <paper-icon-button class="edit" icon="done" on-tap="done"></paper-icon-button>
+        </paper-item-body>
+      </paper-icon-item>
+
       <paper-icon-item class="obliczenia">
         <div class="avatar" item-icon><iron-icon icon="icons:assessment" item-icon></iron-icon></div>
         <paper-item-body two-line>
@@ -187,8 +201,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </paper-item-body>
         <paper-item-body two-line>
           <div class="obl-item">
+            <div class=""> Stan licznika akt. </div>
+            <span class="licznik"> [[karta.stanLicznikaAkt]] </span> <br>
+          </div>
+        </paper-item-body>
+      </paper-icon-item>
+
+      <paper-icon-item class="obliczenia">
+        <div class="avatar" item-icon><iron-icon icon="icons:assessment" item-icon></iron-icon></div>
+        <paper-item-body two-line>
+          <div class="obl-item">
+            <div class=""> Ilośc paliwa pobr. </div>
+            <span class="paliwo"> [[karta.iloscPaliwaPobr]] </span> <br>
+          </div>
+        </paper-item-body>
+        <paper-item-body two-line>
+          <div class="obl-item">
             <div class=""> Zuzycie paliwa </div>
             <span class="paliwo"> [[karta.zuzyciePaliwa]] </span> <br>
+          </div>
+        </paper-item-body>
+        <paper-item-body two-line>
+          <div class="obl-item">
+            <div class=""> Ilośc paliwa akt. </div>
+            <span class="paliwo"> [[karta.iloscPaliwaAkt]] </span> <br>
           </div>
         </paper-item-body>
       </paper-icon-item>

@@ -112,6 +112,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       my-sticker[label="stan"]{
         margin-top: 20px;
       }
+      #kierowca {
+        /*margin-top: 8px;*/
+      }
+      #kierowca paper-item {
+        font-size: 12px;
+        /*max-height: 40px;*/
+        min-height: 30px;
+        /*width: 150px;*/
+        overflow-x: hidden;
+      }
+      paper-dropdown-menu {
+        --paper-dropdown-menu-input {
+          /*--paper-input-container-color: rgba(55, 95, 146, 0.5);*/
+          --paper-input-container-focus-color: rgb(55, 95, 146);
+          --paper-input-container-input-color: #555;
+          --paper-input-container-input: {
+            font-size: 14px;
+          };
+          --paper-input-container-label {
+            font-size: 14px;
+            /*color: yellow;*/
+          };
+          --paper-input-container-label-focus {
+            font-size: 14px;
+            /*color: yellow;*/
+          };
+        }
+      }
     </style>
     <paper-card  animated-shadow="true" class$="fancy [[_computeClass(samochod.isActive)]]">
       <div class="title">
@@ -125,23 +153,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <my-sticker label="rodzaj paliwa" data="[[samochod.paliwo]]"></my-sticker>
           <my-sticker label="norma zużycia" data="[[samochod.norma]]"></my-sticker>
           <my-sticker label="stan" class="stan" data="[[_computeStatusName(samochod.isActive)]]"></my-sticker>
+          <my-sticker label="licznik" data="[[samochod.licznik]]"></my-sticker>
+          <my-sticker label="ilośc paliwa" data="[[samochod.iloscPaliwa]]"></my-sticker>
         </div>
         <div id="samochod-edit" class="edit" hidden$="{{!edit}}">
           <paper-toggle-button id="active" name="Aktywny" checked="[[samochod.isActive]]" on-change="_toggleActiveName"></paper-toggle-button>
           <paper-input id="nazwa" label="Nazwa" value="[[samochod.nazwa]]" ></paper-input>
           <paper-input id="marka" label="Marka" value="[[samochod.marka]]" ></paper-input>
           <paper-input id="rejestracja" label="Rejestracja" value="[[samochod.rejestracja]]"></paper-input>
-          <paper-material elevation="1" class='edit'>
+          <paper-material elevation="0" class='edit'>
             <paper-radio-group id="paliwo" selected="[[samochod.paliwo]]"><iron-icon icon="maps:local-gas-station"></iron-icon>
               <paper-radio-button name="ON">ON</paper-radio-button>
               <paper-radio-button name="benzyna">benzyna</paper-radio-button>
             </paper-radio-group>
           </paper-material>
-          <paper-material elevation="1" class="horizontal edit">
-            <iron-icon class="prop-icon" icon="inbox"></iron-icon><paper-slider id="norma" pin snaps min="1" max="20" step="1" value="[[samochod.norma]]"></paper-slider>
-          </paper-material>
-          <paper-material elevation="1" class="horizontal edit"><iron-icon  class="prop-icon" icon="assignment-ind"></iron-icon>
-          <!-- Drop down menu - lista kierowcow -->
+            <paper-input id="norma" type="number" min="0" max="25" label="Norma" value="[[samochod.norma]]"></paper-input>
+            <paper-input id="licznik" type="number" min="0" max="10000000" label="Licznik" value="[[samochod.licznik]]"></paper-input>
+            <paper-input id="iloscPaliwa" type="number" min="0" max="100" label="Stan paliwa" value="[[samochod.iloscPaliwa]]"></paper-input>
             <paper-dropdown-menu id="kierowca" label="" placeholder="[[samochod.kierowca]]">
               <paper-menu  id="kierowcamenu" class="dropdown-content">
                 <template is="dom-repeat" items="[[kierlist]]" as="kierowca">
@@ -213,16 +241,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.kierowcamenu.select(-1);
       },
       _onAccept: function() {
-        this.set('samochod.nazwa',this.$.nazwa.value);
-        this.set('samochod.marka',this.$.marka.value);
-        this.set('samochod.isActive',this.$.active.checked);
-        this.set('samochod.kierowca',this.$.kierowca.selectedItemLabel);
-        this.set('samochod.rejestracja',this.$.rejestracja.value);
-        this.set('samochod.paliwo',this.$.paliwo.selected);
-        this.set('samochod.norma',this.$.norma.value);
+
+        this.samochod.nazwa = this.$.nazwa.value;
+        this.samochod.marka = this.$.marka.value;
+        this.samochod.isActive = this.$.active.checked;
+        // this.samochod.kierowca = this.$.kierowca.selectedItemLabel;
+        this.samochod.kierowca = this.$.kierowca.value || this.samochod.kierowca;
+        this.samochod.rejestracja = this.$.rejestracja.value;
+        this.samochod.paliwo = this.$.paliwo.selected;
+        this.samochod.norma = this.$.norma.value;
+        this.samochod.licznik = this.$.licznik.value;
+        this.samochod.iloscPaliwa = this.$.iloscPaliwa.value;
+
+        this.set('samochod.timestamp', new Date());
 
         this._toggleEditMode();
-        console.log('Edit mode off', this.edit, this.samopchod);
+        console.log('SAMOCHOD ', this.$.kierowca.value, this.samochod);
         this.fire('edit-samochod', {samochod: this.samochod});
       }
     });

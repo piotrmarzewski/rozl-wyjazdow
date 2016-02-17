@@ -146,7 +146,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <div class="zlecenie-item">
                 <div class=""> wyjazd </div>
                 <paper-input id="wyjazddata" label="" value="[[_today()]]" type="datetime-local" no-label-float ></paper-input>
-                <paper-input id="wyjazdlicznik" label="Licznik" type="number" min="1" max="5000" step="1" no-label-float></paper-input>
+                <paper-input id="wyjazdlicznik" label="Licznik" value="[[licznik]]" type="number" min="1" max="5000" step="1" no-label-float></paper-input>
                 <!-- <span>Data: </span> [[zlecenie.wyjazd.godz]]<br>
                 <span>Licznik: </span> [[zlecenie.wyjazd.licznik]] -->
               </div>
@@ -155,7 +155,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <div class="zlecenie-item">
                 <div class=""> przyjazd </div>
                 <paper-input id="przyjazddata" label="" value="[[_today()]]" type="datetime-local" no-label-float ></paper-input>
-                <paper-input id="przyjazdlicznik" label="Licznik" type="number" min="100" max="5000" step="1" no-label-float></paper-input>
+                <paper-input id="przyjazdlicznik" label="Licznik" value="[[licznik]]" type="number" min="100" max="5000" step="1" no-label-float></paper-input>
                 <!-- <span>Data: </span> [[zlecenie.przyjazd.godz]]<br>
                 <span>Licznik: </span> [[zlecenie.przyjazd.licznik]] -->
               </div>
@@ -175,11 +175,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       properties: {
         kierowcaNazw: String,
         kierlist: Array,
-        foo: {
-          type: String,
-          value: 'karty-edit-orders-add',
-          notify: true
-        }
+        licznik: String,
       },
       ready: function() {
         // access a local DOM element by ID using this.$
