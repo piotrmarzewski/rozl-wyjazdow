@@ -108,6 +108,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       paper-icon-button{
         color: var(--paper-blue-grey-300);
       }
+      paper-input {
+        width: 150px;
+      }
       @media all and (max-width: 960px) {
         .list paper-icon-item{
           width: 100%;
@@ -165,7 +168,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div secondary>Stan początkowy licznika</div>
           <div class="data licznik view">[[karta.stanLicznikaPocz]]</div>
           <div class="edit">
-            <paper-input label="Stan licznika" value="{{karta.stanLicznikaPocz}}" no-label-float></paper-input>
+            <paper-input label="Stan licznika" type="Number" value="{{karta.stanLicznikaPocz}}" no-label-float></paper-input>
           </div>
           <paper-icon-button class="view" icon="create" on-tap="edit"></paper-icon-button>
           <paper-icon-button class="edit" icon="done" on-tap="done"></paper-icon-button>
@@ -178,7 +181,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div secondary>Stan początkowy paliwa</div>
           <div class="data paliwo view">[[karta.iloscPaliwaPocz]]</div>
           <div class="edit">
-            <paper-input label="Stan licznika" value="{{karta.iloscPaliwaPocz}}" no-label-float></paper-input>
+            <paper-input label="Stan paliwa" type="Number" min="0" max="100" value="{{karta.iloscPaliwaPocz}}" no-label-float></paper-input>
           </div>
           <paper-icon-button class="view" icon="create" on-tap="edit"></paper-icon-button>
           <paper-icon-button class="edit" icon="done" on-tap="done"></paper-icon-button>

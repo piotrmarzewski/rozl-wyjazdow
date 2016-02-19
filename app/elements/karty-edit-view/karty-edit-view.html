@@ -89,9 +89,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <karty-edit-fuel on-update-fuel="updateFuel" id="[[params.id]]"></karty-edit-fuel>
           <karty-edit-orders-view id="[[params.id]]"
               kierlist="[[kierlist]]"
-              licznik="[[licznik]]"
+              licznik="[[karta.stanLicznikaAkt]]"
               kierowca-nazw="[[karta.kierowca]]"
-              on-orders-changed='updateDistance'></karty-edit-orders-view>
+              on-orders-changed='ordersChanged'></karty-edit-orders-view>
           <!-- <karty-edit-orders-add on-add-karta-order="addKartaOrder" kierlist=[[kierlist]]></karty-edit-orders-add> -->
         </div>
       </paper-card>
@@ -118,21 +118,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: String,
           value: 'https://zbk.firebaseio.com/rozliczenia/karty/'
         },
-        licznik: {
-          type: Number,
-          computed: '_computeMileage(karta.stanLicznikaPocz, karta.stanLicznika)',
-          notify: true
-        },
         kierlist: Array
       },
-      updateDistance: function(e){
+      observers: [
+        'kartaStanLiczPoczChanged(karta.stanLicznikaPocz)',
+        'kartaIloscPaliwaPocz(karta.iloscPaliwaPocz)',
+      ],
+      ordersChanged: function(e){
         // console.log('UPDATE', e.detail, this.karta.zuzyciePaliwaNorma);
         //update time and distance summ
         this.set('karta.dystans', e.detail.dystans);
         this.set('karta.czas', e.detail.czas);
         this.set('karta.zuzyciePaliwa', this._calculateFuelUsage(e.detail.dystans, this.karta.zuzyciePaliwaNorma));
-        console.log('COMPUTEFUEL');
-        this.computeFuelData();
+        this.set('karta.stanLicznikaAkt', Number(this.karta.stanLicznikaPocz) + Number(e.detail.dystans));
+        console.log('COMPUTEFUEL', this.karta.stanLicznikaAkt);
+        this.set('karta.iloscPaliwaAkt', this.computeFuelData());
       },
       _computeLocation: function(lb, id) {
         var loc =  lb + id;
@@ -147,22 +147,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         console.log('USAGE',usage);
         return usage;
       },
-      _computeMileage: function(lpocz, lakt){
-        console.log('LICZNIK ', lpocz, lakt);
-        return lakt || lpocz ;
+      computeMileage: function(){
+        // console.log('LICZNIK ', lpocz, lakt);
+        var mileage = Number(this.karta.stanLicznikaPocz) + Number(this.karta.distance);
+        return mileage ;
       },
       updateFuel: function (e) {
         console.log('EDITEDFUEL ', e.detail);
         this.set('karta.iloscPaliwaPobr', e.detail.ilosc);
-        this.computeFuelData();
+        this.set('karta.iloscPaliwaAkt', this.computeFuelData());
+        // this.computeFuelData();
       },
       computeFuelData: function () {
         var fuelAkt = Number(this.karta.iloscPaliwaPocz) + Number(this.karta.iloscPaliwaPobr) - Number(this.karta.zuzyciePaliwa);
-        console.log('FUELAKT ', this.karta.iloscPaliwaPocz, this.karta.iloscPaliwaPobr , this.karta.zuzyciePaliwa);
-
+        // console.log('FUELAKT ', this.karta.iloscPaliwaPocz, this.karta.iloscPaliwaPobr , this.karta.zuzyciePaliwa);
         fuelAkt = Math.round(fuelAkt*10)/10;
-        this.set('karta.iloscPaliwaAkt', fuelAkt);
         console.log('FUELAKT ', fuelAkt);
+        return fuelAkt;
+      },
+      kartaStanLiczPoczChanged: function (licznik) {
+        console.log('OBSERVER licz ', licznik);
+        this.set('karta.stanLicznikaPocz', this.computeMileage());
+      },
+      kartaIloscPaliwaPocz: function (paliwo) {
+        this.set('karta.iloscPaliwaAkt', this.computeFuelData());
       }
     });
   })();

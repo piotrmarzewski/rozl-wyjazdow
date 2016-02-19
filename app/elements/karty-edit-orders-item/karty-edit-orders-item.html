@@ -263,7 +263,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div class="zlecenie-item">
               <div class="">trasa</div>
               <paper-input id="trasaz" value="[[zlecenie.trasa.z]]" label="Z" no-label-float autocomplete autocapitalize></paper-input>
-              <paper-input id="trasado" value="[[zlecenie.trasa.do]]" label="Do" no-label-float></paper-input>
+              <paper-input id="trasado" value="[[zlecenie.trasa.do]]" label="Do" no-label-float autocomplete autocapitalize></paper-input>
             </div>
           </paper-item-body>
           <paper-item-body two-line>
@@ -279,7 +279,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div class="zlecenie-item">
               <div class=""> przyjazd </div>
               <paper-input id="przyjazddata" label="" value="[[zlecenie.przyjazd.data]]" type="datetime-local" no-label-float ></paper-input>
-              <paper-input id="przyjazdlicznik" label="Licznik" value="[[zlecenie.przyjazd.licznik]]" type="number" min="100" max="5000" step="1" no-label-float></paper-input>
+              <paper-input id="przyjazdlicznik" label="Licznik" value="[[zlecenie.przyjazd.licznik]]" type="number" min="1" max="5000" step="1" no-label-float></paper-input>
               <!-- <span>Data: </span> [[zlecenie.przyjazd.godz]]<br>
               <span>Licznik: </span> [[zlecenie.przyjazd.licznik]] -->
             </div>

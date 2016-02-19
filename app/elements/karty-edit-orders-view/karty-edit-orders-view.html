@@ -92,7 +92,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
     </paper-card>
     <karty-edit-orders-add
-          on-add-karta-order="addKartaOrder"
+          on-add-order="addOrder"
           kierowca-nazw="[[kierowcaNazw]]"
           licznik: "[[licznik]]"
           kierlist="[[kierlist]]">
@@ -137,22 +137,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         console.log('ZLECENIA', loc);
         return loc;
       },
-      addKartaOrder: function(e) {
-        console.log('Add-Karta-Order: ', e.detail);
+      addOrder: function(e) {
+        console.log('Add-Order: ', e.detail);
         this.push('zlecenia', e.detail);
-        var suma = this._sumDistance(this.zlecenia);
-        // console.log("Dystans:", suma);
-        this.fire('orders-changed', suma);
+        this.ordersChanged();
       },
       deleteOrder: function(e) {
         console.log('Order delete', e);
         this.arrayDelete('zlecenia', e.detail.zlecenie);
-        //counting distance and time in orders
-        var suma = this._sumDistance(this.zlecenia);
-        this.fire('orders-changed', suma);
+        this.ordersChanged();
       },
       editedOrder: function(e) {
         console.log('ORDER EDITED: ', e);
+        this.ordersChanged();
+      },
+      ordersChanged: function () {
         //counting distance and time in orders
         var suma = this._sumDistance(this.zlecenia);
         this.fire('orders-changed', suma);
@@ -163,7 +162,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           dystans: 0
         };
         zlecenia.forEach(function(zlecenie){
-          // console.log(zlecenie.dystans);
           suma.dystans += zlecenie.dystans;
           suma.czas += zlecenie.czas;
         });

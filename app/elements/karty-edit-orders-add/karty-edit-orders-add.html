@@ -193,7 +193,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // console.log("Distance",distance, timeDiff);
         var kierowca = this.$.kierowca.selectedItemLabel || this.kierowcaNazw;
 
-        this.fire('add-karta-order', {
+        this.fire('add-order', {
           trasa: {
             z: this.$.trasaz.value.toUpperCase(),
             do: this.$.trasado.value.toUpperCase()
@@ -209,7 +209,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           kierowca: kierowca,
           dystans: distance,
           czas: timeDiff,
-          timestamp: new Date()
+          timestamp: new Date().getTime()
         });
         //clean form
         this.$.wyjazddata.value = this._today();
