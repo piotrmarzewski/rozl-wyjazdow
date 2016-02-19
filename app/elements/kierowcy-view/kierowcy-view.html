@@ -36,7 +36,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <firebase-collection
         log="true"
         order-by-child="nazwisko"
-        location="https://zbk.firebaseio.com/rozliczenia/kierowcy"
+        location="[[location]]"
         data="{{kierowcy}}">
       </firebase-collection>
 
@@ -68,11 +68,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: Array,
           value: [],
           notify: true
+        },
+        locationBase: {
+          type: String,
+          notify: true,
+          value: ''
+        },
+        location: {
+          type: String,
+          computed: '_computeLocation(locationBase)',
+          notify: true
         }
       },
       observers: [
         '_dataChanged(kierowcy.*)'
       ],
+      _computeLocation: function(locb) {
+        var lb = ""
+        if (locb) { lb = locb + 'kierowcy' }
+        console.log('KIER fbase', lb);
+        return lb;
+      },
       addKierowca: function(e) {
         this.push('kierowcy', {
           imie: e.detail.imie,

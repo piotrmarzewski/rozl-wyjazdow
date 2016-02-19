@@ -30,11 +30,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
   };
 
-
+  app.firebaseLoc = app.firebaseLoc || '';
+  app.loggedUser = '';
   // Listen for template bound event to know when bindings
   // have resolved and content has been stamped to the page
   app.addEventListener('dom-change', function() {
     console.log('Our app is ready to rock!');
+  });
+
+  window.addEventListener('logged-out', function() {
+    app.firebaseLoc = '';
+    console.log('Logged out!');
+  });
+
+  window.addEventListener('logged-in', function(e) {
+
+    app.loggedUser = e.detail.user ;
+    app.firebaseLoc = 'https://zbk.firebaseio.com/rozliczenia/';
+    console.log('Logged in! ', app.loggedUser, app.firebaseLoc);
   });
 
   // See https://github.com/Polymer/polymer/issues/1381

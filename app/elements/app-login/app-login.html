@@ -168,7 +168,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       computeLoginStatus: function(statusKnown, user) {
         if (statusKnown && user) {
-          console.log('USER ',user);
+          // console.log('USER ',user);
           return 'Wyloguj';
         }
 
@@ -185,7 +185,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         return !statusKnown || !user;
       },
       computeLogged: function (status, user){
-        console.log('LOGGED', status, !!user, (status && !!user) );
+        // console.log('LOGGED', status, !!user, (status && !!user) );
         return (status && !!user);
       },
       _loginChanged: function () {
@@ -193,6 +193,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.$.login.close();
           this.$.email.value = "";
           this.$.password.value = "";
+          console.log('LOGGED in ', this.logged);
+          this.fire('logged-in', {user: this.user.password.email});
+        } else {
+          console.log('LOGGED app  ', app.loggedUser);
+
+          console.log('LOGGED out ', this.logged);
+          this.fire('logged-out', {});
+
+          // this.openDialog();
         }
       }
     });

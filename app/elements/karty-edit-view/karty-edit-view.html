@@ -122,6 +122,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       observers: [
         'kartaStanLiczPoczChanged(karta.stanLicznikaPocz)',
+        'kartaStanLiczAktChanged(karta.stanLicznikaAkt)',
         'kartaIloscPaliwaPocz(karta.iloscPaliwaPocz)',
       ],
       ordersChanged: function(e){
@@ -166,8 +167,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         return fuelAkt;
       },
       kartaStanLiczPoczChanged: function (licznik) {
-        console.log('OBSERVER licz ', licznik);
         this.set('karta.stanLicznikaAkt', this.computeMileage());
+      },
+      kartaStanLiczAktChanged: function (licznik) {
+        console.log('OBSERVER akt licz ', licznik);
+
       },
       kartaIloscPaliwaPocz: function (paliwo) {
         this.set('karta.iloscPaliwaAkt', this.computeFuelData());
