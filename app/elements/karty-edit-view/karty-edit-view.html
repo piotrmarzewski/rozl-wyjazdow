@@ -149,7 +149,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       computeMileage: function(){
         // console.log('LICZNIK ', lpocz, lakt);
-        var mileage = Number(this.karta.stanLicznikaPocz) + Number(this.karta.distance);
+        var mileage = Number(this.karta.stanLicznikaPocz) + Number(this.karta.dystans);
         return mileage ;
       },
       updateFuel: function (e) {
@@ -167,7 +167,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       kartaStanLiczPoczChanged: function (licznik) {
         console.log('OBSERVER licz ', licznik);
-        this.set('karta.stanLicznikaPocz', this.computeMileage());
+        this.set('karta.stanLicznikaAkt', this.computeMileage());
       },
       kartaIloscPaliwaPocz: function (paliwo) {
         this.set('karta.iloscPaliwaAkt', this.computeFuelData());
