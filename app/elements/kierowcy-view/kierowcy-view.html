@@ -76,18 +76,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
         location: {
           type: String,
-          computed: '_computeLocation(locationBase)',
+          computed: '_computeLocation(locationBase, "kierowcy")',
           notify: true
         }
       },
       observers: [
         '_dataChanged(kierowcy.*)'
       ],
-      _computeLocation: function(locb) {
-        var lb = ""
-        if (locb) { lb = locb + 'kierowcy' }
-        console.log('KIER fbase', lb);
-        return lb;
+      _computeLocation: function(lb, ltab) {
+        var loc = '';
+        if (lb) { loc = lb + ltab }
+        console.log('KIER fbase', loc);
+        return loc;
       },
       addKierowca: function(e) {
         this.push('kierowcy', {
@@ -117,14 +117,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.kierlist = this.kierowcy.slice();
       },
 
-      // clearTodos: function() {
-      //   for (var i = 0; i < this.todos.length; i++) {
-      //     var todo = this.todos[i];
-      //     if (todo.isComplete) {
-      //       this.splice('todos', i--, 1);
-      //     }
-      //   }
-      // },
       attributeChanged: function(name) {
         console.log(this.localName + '#' + this.id + ' attribute ' + name +
         ' was changed to ' + this.getAttribute(name));

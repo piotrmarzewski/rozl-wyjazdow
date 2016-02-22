@@ -22,7 +22,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             color: #fff;
             font-weight: normal;
         }
-      } 
+      }
       karty-view-datepicker {
           display: inline-block;
           float: left;
@@ -73,7 +73,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
     <firebase-collection
       log="true"
-      location="https://zbk.firebaseio.com/rozliczenia/karty"
+      location="[[location]]"
       order-by-child="data"
       start-at="{{startAtDate}}"
       end-at="{{endAtDate}}"
@@ -135,13 +135,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         selCarId: {
           type: String,
           notify: true,
-          value: ""
+          value: ''
         },
         searchString: {
           type: String,
           notify: true,
-          value: ""
+          value: ''
+        },
+        locationBase: {
+          type: String,
+          notify: true,
+          value: ''
+        },
+        location: {
+          type: String,
+          computed: '_computeLocation(locationBase, "karty")',
+          notify: true
         }
+      },
+      _computeLocation: function(locb, loc) {
+        var lb = '';
+        if (locb) { lb = locb + loc }
+        console.log('KARTY fbase', lb);
+        return lb;
       },
       _today: function() {
         return (new Date()).toISOString().slice(0,10);

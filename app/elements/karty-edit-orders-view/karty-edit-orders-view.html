@@ -124,13 +124,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
         locationBase: {
           type: String,
-          value: 'https://zbk.firebaseio.com/rozliczenia/zlecenia'
+          value: ''
         }
       },
-      _computeLocation: function(lb, id) {
-        var loc =  lb + '/' + id;
-        console.log('ZLECENIA', loc);
-        return loc;
+      _computeLocation: function(locb, id) {
+        var lb = '';
+        if (locb) { lb = locb + 'zlecenia/' + id }
+        console.log('ZLEC fbase', lb);
+        return lb;
+        // var loc =  lb + '/' + id;
+        // console.log('ZLECENIA', loc);
+        // return loc;
       },
       addOrder: function(e) {
         console.log('Add-Order: ', e.detail);

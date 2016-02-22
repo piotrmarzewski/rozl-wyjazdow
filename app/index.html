@@ -150,15 +150,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </section>
 
             <section data-route="samochody">
-                <samochody-view samlist="{{cars}}" kierlist="{{drivers}}"></samochody-view>
+                <samochody-view samlist="{{cars}}" kierlist="{{drivers}}" location-base="[[firebaseLoc]]"></samochody-view>
             </section>
 
             <section data-route="karty">
-              <karty-view samlist="{{cars}}"></karty-view>
+              <karty-view samlist="{{cars}}" location-base="[[firebaseLoc]]"></karty-view>
             </section>
 
             <section data-route="karty-edit">
-              <karty-edit-view params="[[params]]" kierlist="{{drivers}}" ></karty-edit-view>
+              <karty-edit-view params="[[params]]" kierlist="{{drivers}}" location-base="[[firebaseLoc]]"></karty-edit-view>
             </section>
 
             <section data-route="user-info">

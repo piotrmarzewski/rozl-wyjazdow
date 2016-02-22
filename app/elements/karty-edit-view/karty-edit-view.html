@@ -86,8 +86,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
         <div id="card-content" class="card-content">
           <karty-edit-maindata karta="{{karta}}"></karty-edit-maindata>
-          <karty-edit-fuel on-update-fuel="updateFuel" id="[[params.id]]"></karty-edit-fuel>
+          <karty-edit-fuel
+              on-update-fuel="updateFuel"
+              location-base="[[locationBase]]"
+              id="[[params.id]]">
+          </karty-edit-fuel>
           <karty-edit-orders-view id="[[params.id]]"
+              location-base="[[locationBase]]"
               kierlist="[[kierlist]]"
               licznik="[[karta.stanLicznikaAkt]]"
               kierowca-nazw="[[karta.kierowca]]"
@@ -107,24 +112,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       properties: {
         karta: Object,
+        kierlist: Array,
         params: {
           type: Object
         },
-        location: {
-          type: String,
-          computed: '_computeLocation(locationBase, params.id)'
-        },
         locationBase: {
           type: String,
-          value: 'https://zbk.firebaseio.com/rozliczenia/karty/'
+          value: ''
         },
-        kierlist: Array
+        location: {
+          type: String,
+          computed: '_computeLocation(locationBase, "karty", params.id)',
+          notify: true
+        }
       },
       observers: [
         'kartaStanLiczPoczChanged(karta.stanLicznikaPocz)',
         'kartaStanLiczAktChanged(karta.stanLicznikaAkt)',
         'kartaIloscPaliwaPocz(karta.iloscPaliwaPocz)',
       ],
+      _computeLocation: function(locbase, loctab, id) {
+        var loc = '';
+        if (locbase) { loc = locbase + loctab + '/' + id};
+        console.log('KAR EDIT fbase', locbase, loc);
+        return loc;
+      },
       ordersChanged: function(e){
         // console.log('UPDATE', e.detail, this.karta.zuzyciePaliwaNorma);
         //update time and distance summ
@@ -134,11 +146,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.set('karta.stanLicznikaAkt', Number(this.karta.stanLicznikaPocz) + Number(e.detail.dystans));
         console.log('COMPUTEFUEL', this.karta.stanLicznikaAkt);
         this.set('karta.iloscPaliwaAkt', this.computeFuelData());
-      },
-      _computeLocation: function(lb, id) {
-        var loc =  lb + id;
-        console.log('LOCATION', loc);
-        return loc;
       },
       _goBack: function(){
         window.history.back();

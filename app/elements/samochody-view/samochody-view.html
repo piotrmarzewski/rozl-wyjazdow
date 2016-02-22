@@ -49,7 +49,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <firebase-collection
         log="true"
         order-by-child="marka"
-        location="https://zbk.firebaseio.com/rozliczenia/samochody"
+        location="[[location]]"
         data="{{samochody}}"></firebase-collection>
 
 
@@ -81,14 +81,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         kierlist: {
           type: Array
         },
-        foo: {
+        locationBase: {
           type: String,
+          notify: true,
+          value: ''
+        },
+        location: {
+          type: String,
+          computed: '_computeLocation(locationBase, "samochody")',
           notify: true
         }
       },
       observers: [
         '_dataChanged(samochody.*)'
       ],
+      _computeLocation: function(locb, loc) {
+        var lb = '';
+        if (locb) { lb = locb + loc }
+        console.log('SAM fbase', lb);
+        return lb;
+      },
       addSamochod: function(e) {
         this.push('samochody', e.detail );
         document.querySelector('#sm-add-accepted').open();

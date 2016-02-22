@@ -107,12 +107,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
         locationBase: {
           type: String,
-          value: 'https://zbk.firebaseio.com/rozliczenia/karty'
+          value: ''
         }
       },
       _computeLocation: function(lb, id) {
-        var loc =  lb + '/' + id + '/paliwo' ;
-        console.log('PALIWO1: ', loc, this.id);
+        var loc = '';
+        if (lb) { loc =  lb + 'karty/' + id + '/paliwo' };
+        console.log('FUEL fbase', loc, this.id);
         return loc;
       },
       _add: function () {
