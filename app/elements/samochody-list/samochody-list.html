@@ -27,7 +27,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --paper-progress-secondary-color: var(--paper-light-blue-100);
       }
     </style>
-    <paper-progress indeterminate class="blue" hidden$="[[!_samochodyEmpty(samochody.length)]]"></paper-progress>
+    <!-- <paper-progress indeterminate class="blue" hidden$="[[!_samochodyEmpty(samochody.length)]]"></paper-progress> -->
 
     <template is="dom-repeat" items="{{samochody}}" as="samochod">
       <samochody-item samochod="{{samochod}}" kierlist="[[kierlist]]"></samochody-item>
