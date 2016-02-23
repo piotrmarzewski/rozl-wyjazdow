@@ -15,5 +15,9 @@ body {
 .opened {
   /*background-color: yellow !important;*/
   z-index: 100 !important;
+  background-repeat: no-repeat;
+  background-image: url('/images/bg.png');
+  background-size: cover;
+  opacity: 1 !important;
 }
 --main-template-dark: rgb(55, 95, 146);

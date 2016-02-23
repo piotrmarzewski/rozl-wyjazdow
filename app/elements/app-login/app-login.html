@@ -37,6 +37,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       paper-dialog {
         padding: 45px;
         background-color: #FFF;
+        min-height: 300px;
+        min-width: 200px;
       }
       paper-input {
         display: block;
@@ -168,12 +170,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.errormsg.open();
       },
       openDialog: function () {
-        // var content = Polymer.dom(document).querySelector('#maincontent');
-        console.log('DIALOG ', this.$.login.fitInto);
+        // console.log('DIALOG ', this.$.login.fitInto);
         this.$.login.backdropElement.toggleClass('opened', true);
         this.$.login.open();
-        // this.$.login.fitInto = content;
-        console.log('DIALOG ', this.$.login.fitInto);
       },
       computeLoginStatus: function(statusKnown, user) {
         if (statusKnown && user) {
