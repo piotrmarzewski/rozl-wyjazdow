@@ -103,10 +103,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </paper-scroll-header-panel>
 
       <!-- Main Area -->
-      <paper-scroll-header-panel main id="headerPanelMain" condenses keep-condensed-header>
-
+      <paper-header-panel main id="headerPanelMain" mode="waterfall">
         <!-- Main Toolbar -->
-        <paper-toolbar id="mainToolbar" class="tall">
+        <paper-toolbar id="mainToolbar" class="">
 
           <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
           <span class="flex"></span>
@@ -118,15 +117,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
 
           <!-- Application sub title -->
-          <div class="bottom bottom-container center horizontal layout">
+          <!-- <div class="bottom bottom-container center horizontal layout">
             <div class="bottom-title paper-font-subhead">ZBK Barczewo</div>
-          </div>
+          </div> -->
 
-          <app-login user="{{user}}" logged="{{logged}}"></app-login>
+          <app-login id="login" user="{{user}}" logged="{{logged}}"></app-login>
         </paper-toolbar>
 
         <!-- Main Content -->
-        <div class="content">
+        <div id="maincontent" class="content fit">
           <iron-pages attr-for-selected="data-route" selected="{{route}}">
 
             <section data-route="home">
@@ -136,14 +135,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </paper-material>
 
             </section>
-
-            <!-- <section data-route="users">
-              <paper-material elevation="1">
-                <h2 class="page-title">Users</h2>
-                <p>This is the users section</p>
-                <a href$="{{baseUrl}}users/Addy">Addy</a><br>
-              </paper-material>
-            </section> -->
 
             <section data-route="kierowcy">
                 <kierowcy-view kierlist="{{drivers}}" location-base="[[firebaseLoc]]"></kierowcy-view>
@@ -183,7 +174,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           </iron-pages>
         </div>
-      </paper-scroll-header-panel>
+      </paper-header-panel>
     </paper-drawer-panel>
 
     <paper-toast id="toast">
