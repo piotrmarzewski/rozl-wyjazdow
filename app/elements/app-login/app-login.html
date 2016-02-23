@@ -21,20 +21,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       paper-dialog.colored {
         border: 2px solid;
-        border-color: var(--paper-green-500);
-        background-color: var(--paper-light-green-50);
-        color: var(--paper-green-500);
+        border-color: #375F92;
+        background-color: #fff;
+        color: #375F92;
       }
 
       paper-dialog.size-position {
         position: fixed;
-        top: 16px;
+        /*top: 16px;
         right: 16px;
         width: 300px;
-        height: 600px;
+        height: 600px;*/
         overflow: auto;
       }
       paper-dialog {
+        padding: 45px;
         background-color: #FFF;
       }
       paper-input {
@@ -85,13 +86,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div hidden$="{{computeLoginHidden(statusKnown, user)}}">
     </div>
 
-    <paper-dialog entry-animation="scale-up-animation"
-              exit-animation="fade-out-animation" id="login" modal="true">
+    <paper-dialog
+        entry-animation="scale-up-animation"
+        exit-animation="fade-out-animation"
+        id="login" class="colored"
+        modal no-cancel-on-esc-key>
+
       <p>Logowanie do aplikacji </p>
         <paper-input id="email" label="Email" value="{{email}}"></paper-input>
         <paper-input id="password" type="password" label="Hasło" value="{{password}}"></paper-input>
         <div class="buttons">
-          <paper-button dialog-dismiss >Anuluj</paper-button>
+          <!-- <paper-button dialog-dismiss >Anuluj</paper-button> -->
           <paper-button on-tap="login" autofocus>Login</paper-button>
       </div>
     </paper-dialog>
@@ -144,7 +149,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           observer: '_loginChanged'
         }
       },
-
       login: function() {
         var params;
         params = params || {};
@@ -164,7 +168,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.errormsg.open();
       },
       openDialog: function () {
-        var content = Polymer.dom(document).querySelector('#maincontent');
+        // var content = Polymer.dom(document).querySelector('#maincontent');
         console.log('DIALOG ', this.$.login.fitInto);
         this.$.login.backdropElement.toggleClass('opened', true);
         this.$.login.open();
