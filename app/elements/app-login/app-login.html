@@ -85,8 +85,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div hidden$="{{computeLoginHidden(statusKnown, user)}}">
     </div>
 
-    <paper-dialog entry-animation="scale-up-animation"
-              exit-animation="fade-out-animation" id="login" modal="true">
+    <paper-dialog id="login" modal="true" >
       <p>Logowanie do aplikacji </p>
         <paper-input id="email" label="Email" value="{{email}}"></paper-input>
         <paper-input id="password" type="password" label="Hasło" value="{{password}}"></paper-input>
@@ -164,12 +163,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.errormsg.open();
       },
       openDialog: function () {
-        var content = Polymer.dom(document).querySelector('#maincontent');
-        console.log('DIALOG ', this.$.login.fitInto);
-        this.$.login.backdropElement.toggleClass('opened', true);
-        this.$.login.open();
-        // this.$.login.fitInto = content;
-        console.log('DIALOG ', this.$.login.fitInto);
+        this.$.login.fitInto = null;
+        this.$.login.fitInto = window;
+        this.$.login.toggle();
+        console.log('DIALOG ', this.$.login.fitInto, this.$.login.backdropElement );
       },
       computeLoginStatus: function(statusKnown, user) {
         if (statusKnown && user) {
@@ -201,8 +198,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           console.log('LOGGED in ', this.logged);
           this.fire('logged-in', {user: this.user.password.email});
         } else {
-          // this.$.login.open();
-
           console.log('LOGGED app  ', app.loggedUser);
 
           console.log('LOGGED out ', this.logged);
