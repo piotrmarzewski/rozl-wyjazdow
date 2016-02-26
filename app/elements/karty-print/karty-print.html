@@ -1,0 +1,62 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<script src="..\..\bower_components/pdfmake/build/pdfmake.min.js"></script>
+<script src="..\..\bower_components/pdfmake/build/vfs_fonts.js"></script>
+<dom-module id="karty-print">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      paper-fab {
+        background-color: var(--paper-yellow-900);
+        position: absolute;
+        top: 10px;
+        right: 45px;
+      }
+    </style>
+    <paper-fab icon="icons:print" on-tap="printCard"></paper-fab>
+    <!-- <div>Hello from <span>{{foo}}</span></div> -->
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    Polymer({
+      is: 'karty-print',
+
+      properties: {
+        karta: Object,
+        foo: {
+          type: String,
+          value: 'karty-print',
+          notify: true
+        }
+      },
+      docDefinition:  { content: [], styles: {} },
+      printCard:  function () {
+        var content = [];
+        //define styles
+        this.docDefinition.styles.header =  { fontSize: 22, bold: true };
+
+        //define content
+        var par1 = { text: 'This is a header', style: 'header' };
+        content.push('Some tekst',  this.karta.numer, this.karta.kierowca, par1);
+        
+        this.docDefinition.content = content;
+        console.log('PRINT', this.docDefinition.content, this.karta.numer, this.karta.kierowca);
+        // pdfMake.createPdf(this.docDefinition).download('KartaDrogowa.pdf');
+        pdfMake.createPdf(this.docDefinition).open();
+      }
+    });
+  })();
+  </script>
+</dom-module>
