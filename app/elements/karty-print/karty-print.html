@@ -44,13 +44,147 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       docDefinition:  { content: [], styles: {} },
       printCard:  function () {
         var content = [];
+        var paragraph = {};
+        //page definitions
+        this.docDefinition.pageSize = 'A5';
+        this.docDefinition.pageOrientation = 'landscape';
+        this.docDefinition.pageMargins = [ 20, 20, 20, 20 ];
         //define styles
-        this.docDefinition.styles.header =  { fontSize: 22, bold: true };
+        this.docDefinition.styles =  {
+          header: {
+            fontSize: 18,
+            bold: true,
+            margin: [0, 0, 0, 10]
+          },
+          subheader: {
+            fontSize: 16,
+            bold: true,
+            margin: [0, 10, 0, 5]
+          },
+          tableExample: {
+            fontSize: 10,
+            margin: [0, 0, 0, 5]
+          },
+          tableHeader: {
+            bold: true,
+            fontSize: 13,
+            color: 'black'
+          },
+          tableHeaderColor: {
+            bold: true,
+            fontSize: 13,
+            color: 'black',
+            fillColor: '#ddd'
+          },
+          tableFieldNameColor: {
+            fontSize: 10,
+            bold: true,
+            fillColor: '#eee'
+          },
+          tableText: {
+            fontSize: 11,
+            color: 'black'
+          },
+          tableUwagi: {
+            fontSize: 11,
+            margin: [15, 15, 15, 15]
+          },
+          tableFieldName: {
+            fontSize: 10,
+            bold: true,
+            color: 'black'
+          }
+        };
 
         //define content
-        var par1 = { text: 'This is a header', style: 'header' };
-        content.push('Some tekst',  this.karta.numer, this.karta.kierowca, par1);
-        
+        //Header page 1
+        paragraph = {
+                style: 'tableExample',
+                table: {
+                    widths: [150, 150 ,'*'],
+
+                    body: [
+                        [{ text: 'Karta drogowa nr:', style: 'tableHeaderColor' },  { text: 'Data: ', style: 'tableHeaderColor' },{ rowSpan: 3, text:'Zakład Budynków Komunalnych\nul. Wojska Polskiego 15\n11-010 Barczewo\ntel. 89 514 99 12\n',style: 'tableHeader'}],
+                        [{ text: this.karta.numer, style: 'tableHeader' },{ text: this.karta.data, style:  'tableHeader' },''],
+                        [{ text: 'Kartę wystawił:', style: 'tableFieldNameColor' },{ text: this.karta.wydanaPrzez, style:  'tableFieldName' },'']
+                    ]
+                },
+
+        };
+        content.push(paragraph,  {text: ' '});
+        // Samochod page 1
+        paragraph = {
+          style: 'tableExample',
+          table: {
+            widths: [70, 100, 140, 60, '*'],
+
+            body: [
+                [{ rowSpan: 2, text: 'Samochód:', style: 'tableHeaderColor' }, { text: 'Nr rejestracyjny: ', style: 'tableFieldNameColor' }, { text: 'Nazwa i marka: ', style: 'tableFieldNameColor' }, { text: 'Typ paliwa: ', style: 'tableFieldNameColor' },{ text: 'Norma: ', style: 'tableFieldNameColor' }],
+                ['', this.karta.numer, this.karta.samochodMarka + ' ' + this.karta.samochodNazwa, 'ON', this.karta.zuzyciePaliwaNorma + ' l/100km']
+            ]
+          }
+        };
+        content.push(paragraph);
+        // kierowca
+        paragraph = {
+            style: 'tableExample',
+            table: {
+                widths: [70, 100 ,120,100,'*'],
+
+                body: [
+                    [{ rowSpan: 2, text: 'Kierowca:', style: 'tableHeaderColor' },  { text: 'Imię i nazwisko: ', style: 'tableFieldNameColor' }, { text: 'Promień wyjazdu: ', style: 'tableFieldNameColor' }, { rowSpan: 2, text: 'Pojazd sprawny do wyjazdu: ', style: 'tableFieldNameColor' },{ rowSpan: 2, text: 'Podpis kierowcy:', style: 'tableFieldName' }],
+                    ['', this.karta.kierowca, this.karta.promWyjazdu , '', '']
+                ]
+            },
+
+        };
+        content.push(paragraph);
+        // paliwo
+        paragraph = {
+            style: 'tableExample',
+            table: {
+                widths: [70, 55 ,15,80,80,30,'*'],
+
+                body: [
+                    [{ rowSpan: 5, text: 'Paliwo:', style: 'tableHeaderColor' },  { rowSpan: 2, text: 'Stan początkowy: ', style: 'tableFieldNameColor' }, { colSpan: 5, text: 'Pobrano', style: 'tableFieldNameColor' }, '',{ text: '', style: 'tableFieldName' },'',''],
+                    ['','', {text:'l.p.',style: 'tableFieldNameColor'}, {text:'Miejsce:', style: 'tableFieldNameColor'}, {text:'Nr kwitu:', style: 'tableFieldNameColor'}, {text:'Ilość', style: 'tableFieldNameColor'}, {text:'Podpis wydającego', style: 'tableFieldNameColor'}],
+                    ['',this.karta.iloscPaliwaPocz + ' l','1','','','',''],
+                    ['',{ rowSpan: 2, text: 'Podpis', style: 'tableFieldName' },'2','','','',''],
+                    ['','','3','','','','']
+                ]
+            },
+
+        };
+        content.push(paragraph);
+        // wyniki
+        paragraph = {
+           style: 'tableExample',
+           table: {
+               widths: [70, 100 ,100,120,'*'],
+
+               body: [
+                  [{ rowSpan: 4, text: 'Wyniki:', style: 'tableHeaderColor' },  { text: 'Stan licznika pocz. ', style: 'tableFieldNameColor' }, { text: 'Stan licznika końc. ', style: 'tableFieldNameColor' },{ text: 'Zużycie paliwa: ', style: 'tableFieldNameColor' },{ rowSpan: 2, text: 'Wyniki obliczył:', style: 'tableFieldName' }],
+                  ['',this.karta.stanLicznikaPocz, this.karta.stanLicznikaAkt.toString(), this.karta.zuzyciePaliwa + ' l',''],
+                  ['', { text: 'Czas pracy:', style: 'tableFieldNameColor' }, { text: 'Przebieg: ', style: 'tableFieldNameColor' }, { text: 'Stan paliwa końcowy: ', style: 'tableFieldNameColor' }, { rowSpan: 2, text: 'Podpis kontrolującego: ', style: 'tableFieldName' }],
+                  ['',this.karta.czas + ' min', this.karta.dystans + ' km', this.karta.iloscPaliwaAkt + ' l','']
+               ]
+           },
+        };
+        content.push(paragraph);
+        // Uwagi
+        paragraph = {
+            style: 'tableExample',
+            table: {
+                widths: [70, '*'],
+
+                body: [
+                    [{ rowSpan: 1, text: 'Uwagi:', style: 'tableHeaderColor' }, { text: ' ', style: 'tableUwagi' }],
+                ]
+            },
+
+        };
+        content.push(paragraph);
+       
         this.docDefinition.content = content;
         console.log('PRINT', this.docDefinition.content, this.karta.numer, this.karta.kierowca);
         // pdfMake.createPdf(this.docDefinition).download('KartaDrogowa.pdf');
