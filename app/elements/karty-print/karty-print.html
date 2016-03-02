@@ -86,6 +86,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             fontSize: 11,
             color: 'black'
           },
+          tableSmall: {
+            fontSize: 9,
+            color: '#999'
+          },
           tableUwagi: {
             fontSize: 11,
             margin: [15, 15, 15, 15]
@@ -117,11 +121,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         paragraph = {
           style: 'tableExample',
           table: {
-            widths: [70, 80, 140, 60, 60, '*'],
+            widths: [70, 100, 140, 60, 60, '*'],
 
             body: [
                 [{ rowSpan: 2, text: 'Samochód:', style: 'tableHeaderColor' }, { text: 'Nr rejestracyjny: ', style: 'tableFieldNameColor' }, { text: 'Nazwa i marka: ', style: 'tableFieldNameColor' }, { text: 'Typ paliwa: ', style: 'tableFieldNameColor' },{ text: 'Norma: ', style: 'tableFieldNameColor' },{ text: 'Stan paliwa: ', style: 'tableFieldNameColor' }],
-                ['', this.karta.numer, this.karta.samochodMarka + ' ' + this.karta.samochodNazwa, 'ON', this.karta.zuzyciePaliwaNorma + ' l/100km', this.karta.iloscPaliwaPocz + ' l']
+                ['', this.karta.rejestracja, this.karta.samochodMarka + ' ' + this.karta.samochodNazwa, this.karta.rodzajPaliwa, this.karta.zuzyciePaliwaNorma + ' l/100km' , this.karta.iloscPaliwaPocz + ' l']
             ]
           }
         };
@@ -198,7 +202,70 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         };
         content.push(paragraph);
-       
+        // Second page
+        paragraph = {
+            style: 'tableExample',
+            table: {
+                widths: ['auto', 100, 'auto', 80],
+                headerRows: 1,
+                body: [
+                    [{ text: 'Karta drogowa nr:', style: 'tableHeaderColor' }, { text: this.karta.numer, style: 'tableHeader'}, { text: 'Data: ', style: 'tableHeaderColor' },{ text: this.karta.data, style: 'tableHeader' }],
+
+                ]
+            },
+
+        };
+        content.push(paragraph);
+        
+        paragraph = {
+            style: 'tableExample',
+
+            table: {
+                widths: [10, 100, 100, 80,50,50,'*'],
+              body: [
+                [{text: 'lp.', style: 'tableFieldNameColor' }, {text: 'Imię\nNazwisko', style: 'tableFieldNameColor'},
+                 {text: 'Trasa:\nSkąd\ndokąd', style: 'tableFieldNameColor'} , {text: 'data:\n wyjazdu\nprzyjazdu', style: 'tableFieldNameColor'},
+                 {text: 'godz:\nwyjazdu\nprzyjazdu', style: 'tableFieldNameColor'}, {text: 'licznik:\nwyjazd\nprzyjazd', style: 'tableFieldNameColor'},
+                 {text: 'podpis', style: 'tableFieldNameColor'}
+                ],
+                [{ rowSpan: 2, text: '1'}, 'Jan', 'Barczewo','10.01.2016','11:25','1231456',{ rowSpan: 2, text: ''}],
+                ['', 'Kowalski', 'Olsztyn','10.01.2016','11:00','1231456',''],
+                [{ rowSpan: 2, text: '2'}, 'Jan', 'Barczewo','10.01.2016','11:25','1231456',{ rowSpan: 2, text: ''}],
+                ['', 'Kowalski', 'Olsztyn','10.01.2016','11:00','1231456',''],
+                [{ rowSpan: 2, text: '3'}, 'Jan', 'Barczewo','10.01.2016','11:25','1231456',{ rowSpan: 2, text: ''}],
+                ['', 'Kowalski', 'Olsztyn','10.01.2016','11:00','1231456',''],
+                [{ rowSpan: 2, text: '4'}, 'Jan', 'Barczewo','10.01.2016','11:25','1231456',{ rowSpan: 2, text: ''}],
+                ['', 'Kowalski', 'Olsztyn','10.01.2016','11:00','1231456',''],
+                [{ rowSpan: 2, text: '5'}, 'Jan', 'Barczewo','10.01.2016','11:25','1231456',{ rowSpan: 2, text: ''}],
+                ['', 'Kowalski', 'Olsztyn','10.01.2016','11:00','1231456',''],
+                [{ rowSpan: 2, text: '6'}, 'Jan', 'Barczewo','10.01.2016','11:25','1231456',{ rowSpan: 2, text: ''}],
+                ['', 'Kowalski', 'Olsztyn','10.01.2016','11:00','1231456',''],
+                [{ rowSpan: 2, text: '7'}, 'Jan', 'Barczewo','10.01.2016','11:25','1231456',{ rowSpan: 2, text: ''}],
+                ['', 'Kowalski', 'Olsztyn','10.01.2016','11:00','1231456','']
+              ]
+            },
+            layout: {
+              hLineWidth: function(i, node) {
+                return (i === 0 || i === 1 || i === 3 || i === 6 ) ? 1 : 1;
+              },
+              // vLineWidth: function(i, node) {
+              //   return (i === 0 || i === node.table.widths.length) ? 2 : 1;
+              // },
+              hLineColor: function(i, node) {
+                return (i > 0 &&  !(i % 2)) ? 'gray' : 'black';
+              },
+              // vLineColor: function(i, node) {
+              //   return (i === 0 || i % 2) ? 'gray' : 'black';
+              // },
+              paddingLeft: function(i, node) { return 4; },
+               // paddingRight: function(i, node) { return 4; },
+              paddingTop: function(i, node) { return 4; },
+              paddingBottom: function(i, node) { return 4; }
+            }
+        };
+        content.push(paragraph);
+        
+        
         this.docDefinition.content = content;
         console.log('PRINT', this.docDefinition.content, this.karta.numer, this.karta.kierowca);
         // pdfMake.createPdf(this.docDefinition).download('KartaDrogowa.pdf');
