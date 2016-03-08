@@ -35,6 +35,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       properties: {
         karta: Object,
+        zlecenia: Array,
         foo: {
           type: String,
           value: 'karty-print',
@@ -103,167 +104,167 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         //define content
         //Header page 1
-        paragraph = {
-                style: 'tableExample',
-                table: {
-                    widths: [150, 150 ,'*'],
-
-                    body: [
-                        [{ text: 'Karta drogowa nr:', style: 'tableHeaderColor' },  { text: 'Data: ', style: 'tableHeaderColor' },{ rowSpan: 3, text:'Zakład Budynków Komunalnych\nul. Wojska Polskiego 15\n11-010 Barczewo\ntel. 89 514 99 12\n',style: 'tableHeader'}],
-                        [{ text: this.karta.numer, style: 'tableHeader' },{ text: this.karta.data, style:  'tableHeader' },''],
-                        [{ text: 'Kartę wystawił:', style: 'tableFieldNameColor' },{ text: this.karta.wydanaPrzez, style:  'tableFieldName' },'']
-                    ]
-                },
-
-        };
-        content.push(paragraph,  {text: ' '});
+        // paragraph = {
+        //         style: 'tableExample',
+        //         table: {
+        //             widths: [150, 150 ,'*'],
+        //
+        //             body: [
+        //                 [{ text: 'Karta drogowa nr:', style: 'tableHeaderColor' },  { text: 'Data: ', style: 'tableHeaderColor' },{ rowSpan: 3, text:'Zakład Budynków Komunalnych\nul. Wojska Polskiego 15\n11-010 Barczewo\ntel. 89 514 99 12\n',style: 'tableHeader'}],
+        //                 [{ text: this.karta.numer, style: 'tableHeader' },{ text: this.karta.data, style:  'tableHeader' },''],
+        //                 [{ text: 'Kartę wystawił:', style: 'tableFieldNameColor' },{ text: this.karta.wydanaPrzez, style:  'tableFieldName' },'']
+        //             ]
+        //         },
+        //
+        // };
+        // content.push(paragraph,  {text: ' '});
         // Samochod page 1
-        paragraph = {
-          style: 'tableExample',
-          table: {
-            widths: [70, 100, 140, 60, 60, '*'],
-
-            body: [
-                [{ rowSpan: 2, text: 'Samochód:', style: 'tableHeaderColor' }, { text: 'Nr rejestracyjny: ', style: 'tableFieldNameColor' }, { text: 'Nazwa i marka: ', style: 'tableFieldNameColor' }, { text: 'Typ paliwa: ', style: 'tableFieldNameColor' },{ text: 'Norma: ', style: 'tableFieldNameColor' },{ text: 'Stan paliwa: ', style: 'tableFieldNameColor' }],
-                ['', this.karta.rejestracja, this.karta.samochodMarka + ' ' + this.karta.samochodNazwa, this.karta.rodzajPaliwa, this.karta.zuzyciePaliwaNorma + ' l/100km' , this.karta.iloscPaliwaPocz + ' l']
-            ]
-          }
-        };
-        content.push(paragraph);
-        // kierowca
-        paragraph = {
-            style: 'tableExample',
-            table: {
-                widths: [70, 100 ,120,100,'*'],
-
-                body: [
-                    [{ rowSpan: 2, text: 'Kierowca:', style: 'tableHeaderColor' },  { text: 'Imię i nazwisko: ', style: 'tableFieldNameColor' }, { text: 'Promień wyjazdu: ', style: 'tableFieldNameColor' }, { rowSpan: 2, text: 'Pojazd sprawny do wyjazdu: ', style: 'tableFieldNameColor' },{ rowSpan: 2, text: 'Podpis kierowcy:', style: 'tableFieldName' }],
-                    ['', this.karta.kierowca, this.karta.promWyjazdu , '', '']
-                ]
-            },
-
-        };
-        content.push(paragraph);
-        // paliwo
-        paragraph = {
-            style: 'tableExample',
-            table: {
-                widths: [70, 15,90,90,30,'*'],
-
-                body: [
-                    [{ rowSpan: 5, text: 'Paliwo:', style: 'tableHeaderColor' },   { colSpan: 5, text: 'Pobrano', style: 'tableFieldNameColor' }, '',{ text: '', style: 'tableFieldName' },'',''],
-                    ['', {text:'l.p.',style: 'tableFieldNameColor'}, {text:'Miejsce:', style: 'tableFieldNameColor'}, {text:'Nr kwitu:', style: 'tableFieldNameColor'}, {text:'Ilość', style: 'tableFieldNameColor'}, {text:'Podpis wydającego', style: 'tableFieldNameColor'}]
-                ]
-            },
-
-        };
+        // paragraph = {
+        //   style: 'tableExample',
+        //   table: {
+        //     widths: [70, 100, 140, 60, 60, '*'],
+        //
+        //     body: [
+        //         [{ rowSpan: 2, text: 'Samochód:', style: 'tableHeaderColor' }, { text: 'Nr rejestracyjny: ', style: 'tableFieldNameColor' }, { text: 'Nazwa i marka: ', style: 'tableFieldNameColor' }, { text: 'Typ paliwa: ', style: 'tableFieldNameColor' },{ text: 'Norma: ', style: 'tableFieldNameColor' },{ text: 'Stan paliwa: ', style: 'tableFieldNameColor' }],
+        //         ['', this.karta.rejestracja, this.karta.samochodMarka + ' ' + this.karta.samochodNazwa, this.karta.rodzajPaliwa, this.karta.zuzyciePaliwaNorma + ' l/100km' , this.karta.iloscPaliwaPocz + ' l']
+        //     ]
+        //   }
+        // };
+        // content.push(paragraph);
+        // // kierowca
+        // paragraph = {
+        //     style: 'tableExample',
+        //     table: {
+        //         widths: [70, 100 ,120,100,'*'],
+        //
+        //         body: [
+        //             [{ rowSpan: 2, text: 'Kierowca:', style: 'tableHeaderColor' },  { text: 'Imię i nazwisko: ', style: 'tableFieldNameColor' }, { text: 'Promień wyjazdu: ', style: 'tableFieldNameColor' }, { rowSpan: 2, text: 'Pojazd sprawny do wyjazdu: ', style: 'tableFieldNameColor' },{ rowSpan: 2, text: 'Podpis kierowcy:', style: 'tableFieldName' }],
+        //             ['', this.karta.kierowca, this.karta.promWyjazdu , '', '']
+        //         ]
+        //     },
+        //
+        // };
+        // content.push(paragraph);
+        // // paliwo
+        // paragraph = {
+        //     style: 'tableExample',
+        //     table: {
+        //         widths: [70, 15,90,90,30,'*'],
+        //
+        //         body: [
+        //             [{ rowSpan: 5, text: 'Paliwo:', style: 'tableHeaderColor' },   { colSpan: 5, text: 'Pobrano', style: 'tableFieldNameColor' }, '',{ text: '', style: 'tableFieldName' },'',''],
+        //             ['', {text:'l.p.',style: 'tableFieldNameColor'}, {text:'Miejsce:', style: 'tableFieldNameColor'}, {text:'Nr kwitu:', style: 'tableFieldNameColor'}, {text:'Ilość', style: 'tableFieldNameColor'}, {text:'Podpis wydającego', style: 'tableFieldNameColor'}]
+        //         ]
+        //     },
+        //
+        // };
+        //
+        // console.log('ROW ', this.karta.paliwo);
+        // var paliwo = (this.karta.paliwo) ? Object.keys(this.karta.paliwo) : [];
+        // var rowsNum =  paliwo.length || 0;
+        // // if there are some fuel positions print them
+        // if (rowsNum) {
+        //   paliwo.map(function (tank, el) {
+        //     var row = [' ', el + 1 + ' ', this.karta.paliwo[tank].miejsce, this.karta.paliwo[tank].nrKwitu, this.karta.paliwo[tank].ilosc + ' l', ' '];
+        //     paragraph.table.body.push(row);
+        //   },this);
+        // };
+        // // add empty lines to fill 3 rows
+        // for (var i = rowsNum + 1; i <=3 ; i++) {
+        //   paragraph.table.body.push(['', i +' ',' ','','','']);
+        // };
+        //
+        // content.push(paragraph);
+        // // wyniki
+        // paragraph = {
+        //    style: 'tableExample',
+        //    table: {
+        //        widths: [70, 110, 110, 100,'*'],
+        //
+        //        body: [
+        //           [{ rowSpan: 4, text: 'Wyniki:', style: 'tableHeaderColor' },  { text: 'Stan licznika pocz. ', style: 'tableFieldNameColor' }, { text: 'Stan licznika końc. ', style: 'tableFieldNameColor' },{ text: 'Zużycie paliwa: ', style: 'tableFieldNameColor' },{ rowSpan: 2, text: 'Wyniki obliczył:', style: 'tableFieldName' }],
+        //           ['',this.karta.stanLicznikaPocz, this.karta.stanLicznikaAkt.toString(), this.karta.zuzyciePaliwa + ' l',''],
+        //           ['', { text: 'Czas pracy:', style: 'tableFieldNameColor' }, { text: 'Przebieg: ', style: 'tableFieldNameColor' }, { text: 'Stan paliwa końcowy: ', style: 'tableFieldNameColor' }, { rowSpan: 2, text: 'Podpis kontrolującego: ', style: 'tableFieldName' }],
+        //           ['',this.karta.czas + ' min', this.karta.dystans + ' km', this.karta.iloscPaliwaAkt + ' l','']
+        //        ]
+        //    },
+        // };
+        // content.push(paragraph);
+        // // Uwagi
+        // paragraph = {
+        //     style: 'tableExample',
+        //     table: {
+        //         widths: [70, '*'],
+        //
+        //         body: [
+        //             [{ rowSpan: 1, text: 'Uwagi:', style: 'tableHeaderColor' }, { text: ' ', style: 'tableUwagi' }],
+        //         ]
+        //     },
+        //
+        // };
+        // content.push(paragraph);
+        // // Second page
+        // paragraph = {
+        //     style: 'tableExample',
+        //     table: {
+        //         widths: ['auto', 100, 'auto', 80],
+        //         headerRows: 1,
+        //         body: [
+        //             [{ text: 'Karta drogowa nr:', style: 'tableHeaderColor' }, { text: this.karta.numer, style: 'tableHeader'}, { text: 'Data: ', style: 'tableHeaderColor' },{ text: this.karta.data, style: 'tableHeader' }],
+        //
+        //         ]
+        //     },
+        //
+        // };
+        // content.push(paragraph);
         
-        console.log('ROW ', this.karta.paliwo);
-        var paliwo = (this.karta.paliwo) ? Object.keys(this.karta.paliwo) : [];
-        var rowsNum =  paliwo.length || 0;
-        // if there are some fuel positions print them
-        if (rowsNum) {
-          paliwo.map(function (tank, el) {
-            var row = [' ', el + 1 + ' ', this.karta.paliwo[tank].miejsce, this.karta.paliwo[tank].nrKwitu, this.karta.paliwo[tank].ilosc + ' l', ' '];
-            paragraph.table.body.push(row);
-          },this);
-        };
-        // add empty lines to fill 3 rows
-        for (var i = rowsNum + 1; i <=3 ; i++) {
-          paragraph.table.body.push(['', i +' ',' ','','','']);
-        };
-        
-        content.push(paragraph);
-        // wyniki
-        paragraph = {
-           style: 'tableExample',
-           table: {
-               widths: [70, 110, 110, 100,'*'],
-
-               body: [
-                  [{ rowSpan: 4, text: 'Wyniki:', style: 'tableHeaderColor' },  { text: 'Stan licznika pocz. ', style: 'tableFieldNameColor' }, { text: 'Stan licznika końc. ', style: 'tableFieldNameColor' },{ text: 'Zużycie paliwa: ', style: 'tableFieldNameColor' },{ rowSpan: 2, text: 'Wyniki obliczył:', style: 'tableFieldName' }],
-                  ['',this.karta.stanLicznikaPocz, this.karta.stanLicznikaAkt.toString(), this.karta.zuzyciePaliwa + ' l',''],
-                  ['', { text: 'Czas pracy:', style: 'tableFieldNameColor' }, { text: 'Przebieg: ', style: 'tableFieldNameColor' }, { text: 'Stan paliwa końcowy: ', style: 'tableFieldNameColor' }, { rowSpan: 2, text: 'Podpis kontrolującego: ', style: 'tableFieldName' }],
-                  ['',this.karta.czas + ' min', this.karta.dystans + ' km', this.karta.iloscPaliwaAkt + ' l','']
-               ]
-           },
-        };
-        content.push(paragraph);
-        // Uwagi
-        paragraph = {
-            style: 'tableExample',
-            table: {
-                widths: [70, '*'],
-
-                body: [
-                    [{ rowSpan: 1, text: 'Uwagi:', style: 'tableHeaderColor' }, { text: ' ', style: 'tableUwagi' }],
-                ]
-            },
-
-        };
-        content.push(paragraph);
-        // Second page
-        paragraph = {
-            style: 'tableExample',
-            table: {
-                widths: ['auto', 100, 'auto', 80],
-                headerRows: 1,
-                body: [
-                    [{ text: 'Karta drogowa nr:', style: 'tableHeaderColor' }, { text: this.karta.numer, style: 'tableHeader'}, { text: 'Data: ', style: 'tableHeaderColor' },{ text: this.karta.data, style: 'tableHeader' }],
-
-                ]
-            },
-
-        };
-        content.push(paragraph);
-        
-        paragraph = {
-            style: 'tableExample',
-
-            table: {
-                widths: [10, 100, 100, 80,50,50,'*'],
-              body: [
-                [{text: 'lp.', style: 'tableFieldNameColor' }, {text: 'Imię\nNazwisko', style: 'tableFieldNameColor'},
-                 {text: 'Trasa:\nSkąd\ndokąd', style: 'tableFieldNameColor'} , {text: 'data:\n wyjazdu\nprzyjazdu', style: 'tableFieldNameColor'},
-                 {text: 'godz:\nwyjazdu\nprzyjazdu', style: 'tableFieldNameColor'}, {text: 'licznik:\nwyjazd\nprzyjazd', style: 'tableFieldNameColor'},
-                 {text: 'podpis', style: 'tableFieldNameColor'}
-                ],
-                [{ rowSpan: 2, text: '1'}, 'Jan', 'Barczewo','10.01.2016','11:25','1231456',{ rowSpan: 2, text: ''}],
-                ['', 'Kowalski', 'Olsztyn','10.01.2016','11:00','1231456',''],
-                [{ rowSpan: 2, text: '2'}, 'Jan', 'Barczewo','10.01.2016','11:25','1231456',{ rowSpan: 2, text: ''}],
-                ['', 'Kowalski', 'Olsztyn','10.01.2016','11:00','1231456',''],
-                [{ rowSpan: 2, text: '3'}, 'Jan', 'Barczewo','10.01.2016','11:25','1231456',{ rowSpan: 2, text: ''}],
-                ['', 'Kowalski', 'Olsztyn','10.01.2016','11:00','1231456',''],
-                [{ rowSpan: 2, text: '4'}, 'Jan', 'Barczewo','10.01.2016','11:25','1231456',{ rowSpan: 2, text: ''}],
-                ['', 'Kowalski', 'Olsztyn','10.01.2016','11:00','1231456',''],
-                [{ rowSpan: 2, text: '5'}, 'Jan', 'Barczewo','10.01.2016','11:25','1231456',{ rowSpan: 2, text: ''}],
-                ['', 'Kowalski', 'Olsztyn','10.01.2016','11:00','1231456',''],
-                [{ rowSpan: 2, text: '6'}, 'Jan', 'Barczewo','10.01.2016','11:25','1231456',{ rowSpan: 2, text: ''}],
-                ['', 'Kowalski', 'Olsztyn','10.01.2016','11:00','1231456',''],
-                [{ rowSpan: 2, text: '7'}, 'Jan', 'Barczewo','10.01.2016','11:25','1231456',{ rowSpan: 2, text: ''}],
-                ['', 'Kowalski', 'Olsztyn','10.01.2016','11:00','1231456','']
-              ]
-            },
-            layout: {
-              hLineWidth: function(i, node) {
-                return (i === 0 || i === 1 || i === 3 || i === 6 ) ? 1 : 1;
-              },
-              // vLineWidth: function(i, node) {
-              //   return (i === 0 || i === node.table.widths.length) ? 2 : 1;
-              // },
-              hLineColor: function(i, node) {
-                return (i > 0 &&  !(i % 2)) ? 'gray' : 'black';
-              },
-              // vLineColor: function(i, node) {
-              //   return (i === 0 || i % 2) ? 'gray' : 'black';
-              // },
-              paddingLeft: function(i, node) { return 4; },
-               // paddingRight: function(i, node) { return 4; },
-              paddingTop: function(i, node) { return 4; },
-              paddingBottom: function(i, node) { return 4; }
-            }
-        };
-        content.push(paragraph);
+        // paragraph = {
+        //     style: 'tableExample',
+        //
+        //     table: {
+        //         widths: [10, 100, 100, 80,50,50,'*'],
+        //       body: [
+        //         [{text: 'lp.', style: 'tableFieldNameColor' }, {text: 'Imię\nNazwisko', style: 'tableFieldNameColor'},
+        //          {text: 'Trasa:\nSkąd\ndokąd', style: 'tableFieldNameColor'} , {text: 'data:\n wyjazdu\nprzyjazdu', style: 'tableFieldNameColor'},
+        //          {text: 'godz:\nwyjazdu\nprzyjazdu', style: 'tableFieldNameColor'}, {text: 'licznik:\nwyjazd\nprzyjazd', style: 'tableFieldNameColor'},
+        //          {text: 'podpis', style: 'tableFieldNameColor'}
+        //         ],
+        //         [{ rowSpan: 2, text: '1'}, 'Jan', 'Barczewo','10.01.2016','11:25','1231456',{ rowSpan: 2, text: ''}],
+        //         ['', 'Kowalski', 'Olsztyn','10.01.2016','11:00','1231456',''],
+        //         [{ rowSpan: 2, text: '2'}, 'Jan', 'Barczewo','10.01.2016','11:25','1231456',{ rowSpan: 2, text: ''}],
+        //         ['', 'Kowalski', 'Olsztyn','10.01.2016','11:00','1231456',''],
+        //         [{ rowSpan: 2, text: '3'}, 'Jan', 'Barczewo','10.01.2016','11:25','1231456',{ rowSpan: 2, text: ''}],
+        //         ['', 'Kowalski', 'Olsztyn','10.01.2016','11:00','1231456',''],
+        //         [{ rowSpan: 2, text: '4'}, 'Jan', 'Barczewo','10.01.2016','11:25','1231456',{ rowSpan: 2, text: ''}],
+        //         ['', 'Kowalski', 'Olsztyn','10.01.2016','11:00','1231456',''],
+        //         [{ rowSpan: 2, text: '5'}, 'Jan', 'Barczewo','10.01.2016','11:25','1231456',{ rowSpan: 2, text: ''}],
+        //         ['', 'Kowalski', 'Olsztyn','10.01.2016','11:00','1231456',''],
+        //         [{ rowSpan: 2, text: '6'}, 'Jan', 'Barczewo','10.01.2016','11:25','1231456',{ rowSpan: 2, text: ''}],
+        //         ['', 'Kowalski', 'Olsztyn','10.01.2016','11:00','1231456',''],
+        //         [{ rowSpan: 2, text: '7'}, 'Jan', 'Barczewo','10.01.2016','11:25','1231456',{ rowSpan: 2, text: ''}],
+        //         ['', 'Kowalski', 'Olsztyn','10.01.2016','11:00','1231456','']
+        //       ]
+        //     },
+        //     layout: {
+        //       hLineWidth: function(i, node) {
+        //         return (i === 0 || i === 1 || i === 3 || i === 6 ) ? 1 : 1;
+        //       },
+        //       // vLineWidth: function(i, node) {
+        //       //   return (i === 0 || i === node.table.widths.length) ? 2 : 1;
+        //       // },
+        //       hLineColor: function(i, node) {
+        //         return (i > 0 &&  !(i % 2)) ? 'gray' : 'black';
+        //       },
+        //       // vLineColor: function(i, node) {
+        //       //   return (i === 0 || i % 2) ? 'gray' : 'black';
+        //       // },
+        //       paddingLeft: function(i, node) { return 4; },
+        //        // paddingRight: function(i, node) { return 4; },
+        //       paddingTop: function(i, node) { return 4; },
+        //       paddingBottom: function(i, node) { return 4; }
+        //     }
+        // };
+        // content.push(paragraph);
         
         
         this.docDefinition.content = content;
