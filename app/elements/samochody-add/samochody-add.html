@@ -152,8 +152,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
           <paper-item-body two-line>
             <div class="item">
-              <paper-input id="marka"  prevent-invalid-input autocapitalize allowed-pattern="[-,a-z,A-Z,ąęśżźńółćĄĘŚŻŹÓŁŃĆ]" label="Marka" on-keydown="_checkAdd" on-keydown="_checkAdd"></paper-input>
-              <paper-input id="nazwa" prevent-invalid-input allowed-pattern="[-,a-z,A-Z,ąęśżźńółćĄĘŚŻŹÓŁŃĆ]" label="Nazwa" on-keydown="_checkAdd"></paper-input>
+              <paper-input id="marka"  prevent-invalid-input autocapitalize allowed-pattern="[-, ,a-z,A-Z,ąęśżźńółćĄĘŚŻŹÓŁŃĆ,0-9]" label="Marka" on-keydown="_checkAdd" on-keydown="_checkAdd"></paper-input>
+              <paper-input id="nazwa" prevent-invalid-input allowed-pattern="[-, ,a-z,A-Z,ąęśżźńółćĄĘŚŻŹÓŁŃĆ,0-9]" label="Nazwa" on-keydown="_checkAdd"></paper-input>
             </div>
           </paper-item-body>
           <paper-item-body two-line>
@@ -165,7 +165,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   </template>
                 </paper-menu>
               </paper-dropdown-menu>
-              <paper-input id="rejestracja" prevent-invalid-input allowed-pattern="[-,a-z,A-Z,ąęśżźńółćĄĘŚŻŹÓŁŃĆ]" label="Rejestracja" on-keydown="_checkAdd"></paper-input>
+              <paper-input id="rejestracja" prevent-invalid-input allowed-pattern="[A-Z,0-9]" label="Rejestracja" on-keydown="_checkAdd"></paper-input>
             </div>
           </paper-item-body>
           <paper-item-body two-line>
