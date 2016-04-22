@@ -48,8 +48,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var paragraph = {};
         
         //page definitions
-        this.docDefinition.pageSize = 'A5';
-        this.docDefinition.pageOrientation = 'landscape';
+        this.docDefinition.pageSize = 'A4';
+        this.docDefinition.pageOrientation = 'portrait';
         this.docDefinition.pageMargins = [ 20, 20, 20, 20 ];
         //define styles
         this.docDefinition.styles =  {
@@ -205,6 +205,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         };
         content.push(paragraph);
         
+        // page spacing
+        paragraph = [
+          {text: ' '},
+          {text: ' '},
+          {text: ' '}
+        ];
+        
+        content.push(paragraph);
         // Second page
         paragraph = {
             style: 'tableExample',
@@ -250,10 +258,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               // vLineColor: function(i, node) {
               //   return (i === 0 || i % 2) ? 'gray' : 'black';
               // },
-              paddingLeft: function(i, node) { return 4; },
+              paddingLeft: function(i, node) { return 2; },
                // paddingRight: function(i, node) { return 4; },
-              paddingTop: function(i, node) { return 4; },
-              paddingBottom: function(i, node) { return 4; }
+              paddingTop: function(i, node) { return 1; },
+              paddingBottom: function(i, node) { return 1; }
             }
         };
         
@@ -267,7 +275,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             console.log('PRINT map', num, el.kierowca, el.przyjazd.data.slice(0,10), el.przyjazd.licznik);
           })
         };
-        for (var i = rowsNum + 1; i <=7 ; i++) {
+        for (var i = rowsNum + 1; i <=10 ; i++) {
           paragraph.table.body.push([{ rowSpan: 2, text: i + ' '}, { rowSpan: 2, text: ' ' }, ' ', ' ', ' ', ' ', { rowSpan: 2, text: ''}]);
           paragraph.table.body.push(['', '', ' ', ' ', ' ', ' ','']);
         };
